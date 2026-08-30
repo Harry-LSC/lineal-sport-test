@@ -1368,6 +1368,26 @@ window.BANNERMAN_DATA = {"current_champion":"Bayern München","current_since":"2
     D.most_reigns=D.leaderboard.reduce((a,b)=>b.reigns>a.reigns?b:a,D.leaderboard[0]);
     D.most_days=D.leaderboard[0];
 
+    // Render the leaderboard immediately from the updated state, before any
+    // optional badge/chart code can fail. Then update the current holder's
+    // defence cell directly from the audited baseline plus the live reign delta.
+    try {
+      renderLB();
+      const liveKeyEarly=normTeam(live.current_holder);
+      const auditedEarly=baseDefences.get(liveKeyEarly);
+      if(auditedEarly!=null){
+        let targetEarly=auditedEarly;
+        if(liveKeyEarly===normTeam(staticHolder) && live.current_since===staticSince){
+          targetEarly=auditedEarly + Math.max(0,(Number(live.current_defences)||0)-staticCurrentDefences);
+        } else {
+          targetEarly=(D.leaderboard.find(r=>normTeam(r.team)===liveKeyEarly)||{}).defences ?? auditedEarly;
+        }
+        const trs=[...document.querySelectorAll('#lb-body tr')];
+        const tr=trs.find(x=>normTeam(x.querySelector('.lb-team span')?.textContent)===liveKeyEarly);
+        if(tr){const cells=tr.querySelectorAll('td'); if(cells.length>4) cells[4].textContent=String(targetEarly);}
+      }
+    } catch(e) { console.error('Early leaderboard live update failed:', e); }
+
     // Primary live-state fields.
     const setText=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
     setText('holder-name',live.current_holder.toUpperCase());
