@@ -12,6 +12,7 @@
       "total_defences": 270,
       "next_defence": {
         "date": "2026-10-09",
+        "end_date": "2026-10-13",
         "opponent": "Australia",
         "venue": "Kingsmead · Durban",
         "status": "Scheduled"
@@ -28,6 +29,7 @@
       "total_defences": 4,
       "next_defence": {
         "date": "2027-06-24",
+        "end_date": "2027-06-27",
         "opponent": "England",
         "venue": "Headingley · Leeds",
         "status": "Scheduled"
@@ -44,6 +46,7 @@
       "total_defences": 596,
       "next_defence": {
         "date": "2026-09-15",
+        "end_date": null,
         "opponent": "Zimbabwe",
         "venue": "Harare Sports Club · Harare",
         "status": "Scheduled"
@@ -60,6 +63,7 @@
       "total_defences": 251,
       "next_defence": {
         "date": "2026-10-09",
+        "end_date": null,
         "opponent": "Bangladesh",
         "venue": "Allan Border Field · Brisbane",
         "status": "Scheduled"
@@ -87,6 +91,7 @@
       "total_defences": 139,
       "next_defence": {
         "date": "2026-10-18",
+        "end_date": null,
         "opponent": "New Zealand",
         "venue": "North Sydney Oval · Sydney",
         "status": "Scheduled"
@@ -114,6 +119,7 @@
       "total_defences": 1443,
       "next_defence": {
         "date": "2026-09-04",
+        "end_date": null,
         "opponent": "Schalke FC",
         "venue": null,
         "status": "Scheduled"
@@ -130,6 +136,7 @@
       "total_defences": 655,
       "next_defence": {
         "date": "2026-08-31",
+        "end_date": null,
         "opponent": "1. FSV Mainz 05",
         "venue": null,
         "status": "Scheduled"
@@ -140,6 +147,8 @@
     {
       "championship": "Uwe Seeler Trophy",
       "date": "2026-08-28",
+      "fixture_start_date": "2026-08-28",
+      "fixture_end_date": null,
       "holder_before": "Bayern München",
       "challenger": "VfB Stuttgart",
       "result_type": "Holder win",
