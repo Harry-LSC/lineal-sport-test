@@ -1355,6 +1355,12 @@ window.BANNERMAN_DATA = {"current_champion":"Bayern München","current_since":"2
 
     // Add the still-running current reign to the holder's aggregate days.
     const cr=getRow(live.current_holder);
+    // For an unchanged reign, the live current-defence count is authoritative.
+    // This avoids any dependency on DOM selectors or update-row aggregation.
+    if(normTeam(live.current_holder)===normTeam(staticHolder) && live.current_since===staticSince){
+      const audited=baseDefences.get(normTeam(live.current_holder));
+      if(audited!=null) cr.defences=audited + Math.max(0,(Number(live.current_defences)||0)-staticCurrentDefences);
+    }
     cr.days+=daysSince(live.current_since);
     cr.avg_reign=Math.round((cr.days/Math.max(1,cr.reigns))*10)/10;
     D.leaderboard=rows.sort((a,b)=>b.days-a.days);
@@ -1383,7 +1389,7 @@ window.BANNERMAN_DATA = {"current_champion":"Bayern München","current_since":"2
           targetEarly=(D.leaderboard.find(r=>normTeam(r.team)===liveKeyEarly)||{}).defences ?? auditedEarly;
         }
         const trs=[...document.querySelectorAll('#lb-body tr')];
-        const tr=trs.find(x=>normTeam(x.querySelector('.lb-team span')?.textContent)===liveKeyEarly);
+        const tr=trs.find(x=>normTeam(x.querySelector('.club-logo')?.dataset.team || x.querySelector('.lb-team > span:last-child')?.textContent)===liveKeyEarly);
         if(tr){const cells=tr.querySelectorAll('td'); if(cells.length>4) cells[4].textContent=String(targetEarly);}
       }
     } catch(e) { console.error('Early leaderboard live update failed:', e); }
@@ -1434,7 +1440,7 @@ window.BANNERMAN_DATA = {"current_champion":"Bayern München","current_since":"2
         if(liveRow) liveRow.defences=target;
         const forceCell=()=>{
           for(const tr of document.querySelectorAll('#lb-body tr')){
-            const team=tr.querySelector('.lb-team span')?.textContent;
+            const team=tr.querySelector('.club-logo')?.dataset.team || tr.querySelector('.lb-team > span:last-child')?.textContent;
             if(normTeam(team)===liveKey){
               const cells=tr.querySelectorAll('td');
               if(cells.length>4) cells[4].textContent=String(target);
@@ -1457,7 +1463,7 @@ window.BANNERMAN_DATA = {"current_champion":"Bayern München","current_since":"2
     safeRun('club logos',()=>hydrateClubLogos());
 
     const footer=document.getElementById('live-footer-status');
-    if(footer){const nt=live.next_defence?`Next defence ${prettyDate(live.next_defence.date)} vs ${live.next_defence.opponent}.`:'Next defence TBD.';footer.innerHTML=`Live championship state loaded from sports-data.json · ${esc(nt)}<br><a href="mailto:linealsportchamp@gmail.com" style="color:inherit;">linealsportchamp@gmail.com</a> · An unofficial, fan-made project.`;}
+    if(footer){const nt=live.next_defence?`Next defence ${prettyDate(live.next_defence.date)} vs ${live.next_defence.opponent}.`:'Next defence TBD.';footer.innerHTML=`Live championship state loaded from sports-data.json · ${esc(nt)}<br><a href="mailto:linealsportchamp@gmail.com" style="color:inherit;">linealsportchamp@gmail.com</a> · An unofficial, fan-made project. <span style="opacity:.45">build v8</span>`;}
   }catch(err){
     console.error('Live Uwe data hydration failed:',err);
     const footer=document.getElementById('live-footer-status');
@@ -1466,6 +1472,6 @@ window.BANNERMAN_DATA = {"current_champion":"Bayern München","current_since":"2
 })();
 </script>
 
-<!-- JSON integration build: v6 -->
+<!-- JSON integration build: v8 -->
 </body>
 </html>
