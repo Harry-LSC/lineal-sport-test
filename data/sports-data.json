@@ -41,9 +41,9 @@
       "competition": "Men's ODI",
       "current_holder": "Zimbabwe",
       "current_since": "2026-09-15",
-      "current_defences": 0,
+      "current_defences": 1,
       "transfers": 359,
-      "total_defences": 596,
+      "total_defences": 597,
       "next_defence": null
     },
     {
@@ -164,6 +164,21 @@
       "result_score": "Bayern München 5 - VfB Stuttgart 1",
       "outcome": "Defence",
       "holder_after": "Bayern München",
+      "venue": null,
+      "source_url": null,
+      "notes": null
+    },
+    {
+      "championship": "John Edrich Jug",
+      "date": "2026-12-31",
+      "fixture_start_date": "2026-12-31",
+      "fixture_end_date": null,
+      "holder_before": "Zimbabwe",
+      "challenger": "ireland",
+      "result_type": "Holder win",
+      "result_score": "zimbabwe win by 5 wickets",
+      "outcome": "Defence",
+      "holder_after": "Zimbabwe",
       "venue": null,
       "source_url": null,
       "notes": null
