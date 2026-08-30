@@ -5,18 +5,12 @@
       "championship": "Charles Bannerman Belt",
       "sport": "Cricket",
       "competition": "Men's Test",
-      "current_holder": "South Africa",
-      "current_since": "2025-10-23",
-      "current_defences": 2,
-      "transfers": 172,
+      "current_holder": "Australia",
+      "current_since": "2026-10-13",
+      "current_defences": 0,
+      "transfers": 173,
       "total_defences": 270,
-      "next_defence": {
-        "date": "2026-10-09",
-        "end_date": "2026-10-13",
-        "opponent": "Australia",
-        "venue": "Kingsmead · Durban",
-        "status": "Scheduled"
-      }
+      "next_defence": null
     },
     {
       "championship": "Myrtle Maclagan Medal",
@@ -144,6 +138,21 @@
     }
   ],
   "lineage_updates": [
+    {
+      "championship": "Charles Bannerman Belt",
+      "date": "2026-10-13",
+      "fixture_start_date": "2026-10-09",
+      "fixture_end_date": "2026-10-13",
+      "holder_before": "South Africa",
+      "challenger": "Australia",
+      "result_type": "Challenger win",
+      "result_score": "outh Africa lost to Australia",
+      "outcome": "Transfer",
+      "holder_after": "Australia",
+      "venue": "Kingsmead · Durban",
+      "source_url": null,
+      "notes": null
+    },
     {
       "championship": "Uwe Seeler Trophy",
       "date": "2026-08-28",
