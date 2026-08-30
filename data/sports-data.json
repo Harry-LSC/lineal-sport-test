@@ -22,12 +22,18 @@
       "championship": "Myrtle Maclagan Medal",
       "sport": "Cricket",
       "competition": "Women's Test",
-      "current_holder": "England",
-      "current_since": "2027-06-27",
-      "current_defences": 1,
-      "transfers": 9,
-      "total_defences": 5,
-      "next_defence": null
+      "current_holder": "Australia",
+      "current_since": "2026-03-08",
+      "current_defences": 0,
+      "transfers": 8,
+      "total_defences": 4,
+      "next_defence": {
+        "date": "2027-04-08",
+        "end_date": "2027-04-11",
+        "opponent": "South Africa",
+        "venue": "Senwes Park, Potchesfstroom",
+        "status": "Scheduled"
+      }
     },
     {
       "championship": "John Edrich Jug",
@@ -139,21 +145,6 @@
   ],
   "lineage_updates": [
     {
-      "championship": "Myrtle Maclagan Medal",
-      "date": "2027-06-27",
-      "fixture_start_date": "2027-06-24",
-      "fixture_end_date": "2027-06-27",
-      "holder_before": "Australia",
-      "challenger": "England",
-      "result_type": "Challenger win",
-      "result_score": "England beat Australia by 5 wickets",
-      "outcome": "Transfer",
-      "holder_after": "England",
-      "venue": "Headingley · Leeds",
-      "source_url": null,
-      "notes": "24–27 June 2027"
-    },
-    {
       "championship": "Uwe Seeler Trophy",
       "date": "2026-08-28",
       "fixture_start_date": "2026-08-28",
@@ -164,21 +155,6 @@
       "result_score": "Bayern München 5 - VfB Stuttgart 1",
       "outcome": "Defence",
       "holder_after": "Bayern München",
-      "venue": null,
-      "source_url": null,
-      "notes": null
-    },
-    {
-      "championship": "Myrtle Maclagan Medal",
-      "date": "2027-07-03",
-      "fixture_start_date": "2027-06-30",
-      "fixture_end_date": "2027-07-03",
-      "holder_before": "England",
-      "challenger": "India",
-      "result_type": "Holder win",
-      "result_score": "England beat India by 4 wickets",
-      "outcome": "Defence",
-      "holder_after": "England",
       "venue": null,
       "source_url": null,
       "notes": null
