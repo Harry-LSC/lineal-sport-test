@@ -1321,6 +1321,22 @@ window.BANNERMAN_DATA = {"current_champion":"Bayern München","current_since":"2
       }
     });
 
+    // Update the most visible live fields immediately, before any secondary
+    // chart/summary rebuilds. This keeps the hero and next-fixture state
+    // independent of later visualisation code.
+    const setTextEarly=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
+    setTextEarly('holder-name',live.current_holder.toUpperCase());
+    setTextEarly('holder-since','Won on '+prettyDate(live.current_since));
+    setTextEarly('holder-days',daysSince(live.current_since));
+    setTextEarly('holder-defences',live.current_defences);
+    const nextEarly=document.getElementById('next-defence-live');
+    if(nextEarly) nextEarly.textContent=live.next_defence?(prettyDate(live.next_defence.date)+' · vs '+live.next_defence.opponent):'TBD';
+    const latestEarly=updates.length?updates[updates.length-1]:null;
+    const resultEarly=document.getElementById('holder-result');
+    if(resultEarly&&latestEarly){resultEarly.textContent=latestEarly.outcome==='Defence'?`Last defence: ${latestEarly.result_score} — ${prettyDate(latestEarly.date)}`:`Won vs ${latestEarly.holder_before} — ${latestEarly.result_score} — ${prettyDate(latestEarly.date)}`;}
+    const lastDefEarly=document.getElementById('holder-last-defence');
+    if(lastDefEarly){const ld=[...updates].reverse().find(x=>x.outcome==='Defence'&&(x.holder_after===live.current_holder||x.holder_before===live.current_holder));lastDefEarly.textContent=ld?`Last: ${ld.result_score}`:'';}
+
     // Add the still-running current reign to the holder's aggregate days.
     const cr=getRow(live.current_holder);
     cr.days+=daysSince(live.current_since);
@@ -1365,15 +1381,16 @@ window.BANNERMAN_DATA = {"current_champion":"Bayern München","current_since":"2
     if(lastDef){const ld=[...updates].reverse().find(x=>x.outcome==='Defence'&&x.holder_after===live.current_holder);lastDef.textContent=ld?`Last: ${ld.result_score}`:'';}
 
     // Rebuild every dependent section from the same updated in-memory state.
-    renderLB();
-    rebuildDonut(D);
-    rebuildTimeline(D);
-    rebuildTitleCards(D);
-    rebuildFullLineage(D);
-    rebuildEra(D);
-    rebuildTCY(D);
-    rebuildDSR(D);
-    hydrateClubLogos();
+    const safeRun=(name,fn)=>{try{fn();}catch(e){console.error('Uwe live rebuild failed:',name,e);}};
+    safeRun('leaderboard',()=>renderLB());
+    safeRun('ownership',()=>rebuildDonut(D));
+    safeRun('timeline',()=>rebuildTimeline(D));
+    safeRun('title cards',()=>rebuildTitleCards(D));
+    safeRun('full lineage',()=>rebuildFullLineage(D));
+    safeRun('era',()=>rebuildEra(D));
+    safeRun('title changes per year',()=>rebuildTCY(D));
+    safeRun('defence success',()=>rebuildDSR(D));
+    safeRun('club logos',()=>hydrateClubLogos());
 
     const footer=document.getElementById('live-footer-status');
     if(footer){const nt=live.next_defence?`Next defence ${prettyDate(live.next_defence.date)} vs ${live.next_defence.opponent}.`:'Next defence TBD.';footer.innerHTML=`Live championship state loaded from sports-data.json · ${esc(nt)}<br><a href="mailto:linealsportchamp@gmail.com" style="color:inherit;">linealsportchamp@gmail.com</a> · An unofficial, fan-made project.`;}
