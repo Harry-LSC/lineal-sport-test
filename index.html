@@ -1147,13 +1147,22 @@ window.BANNERMAN_DATA = {"current_champion":"Bayern München","current_since":"2
     if (!fitMode) setTimeout(()=>{ tcyScroll.scrollLeft = tcyScroll.scrollWidth; }, 50);
   })();
 
+  // Expose the original renderer helpers to the live-data integration script.
+  // They were intentionally scoped inside this IIFE, so a later <script> cannot
+  // call them unless we publish this small bridge explicitly.
+  window.UWE_RUNTIME = {
+    TEAM_ABBR, flagSVG, hydrateClubLogos, badge, badgeHTML,
+    renderLB, donutColor, attachHoverTip
+  };
+
 })();
 
-  hydrateClubLogos();
+  window.UWE_RUNTIME.hydrateClubLogos();
 </script>
 
 <script>
 (async function(){
+  const {TEAM_ABBR, flagSVG, hydrateClubLogos, badge, badgeHTML, renderLB, donutColor, attachHoverTip} = window.UWE_RUNTIME;
   function prettyDate(iso){
     if(!iso) return 'TBD';
     const [y,m,d]=iso.split('-').map(Number);
@@ -1463,7 +1472,7 @@ window.BANNERMAN_DATA = {"current_champion":"Bayern München","current_since":"2
     safeRun('club logos',()=>hydrateClubLogos());
 
     const footer=document.getElementById('live-footer-status');
-    if(footer){const nt=live.next_defence?`Next defence ${prettyDate(live.next_defence.date)} vs ${live.next_defence.opponent}.`:'Next defence TBD.';footer.innerHTML=`Live championship state loaded from sports-data.json · ${esc(nt)}<br><a href="mailto:linealsportchamp@gmail.com" style="color:inherit;">linealsportchamp@gmail.com</a> · An unofficial, fan-made project. <span style="opacity:.45">build v8</span>`;}
+    if(footer){const nt=live.next_defence?`Next defence ${prettyDate(live.next_defence.date)} vs ${live.next_defence.opponent}.`:'Next defence TBD.';footer.innerHTML=`Live championship state loaded from sports-data.json · ${esc(nt)}<br><a href="mailto:linealsportchamp@gmail.com" style="color:inherit;">linealsportchamp@gmail.com</a> · An unofficial, fan-made project. <span style="opacity:.45">build v9</span>`;}
   }catch(err){
     console.error('Live Uwe data hydration failed:',err);
     const footer=document.getElementById('live-footer-status');
@@ -1472,6 +1481,6 @@ window.BANNERMAN_DATA = {"current_champion":"Bayern München","current_since":"2
 })();
 </script>
 
-<!-- JSON integration build: v8 -->
+<!-- JSON integration build: v9-scope-fix -->
 </body>
 </html>
