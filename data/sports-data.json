@@ -109,9 +109,9 @@
       "competition": "Bundesliga",
       "current_holder": "VfB Stuttgart",
       "current_since": "2026-08-28",
-      "current_defences": 0,
+      "current_defences": 1,
       "transfers": 682,
-      "total_defences": 1442,
+      "total_defences": 1443,
       "next_defence": null
     },
     {
@@ -144,6 +144,19 @@
       "venue": null,
       "source_url": null,
       "notes": "Fixture shown on current page; result not entered here."
+    },
+    {
+      "championship": "Uwe Seeler Trophy",
+      "date": "2026-08-30",
+      "holder_before": "VfB Stuttgart",
+      "challenger": "Weder Bremen",
+      "result_type": "Holder win",
+      "result_score": "VfB Stuttgart 2 - Werder Bremen 0",
+      "outcome": "Defence",
+      "holder_after": "VfB Stuttgart",
+      "venue": null,
+      "source_url": null,
+      "notes": null
     }
   ]
 }
