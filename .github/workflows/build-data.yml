@@ -33,7 +33,7 @@ jobs:
 
       - name: Commit generated JSON
         run: |
-          if git diff --quiet -- data/sports-data.json; then
+          if [ -z "$(git status --porcelain -- data/sports-data.json)" ]; then
             echo "sports-data.json is already up to date."
             exit 0
           fi
