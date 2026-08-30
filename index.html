@@ -1153,106 +1153,234 @@ window.BANNERMAN_DATA = {"current_champion":"Bayern München","current_since":"2
 </script>
 
 <script>
-(async function hydrateLiveUweState(){
+(async function(){
   function prettyDate(iso){
     if(!iso) return 'TBD';
     const [y,m,d]=iso.split('-').map(Number);
     return new Intl.DateTimeFormat('en-GB',{day:'numeric',month:'short',year:'numeric'}).format(new Date(Date.UTC(y,m-1,d)));
   }
-  function daysSince(iso){
-    if(!iso) return '—';
-    const [y,m,d]=iso.split('-').map(Number);
-    const start=Date.UTC(y,m-1,d);
-    const now=new Date();
-    const today=Date.UTC(now.getUTCFullYear(),now.getUTCMonth(),now.getUTCDate());
-    return Math.max(0,Math.floor((today-start)/86400000));
+  function dayDiff(a,b){
+    if(!a || !b) return 0;
+    const [ay,am,ad]=a.split('-').map(Number), [by,bm,bd]=b.split('-').map(Number);
+    return Math.max(0,Math.floor((Date.UTC(by,bm-1,bd)-Date.UTC(ay,am-1,ad))/86400000));
   }
+  function todayISO(){
+    const n=new Date();
+    return `${n.getUTCFullYear()}-${String(n.getUTCMonth()+1).padStart(2,'0')}-${String(n.getUTCDate()).padStart(2,'0')}`;
+  }
+  function daysSince(iso){ return dayDiff(iso,todayISO()); }
+  function esc(s){ return String(s??'').replace(/[&<>\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c])); }
+
+  function rebuildTimeline(D){
+    const track=document.getElementById('tl-track');
+    const axis=document.getElementById('tl-axis');
+    if(!track || !axis) return;
+    track.innerHTML=D.timeline_events.map(e=>`
+      <div class="tl-node ${e.type}" data-date="${esc(prettyDate(e.date))}" data-context="${esc(e.context)}">
+        <div class="dot"></div>${e.type==='new'?`<div class="tl-label">${esc((TEAM_ABBR||{})[e.team]||e.team)}</div>`:''}
+      </div>`).join('');
+    let lastYear=null;
+    axis.innerHTML=D.timeline_events.map(e=>{const yr=e.date.slice(0,4), show=yr!==lastYear; lastYear=yr; return `<div class="tl-axis-tick">${show?`<div class="tl-axis-year">${yr}</div>`:''}</div>`;}).join('');
+    track.querySelectorAll('.tl-node').forEach(node=>attachHoverTip(node,`<div class="tt-date">${node.dataset.date}</div><div class="tt-body">${node.dataset.context}</div>`));
+    const scroll=document.getElementById('tl-scroll');
+    if(scroll) setTimeout(()=>{scroll.scrollLeft=scroll.scrollWidth;},50);
+  }
+
+  function rebuildTitleCards(D){
+    const tcRow=document.getElementById('tc-row');
+    if(!tcRow) return;
+    tcRow.innerHTML=(D.recent_transfers||[]).slice(0,3).map(t=>{
+      const stage=t.competition||'League match';
+      return `<div class="tc-card">
+        <div class="tc-top"><span class="tc-date mono">${prettyDate(t.date)}</span><span class="tc-stage">${esc(stage)}</span></div>
+        <div class="tc-match">
+          <div class="tc-team">${badgeHTML(t.from,'badge')}<span class="tname">${esc(t.from)}</span></div>
+          <div class="tc-vs">VS</div>
+          <div class="tc-team">${badgeHTML(t.to,'badge')}<span class="tname">${esc(t.to)}</span></div>
+        </div>
+        <div class="tc-result">${esc(t.context)}</div>
+        <div class="tc-arrow">${esc(t.from)} <span style="color:var(--slate)">→</span> <b>${esc(t.to)}</b></div>
+      </div>`;
+    }).join('');
+  }
+
+  function rebuildFullLineage(D){
+    const transfers=D.timeline_events.filter(e=>e.type==='new');
+    let prev=null;
+    const items=transfers.map(e=>{const o={...e,from:prev};prev=e.team;return o;}).reverse();
+    const count=document.getElementById('fl-count');
+    const tlCount=document.getElementById('tl-count-label');
+    if(count) count.textContent=`${D.total_transfers} title change${D.total_transfers===1?'':'s'} · ${items.length} total entries incl. seed`;
+    if(tlCount) tlCount.textContent=`${D.total_transfers} title change${D.total_transfers===1?'':'s'} since ${D.timeline_events[0].date.slice(0,4)}`;
+    const list=document.getElementById('fl-list'), more=document.getElementById('fl-more'), search=document.getElementById('fl-search'), flags=document.getElementById('fl-flags');
+    if(!list || !more || !search || !flags) return;
+    const render=()=>{
+      const q=search.value.trim().toLowerCase();
+      const filtered=q?items.filter(h=>h.team.toLowerCase().includes(q)||(h.from||'').toLowerCase().includes(q)):items;
+      const shown=q?filtered:filtered.slice(0,10);
+      list.innerHTML=shown.length?shown.map(h=>`<div class="fl-item${h.from===null?' origin':''}">
+        <div class="fl-date mono">${prettyDate(h.date)}</div>
+        <div class="fl-transfer">${h.from?esc(h.from):'Begins with'} ${h.from?'<span class="arrow">→</span>':''} ${esc(h.team)}</div>
+        <div class="fl-context">${esc(h.context)}</div></div>`).join(''):'<div class="fl-no-results">No title changes match that club search.</div>';
+      more.style.display=(!q && filtered.length>10)?'block':'none';
+    };
+    render();
+  }
+
+  function rebuildDonut(D){
+    const svg=document.getElementById('donut-svg'), legend=document.getElementById('donut-legend');
+    if(!svg||!legend) return;
+    const data=D.leaderboard.filter(r=>r.days>0);
+    const total=data.reduce((a,b)=>a+b.days,0)||1;
+    let acc=0; const R=55,CX=65,CY=65;
+    svg.innerHTML=data.map(s=>{
+      const frac=s.days/total,a0=acc*2*Math.PI-Math.PI/2; acc+=frac; const a1=acc*2*Math.PI-Math.PI/2;
+      const x0=CX+R*Math.cos(a0),y0=CY+R*Math.sin(a0),x1=CX+R*Math.cos(a1),y1=CY+R*Math.sin(a1),large=frac>.5?1:0;
+      return `<path d="M${CX},${CY} L${x0},${y0} A${R},${R} 0 ${large} 1 ${x1},${y1} Z" fill="${donutColor(s.team)}" opacity="0.92"/>`;
+    }).join('')+`<circle cx="${CX}" cy="${CY}" r="30" fill="#12161f"/>`;
+    legend.innerHTML=data.map(s=>`<div class="row"><span class="sw" style="background:${donutColor(s.team)}"></span>${esc(s.team)}<span class="pct mono">${(s.days/total*100).toFixed(0)}%</span></div>`).join('');
+  }
+
+  function rebuildEra(D){
+    const news=D.timeline_events.filter(e=>e.type==='new'), map=document.getElementById('era-map');
+    if(!map||!news.length) return;
+    const today=todayISO(); map.innerHTML='';
+    news.forEach((e,i)=>{const end=i<news.length-1?news[i+1].date:today,dur=Math.max(1,dayDiff(e.date,end)); const seg=document.createElement('div'); seg.className='era-seg'; seg.style.flex=`${dur} 1 0`; seg.style.minWidth='0'; seg.style.background=donutColor(e.team); attachHoverTip(seg,`<div class="tt-date">${esc(e.team)}</div><div class="tt-body">${prettyDate(e.date)} – ${end===today?'present':prettyDate(end)}</div>`); map.appendChild(seg);});
+  }
+
+  function rebuildTCY(D){
+    const news=D.timeline_events.filter(e=>e.type==='new'), track=document.getElementById('tcy-track'); if(!track||!news.length) return;
+    const counts={}; news.forEach(e=>counts[e.date.slice(0,4)]=(counts[e.date.slice(0,4)]||0)+1);
+    const ys=Object.keys(counts).map(Number).sort((a,b)=>a-b), min=ys[0], max=ys.at(-1), all=[]; for(let y=min;y<=max;y++) all.push(y);
+    const mx=Math.max(...Object.values(counts)), fit=all.length<=30, barMax=fit?100:80; track.classList.toggle('fit',fit); track.innerHTML='';
+    all.forEach(y=>{const c=counts[y]||0,h=c===0?2:Math.max(4,(c/mx)*barMax), show=fit||y%5===0||y===min||y===max; const w=document.createElement('div'); w.className=fit?'tcy-bar-wrap fit':'tcy-bar-wrap'; w.innerHTML=`<div class="tcy-bar${fit?' fit':''}" style="height:${h}px"></div>${show?`<div class="tcy-bar-year">${y}</div>`:''}`; attachHoverTip(w,`<div class="tt-date">${y}</div><div class="tt-body">${c} title change${c!==1?'s':''}</div>`); track.appendChild(w);});
+    const sc=document.getElementById('tcy-scroll'); if(sc&&!fit)setTimeout(()=>{sc.scrollLeft=sc.scrollWidth;},50);
+  }
+
+  function rebuildDSR(D){
+    const list=document.getElementById('dsr-list'); if(!list) return;
+    const attempts={};
+    D.timeline_events.forEach((e,i)=>{if(e.type==='def'){attempts[e.team]??={def:0,loss:0};attempts[e.team].def++;}else if(e.type==='new'&&i>0){const p=D.timeline_events[i-1].team;attempts[p]??={def:0,loss:0};attempts[p].loss++;}});
+    const rows=Object.entries(attempts).map(([team,a])=>({team,...a,total:a.def+a.loss,rate:a.def/(a.def+a.loss)*100})).filter(r=>r.total>=2).sort((a,b)=>b.rate-a.rate||b.total-a.total).slice(0,10);
+    list.innerHTML=rows.map(r=>`<div class="dsr-row"><div class="dsr-flag">${flagSVG(r.team)}</div><div class="dsr-name">${esc(r.team)}</div><div class="dsr-bar-track"><div class="dsr-bar-fill" style="width:${r.rate.toFixed(0)}%;background:linear-gradient(90deg,${donutColor(r.team)}99,${donutColor(r.team)})"></div></div><div class="dsr-pct">${r.rate.toFixed(0)}% (${r.def}/${r.total})</div></div>`).join('');
+  }
+
   try{
     const response=await fetch('./data/sports-data.json',{cache:'no-store'});
     if(!response.ok) throw new Error('sports-data.json returned '+response.status);
     const payload=await response.json();
     const live=payload.championships.find(x=>x.championship==='Uwe Seeler Trophy');
     if(!live) throw new Error('Uwe Seeler Trophy missing from sports-data.json');
-
     const D=window.BANNERMAN_DATA;
-    if(D){
-      D.current_champion=live.current_holder;
-      D.current_since=live.current_since;
-      D.current_days=daysSince(live.current_since);
-      D.current_defences=live.current_defences;
-      D.total_transfers=live.transfers;
-      D.total_matches=live.transfers+live.total_defences;
+    if(!D) throw new Error('Page data object missing');
+
+    // Freeze the static page's audited cutoff, then apply only workbook events
+    // newer than that cutoff. This prevents double-counting if the static
+    // historical page is later regenerated to include an old workbook event.
+    const staticLastDate=D.timeline_events.reduce((m,e)=>e.date>m?e.date:m,'0000-00-00');
+    const staticHolder=D.current_champion, staticSince=D.current_since;
+    const baseRows=D.leaderboard.map(r=>({...r}));
+    const staticCurrentRow=baseRows.find(r=>r.team===staticHolder);
+    if(staticCurrentRow && typeof D.current_team_completed_days==='number'){
+      staticCurrentRow.days=D.current_team_completed_days;
+      staticCurrentRow.avg_reign=Math.round((staticCurrentRow.days/staticCurrentRow.reigns)*10)/10;
     }
 
-    const name=document.getElementById('holder-name');
-    if(name) name.textContent=live.current_holder.toUpperCase();
-    const since=document.getElementById('holder-since');
-    if(since) since.textContent='Won on '+prettyDate(live.current_since);
-    const days=document.getElementById('holder-days');
-    if(days) days.textContent=daysSince(live.current_since);
-    const defs=document.getElementById('holder-defences');
-    if(defs) defs.textContent=live.current_defences;
-    const gt=document.getElementById('g-transfers');
-    if(gt) gt.textContent=live.transfers;
-    const gm=document.getElementById('g-matches');
-    if(gm) gm.textContent=live.transfers+live.total_defences;
-    const scd=document.getElementById('s-current-days');
-    if(scd) scd.innerHTML=daysSince(live.current_since)+'<span class="unit">days</span>';
-    const sct=document.getElementById('s-current-team');
-    if(sct) sct.textContent=live.current_holder;
+    const updates=(payload.lineage_updates||[])
+      .filter(x=>x.championship==='Uwe Seeler Trophy' && x.date>staticLastDate)
+      .sort((a,b)=>a.date.localeCompare(b.date));
+
+    let holder=staticHolder, since=staticSince;
+    const rows=baseRows;
+    const getRow=team=>{
+      let r=rows.find(x=>x.team===team);
+      if(!r){r={team,reigns:0,days:0,defences:0,matches:0,avg_reign:0,defences_current:0};rows.push(r); if(!D.all_nations.includes(team))D.all_nations.push(team);}
+      return r;
+    };
+
+    updates.forEach(u=>{
+      const before=u.holder_before||holder;
+      if(u.outcome==='Defence'){
+        const r=getRow(before); r.defences+=1; r.matches=(r.matches||0)+1;
+      }else if(u.outcome==='Transfer'){
+        const old=getRow(before); old.days+=dayDiff(since,u.date); old.matches=(old.matches||0)+1;
+        old.avg_reign=Math.round((old.days/Math.max(1,old.reigns))*10)/10;
+        const nr=getRow(u.holder_after||u.challenger); nr.reigns+=1;
+        holder=u.holder_after||u.challenger; since=u.date;
+      }
+      const type=u.outcome==='Transfer'?'new':u.outcome==='Defence'?'def':null;
+      if(type){
+        const team=u.holder_after||before;
+        const context=u.outcome==='Transfer'
+          ? `${before} vs ${u.challenger} — ${u.holder_after||u.challenger} won${u.result_score?' · '+u.result_score:''}`
+          : `${before} defended vs ${u.challenger}${u.result_score?' — '+u.result_score:''}`;
+        D.timeline_events.push({date:u.date,team,type,context});
+      }
+      if(u.outcome==='Transfer'){
+        D.recent_transfers.unshift({date:u.date,from:before,to:u.holder_after||u.challenger,context:u.result_score||`${before} vs ${u.challenger}`,competition:'League match'});
+      }
+    });
+
+    // Add the still-running current reign to the holder's aggregate days.
+    const cr=getRow(live.current_holder);
+    cr.days+=daysSince(live.current_since);
+    cr.avg_reign=Math.round((cr.days/Math.max(1,cr.reigns))*10)/10;
+    D.leaderboard=rows.sort((a,b)=>b.days-a.days);
+    D.current_champion=live.current_holder;
+    D.current_since=live.current_since;
+    D.current_days=daysSince(live.current_since);
+    D.current_defences=live.current_defences;
+    D.total_transfers=live.transfers;
+    D.total_matches=live.transfers+live.total_defences;
+    D.total_nations=D.leaderboard.filter(r=>r.reigns>0).length;
+    D.most_reigns=D.leaderboard.reduce((a,b)=>b.reigns>a.reigns?b:a,D.leaderboard[0]);
+    D.most_days=D.leaderboard[0];
+
+    // Primary live-state fields.
+    const setText=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
+    setText('holder-name',live.current_holder.toUpperCase());
+    setText('holder-since','Won on '+prettyDate(live.current_since));
+    setText('holder-days',D.current_days);
+    setText('holder-defences',live.current_defences);
+    setText('g-transfers',live.transfers);
+    setText('g-matches',live.transfers+live.total_defences);
+    setText('g-nations',D.total_nations);
+    const scd=document.getElementById('s-current-days'); if(scd)scd.innerHTML=D.current_days+'<span class="unit">days</span>';
+    setText('s-current-team',live.current_holder);
     if(typeof flagSVG==='function'){
-      const sf=document.getElementById('s-current-flag');
-      if(sf) sf.innerHTML=flagSVG(live.current_holder);
-      const hb=document.getElementById('holder-badge');
-      if(hb) hb.innerHTML=flagSVG(live.current_holder);
+      const sf=document.getElementById('s-current-flag');if(sf)sf.innerHTML=flagSVG(live.current_holder);
+      const hb=document.getElementById('holder-badge');if(hb)hb.innerHTML=flagSVG(live.current_holder);
     }
+    setText('s-mostreigns-num',D.most_reigns.reigns); setText('s-mostreigns-team',D.most_reigns.team);
+    const mrf=document.getElementById('s-mostreigns-flag');if(mrf)mrf.innerHTML=flagSVG(D.most_reigns.team);
+    setText('s-mostdays-num',D.most_days.days.toLocaleString()); setText('s-mostdays-team',D.most_days.team);
+    const mdf=document.getElementById('s-mostdays-flag');if(mdf)mdf.innerHTML=flagSVG(D.most_days.team);
 
     const next=document.getElementById('next-defence-live');
-    if(next){
-      next.textContent=live.next_defence ? (prettyDate(live.next_defence.date)+' · vs '+live.next_defence.opponent) : 'TBD';
-    }
-
-    const uweUpdates=(payload.lineage_updates||[]).filter(x=>x.championship==='Uwe Seeler Trophy');
-    const latest=uweUpdates.length ? uweUpdates[uweUpdates.length-1] : null;
+    if(next) next.textContent=live.next_defence?(prettyDate(live.next_defence.date)+' · vs '+live.next_defence.opponent):'TBD';
+    const latest=updates.length?updates[updates.length-1]:null;
     const result=document.getElementById('holder-result');
-    if(result && latest){
-      if(latest.outcome==='Defence') result.textContent='Last defence: '+latest.result_score+' — '+prettyDate(latest.date);
-      else if(latest.outcome==='Transfer') result.textContent='Won vs '+latest.holder_before+' — '+latest.result_score+' — '+prettyDate(latest.date);
-    }
+    if(result&&latest){result.textContent=latest.outcome==='Defence'?`Last defence: ${latest.result_score} — ${prettyDate(latest.date)}`:`Won vs ${latest.holder_before} — ${latest.result_score} — ${prettyDate(latest.date)}`;}
     const lastDef=document.getElementById('holder-last-defence');
-    if(lastDef && latest && latest.outcome==='Defence') lastDef.textContent='Last: '+latest.result_score;
+    if(lastDef){const ld=[...updates].reverse().find(x=>x.outcome==='Defence'&&x.holder_after===live.current_holder);lastDef.textContent=ld?`Last: ${ld.result_score}`:'';}
 
-    // Add newly completed workbook events to the visual timeline if the
-    // historical static page does not already contain them.
-    const track=document.getElementById('tl-track');
-    if(track && D && Array.isArray(D.timeline_events)){
-      uweUpdates.forEach(u=>{
-        if(D.timeline_events.some(e=>e.date===u.date && e.context && e.context.includes(u.result_score||'__none__'))) return;
-        const team=u.holder_after;
-        const type=u.outcome==='Transfer' ? 'new' : (u.outcome==='Defence' ? 'def' : null);
-        if(!type) return;
-        const context=u.outcome==='Transfer'
-          ? `${u.holder_before} vs ${u.challenger} — ${u.challenger} won (${u.result_score})`
-          : `${u.holder_before} defended vs ${u.challenger} — ${u.result_score}`;
-        D.timeline_events.push({date:u.date,team,type,context});
-        const node=document.createElement('div');
-        node.className='tl-node '+type;
-        node.dataset.date=prettyDate(u.date);
-        node.dataset.context=context;
-        node.innerHTML='<div class="dot"></div>'+(type==='new'?'<div class="tl-label">'+((window.TEAM_ABBR||{})[team]||team)+'</div>':'');
-        track.appendChild(node);
-      });
-    }
+    // Rebuild every dependent section from the same updated in-memory state.
+    renderLB();
+    rebuildDonut(D);
+    rebuildTimeline(D);
+    rebuildTitleCards(D);
+    rebuildFullLineage(D);
+    rebuildEra(D);
+    rebuildTCY(D);
+    rebuildDSR(D);
+    hydrateClubLogos();
 
     const footer=document.getElementById('live-footer-status');
-    if(footer){
-      const nextText=live.next_defence ? ('Next defence '+prettyDate(live.next_defence.date)+' vs '+live.next_defence.opponent+'.') : 'Next defence TBD.';
-      footer.innerHTML='Live championship state loaded from sports-data.json · '+nextText+'<br><a href="mailto:linealsportchamp@gmail.com" style="color:inherit;">linealsportchamp@gmail.com</a> · An unofficial, fan-made project.';
-    }
+    if(footer){const nt=live.next_defence?`Next defence ${prettyDate(live.next_defence.date)} vs ${live.next_defence.opponent}.`:'Next defence TBD.';footer.innerHTML=`Live championship state loaded from sports-data.json · ${esc(nt)}<br><a href="mailto:linealsportchamp@gmail.com" style="color:inherit;">linealsportchamp@gmail.com</a> · An unofficial, fan-made project.`;}
   }catch(err){
     console.error('Live Uwe data hydration failed:',err);
     const footer=document.getElementById('live-footer-status');
-    if(footer) footer.innerHTML='<strong>Live data failed to load.</strong><br><a href="mailto:linealsportchamp@gmail.com" style="color:inherit;">linealsportchamp@gmail.com</a>';
+    if(footer)footer.innerHTML='<strong>Live data failed to load.</strong><br><a href="mailto:linealsportchamp@gmail.com" style="color:inherit;">linealsportchamp@gmail.com</a>';
   }
 })();
 </script>
