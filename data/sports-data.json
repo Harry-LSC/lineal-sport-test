@@ -1,0 +1,154 @@
+{
+  "schema_version": 1,
+  "championships": [
+    {
+      "championship": "Charles Bannerman Belt",
+      "sport": "Cricket",
+      "competition": "Men's Test",
+      "current_holder": "South Africa",
+      "current_since": "2025-10-23",
+      "current_defences": 2,
+      "transfers": 172,
+      "total_defences": 270,
+      "next_defence": {
+        "date": "2026-10-09",
+        "opponent": "Australia",
+        "venue": "Kingsmead · Durban",
+        "status": "Scheduled"
+      }
+    },
+    {
+      "championship": "Myrtle Maclagan Medal",
+      "sport": "Cricket",
+      "competition": "Women's Test",
+      "current_holder": "Australia",
+      "current_since": "2026-03-08",
+      "current_defences": 0,
+      "transfers": 8,
+      "total_defences": 4,
+      "next_defence": {
+        "date": "2027-06-24",
+        "opponent": "England",
+        "venue": "Headingley · Leeds",
+        "status": "Scheduled"
+      }
+    },
+    {
+      "championship": "John Edrich Jug",
+      "sport": "Cricket",
+      "competition": "Men's ODI",
+      "current_holder": "Australia",
+      "current_since": "2026-06-14",
+      "current_defences": 0,
+      "transfers": 358,
+      "total_defences": 596,
+      "next_defence": {
+        "date": "2026-09-15",
+        "opponent": "Zimbabwe",
+        "venue": "Harare Sports Club · Harare",
+        "status": "Scheduled"
+      }
+    },
+    {
+      "championship": "Tina Macpherson Trophy",
+      "sport": "Cricket",
+      "competition": "Women's ODI",
+      "current_holder": "Australia",
+      "current_since": "2026-02-24",
+      "current_defences": 5,
+      "transfers": 120,
+      "total_defences": 251,
+      "next_defence": {
+        "date": "2026-10-09",
+        "opponent": "Bangladesh",
+        "venue": "Allan Border Field · Brisbane",
+        "status": "Scheduled"
+      }
+    },
+    {
+      "championship": "Ricky Ponting Ribbon",
+      "sport": "Cricket",
+      "competition": "Men's T20I",
+      "current_holder": "Ireland",
+      "current_since": "2026-06-26",
+      "current_defences": 1,
+      "transfers": 89,
+      "total_defences": 152,
+      "next_defence": null
+    },
+    {
+      "championship": "Rebecca Rolls Ribbon",
+      "sport": "Cricket",
+      "competition": "Women's T20I",
+      "current_holder": "Australia",
+      "current_since": "2026-06-13",
+      "current_defences": 6,
+      "transfers": 76,
+      "total_defences": 139,
+      "next_defence": {
+        "date": "2026-10-18",
+        "opponent": "New Zealand",
+        "venue": "North Sydney Oval · Sydney",
+        "status": "Scheduled"
+      }
+    },
+    {
+      "championship": "Yusuf Pathan Plate",
+      "sport": "Cricket",
+      "competition": "IPL",
+      "current_holder": "Royal Challengers Bengaluru",
+      "current_since": "2026-05-31",
+      "current_defences": 0,
+      "transfers": 150,
+      "total_defences": 125,
+      "next_defence": null
+    },
+    {
+      "championship": "Uwe Seeler Trophy",
+      "sport": "Football",
+      "competition": "Bundesliga",
+      "current_holder": "Bayern München",
+      "current_since": "2026-02-28",
+      "current_defences": 11,
+      "transfers": 681,
+      "total_defences": 1443,
+      "next_defence": {
+        "date": "2026-09-04",
+        "opponent": "Schalke FC",
+        "venue": null,
+        "status": "Scheduled"
+      }
+    },
+    {
+      "championship": "Heidi Mohr Pott",
+      "sport": "Football",
+      "competition": "Frauen-Bundesliga",
+      "current_holder": "Bayern München",
+      "current_since": "2025-03-14",
+      "current_defences": 32,
+      "transfers": 113,
+      "total_defences": 655,
+      "next_defence": {
+        "date": "2026-08-31",
+        "opponent": "1. FSV Mainz 05",
+        "venue": null,
+        "status": "Scheduled"
+      }
+    }
+  ],
+  "lineage_updates": [
+    {
+      "championship": "Uwe Seeler Trophy",
+      "date": "2026-08-28",
+      "holder_before": "Bayern München",
+      "challenger": "VfB Stuttgart",
+      "result_type": "Holder win",
+      "result_score": "Bayern München 5 - VfB Stuttgart 1",
+      "outcome": "Defence",
+      "holder_after": "Bayern München",
+      "venue": null,
+      "source_url": null,
+      "notes": "Fixture shown on current page; result not entered here."
+    }
+  ]
+}
