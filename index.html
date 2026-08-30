@@ -327,12 +327,13 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding:36px 0 44px;}
 }
 .tl-shared-tip .tt-body{color:var(--cream);}
 
-/* Current-champion banner share: anchored to the champion name */
-.holder-name-row{display:flex;align-items:center;gap:8px;min-width:0;flex-wrap:wrap;}
+/* Current-champion banner share: anchored to the fixed label */
+.holder-label-row{display:flex;align-items:center;gap:2px;min-width:0;}
+.holder-label-row .holder-label{margin:0;}
 .holder-result-anchor{display:block;max-width:100%;}
 .holder-share-btn{
   position:static;transform:none;flex:0 0 auto;
-  width:26px;height:26px;padding:0;border:0;background:transparent;color:var(--gold-dim);
+  width:22px;height:22px;padding:0;border:0;background:transparent;color:var(--gold-dim);
   display:grid;place-items:center;cursor:pointer;border-radius:50%;
   transition:color .15s,background .15s;z-index:2;
 }
@@ -434,9 +435,8 @@ body, button, input, select, textarea {
         <div class="holder-main" style="border-right:1px solid var(--line);">
           <div class="holder-badge" id="holder-badge"></div>
           <div>
-            <div class="holder-label">Current Champion</div>
-            <div class="holder-name-row">
-              <div class="holder-name" id="holder-name">—</div>
+            <div class="holder-label-row">
+              <div class="holder-label">Current Champion</div>
               <button class="holder-share-btn" id="holder-share-btn" type="button" aria-label="Share current champion banner" title="Share current champion banner">
                 <svg viewBox="0 0 18 18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M4 14L14 4"/>
@@ -444,6 +444,7 @@ body, button, input, select, textarea {
                 </svg>
               </button>
             </div>
+            <div class="holder-name" id="holder-name">—</div>
             <div class="holder-since" id="holder-since">—</div>
             <div class="holder-result-anchor">
               <span class="holder-result" id="holder-result"></span>
@@ -634,10 +635,9 @@ body, button, input, select, textarea {
         <div class="brand-title">CHARLES BANNERMAN BELT</div>
       </div>
       <div class="copyright footer-meta">
-        <div class="lineage-verified" id="live-footer-status">JSON integration test · Bannerman B1</div>
         <div>© <span class="lsc-current-year">2026</span> Lineal Sport Championship</div>
         <div>An independent fan project. Not affiliated with any governing body, league or club.</div>
-        <div><a class="footer-error-link" href="mailto:?subject=Lineal%20Sport%20Championship%20correction">Found an error? Let us know.</a></div>
+        <div><a class="footer-error-link" href="mailto:linealsportchamp@gmail.com?subject=Lineal%20Sport%20Championship%20correction">Found an error? Let us know.</a></div>
       </div>
     </div>
   </div>
@@ -1608,7 +1608,7 @@ window.BANNERMAN_DATA = {"current_champion": "South Africa", "current_since": "2
     if(lastDef){const ld=[...updates].reverse().find(x=>x.outcome==='Defence'&&x.holder_after===live.current_holder);lastDef.textContent=ld?`Last: ${ld.result_score}`:'';}
 
     // Rebuild every dependent section from the same updated in-memory state.
-    const safeRun=(name,fn)=>{try{fn();}catch(e){console.error('Bannerman live rebuild failed:',name,e);}};
+    const safeRun=(name,fn)=>{try{fn();}catch(e){console.error('Bannerman data rebuild failed:',name,e);}};
     safeRun('leaderboard',()=>renderLB());
     // Final deterministic leaderboard sync. For an unchanged current reign,
     // the aggregate club total advances by exactly the increase in the live
