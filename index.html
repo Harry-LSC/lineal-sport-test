@@ -299,10 +299,39 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding:36px 0 44px;}
 }
 
 
-/* Current-champion banner share prototype */
-.holder-result-anchor{display:inline-block;position:relative;max-width:100%;}
+
+/* Shared hover tooltip used by Trophy Timeline, Era Map and Title Changes per Year */
+.tl-shared-tip{
+  position:fixed;
+  left:0;top:0;
+  z-index:5000;
+  display:none;
+  max-width:min(360px,calc(100vw - 24px));
+  padding:10px 12px;
+  background:#07131d;
+  border:1px solid var(--line2);
+  border-radius:9px;
+  box-shadow:0 14px 38px rgba(0,0,0,.42);
+  color:var(--cream);
+  pointer-events:none;
+  font-size:12px;
+  line-height:1.45;
+}
+.tl-shared-tip.show{display:block;}
+.tl-shared-tip .tt-date{
+  margin-bottom:4px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;
+  letter-spacing:.04em;
+  color:var(--gold-bright);
+}
+.tl-shared-tip .tt-body{color:var(--cream);}
+
+/* Current-champion banner share: anchored to the champion name */
+.holder-name-row{display:flex;align-items:center;gap:8px;min-width:0;flex-wrap:wrap;}
+.holder-result-anchor{display:block;max-width:100%;}
 .holder-share-btn{
-  position:absolute;left:calc(100% + 8px);top:50%;transform:translateY(-50%);
+  position:static;transform:none;flex:0 0 auto;
   width:26px;height:26px;padding:0;border:0;background:transparent;color:var(--gold-dim);
   display:grid;place-items:center;cursor:pointer;border-radius:50%;
   transition:color .15s,background .15s;z-index:2;
@@ -399,23 +428,25 @@ body, button, input, select, textarea {
     <div>
       <div class="mono" style="font-size:11px;letter-spacing:0.14em;color:var(--gold-dim);text-transform:uppercase;">Since 19 March 1877</div>
       <h1 class="hero-title"><span class="gold">CHARLES BANNERMAN BELT</span></h1>
-      <p class="hero-tagline">An unofficial Men's Test Championship, named for Charles Bannerman — the standout batter of the very first Test match.</p>
+      <p class="hero-tagline">An unofficial Men's Test Championship, named after Charles Bannerman — the standout batter of the very first Test match.</p>
 
       <div class="holder-row">
         <div class="holder-main" style="border-right:1px solid var(--line);">
           <div class="holder-badge" id="holder-badge"></div>
           <div>
             <div class="holder-label">Current Champion</div>
-            <div class="holder-name" id="holder-name">—</div>
-            <div class="holder-since" id="holder-since">—</div>
-            <div class="holder-result-anchor">
-              <span class="holder-result" id="holder-result"></span>
+            <div class="holder-name-row">
+              <div class="holder-name" id="holder-name">—</div>
               <button class="holder-share-btn" id="holder-share-btn" type="button" aria-label="Share current champion banner" title="Share current champion banner">
                 <svg viewBox="0 0 18 18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M4 14L14 4"/>
                   <path d="M8.5 4H14V9.5"/>
                 </svg>
               </button>
+            </div>
+            <div class="holder-since" id="holder-since">—</div>
+            <div class="holder-result-anchor">
+              <span class="holder-result" id="holder-result"></span>
             </div>
           </div>
         </div>
@@ -595,7 +626,7 @@ body, button, input, select, textarea {
   <div class="wrap footer-grid" id="about">
     <div>
       <div class="footer-title">About The Charles Bannerman Belt</div>
-      <div class="footer-text">Named for Charles Bannerman, whose 165 retired hurt for Australia in the very first Test match remains the standout individual performance of that fixture. Seeded with Australia's win over England in the first-ever Test match, completed on 19 March 1877 at Melbourne. Scope: Test-playing nations, as each gained Test status over time (South Africa 1889, West Indies 1928, New Zealand 1930, India 1932, Pakistan 1952, Sri Lanka 1982, Zimbabwe 1992, Bangladesh 2000, Ireland and Afghanistan 2018). Data compiled from Wikipedia's season-by-season "International cricket in [year]" archives, cross-checked series by series — full match-by-match detail wherever the reigning champion had at least one loss in a series, series-level results where they didn't lose at all.</div>
+      <div class="footer-text">Named after Charles Bannerman, whose 165 retired hurt for Australia in the very first Test match remains the standout individual performance of that fixture. Seeded with Australia's win over England in the first-ever Test match, completed on 19 March 1877 at Melbourne. Scope: Test-playing nations, as each gained Test status over time (South Africa 1889, West Indies 1928, New Zealand 1930, India 1932, Pakistan 1952, Sri Lanka 1982, Zimbabwe 1992, Bangladesh 2000, Ireland and Afghanistan 2018). Data compiled from Wikipedia's season-by-season "International cricket in [year]" archives, cross-checked series by series — full match-by-match detail wherever the reigning champion had at least one loss in a series, series-level results where they didn't lose at all.</div>
     </div>
     <div>
       <div class="footer-brand">
