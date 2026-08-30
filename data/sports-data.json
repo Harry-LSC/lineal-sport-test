@@ -24,16 +24,10 @@
       "competition": "Women's Test",
       "current_holder": "Australia",
       "current_since": "2026-03-08",
-      "current_defences": 0,
+      "current_defences": 1,
       "transfers": 8,
-      "total_defences": 4,
-      "next_defence": {
-        "date": "2027-06-24",
-        "end_date": "2027-06-27",
-        "opponent": "England",
-        "venue": "Headingley · Leeds",
-        "status": "Scheduled"
-      }
+      "total_defences": 5,
+      "next_defence": null
     },
     {
       "championship": "John Edrich Jug",
@@ -144,6 +138,21 @@
     }
   ],
   "lineage_updates": [
+    {
+      "championship": "Myrtle Maclagan Medal",
+      "date": "2027-06-27",
+      "fixture_start_date": "2027-06-24",
+      "fixture_end_date": "2027-06-27",
+      "holder_before": "Australia",
+      "challenger": "England",
+      "result_type": "Holder win",
+      "result_score": "Australia beat England by 5 wickets",
+      "outcome": "Defence",
+      "holder_after": "Australia",
+      "venue": "Headingley · Leeds",
+      "source_url": null,
+      "notes": "24–27 June 2027"
+    },
     {
       "championship": "Uwe Seeler Trophy",
       "date": "2026-08-28",
