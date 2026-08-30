@@ -1251,13 +1251,12 @@ window.BANNERMAN_DATA = {"current_champion": "South Africa", "current_since": "2
       ctx.fillStyle='#0b1c29';ctx.fillRect(46,46,988,988);
       ctx.strokeStyle='#314758';ctx.lineWidth=2;ctx.strokeRect(46,46,988,988);
       txt('LSC',84,116,28,'#d7b96b',700);
-      txt('LINEAL SPORT CHAMPIONSHIP',996,112,19,'#91a0a9',600,'right');
       line(145);
       txt(kicker,82,206,20,'#75b79a',700);
       wrap('CHARLES BANNERMAN BELT',82,274,900,70,58,'#f2ead8',700);
     }
     function footer(){
-      line(944); txt('CHARLES BANNERMAN BELT',82,992,18,'#d7b96b',700); txt('LINEAL SPORT CHAMPIONSHIP',998,992,16,'#91a0a9',500,'right');
+      line(944); txt('CHARLES BANNERMAN BELT',82,992,18,'#d7b96b',700);
     }
     function renderCard(spec){
       if(spec.type==='lineage'){
@@ -1406,7 +1405,12 @@ window.BANNERMAN_DATA = {"current_champion": "South Africa", "current_since": "2
       list.innerHTML=shown.length?shown.map(h=>`<div class="fl-item${h.from===null?' origin':''}">
         <div class="fl-date mono">${prettyDate(h.date)}</div>
         <div class="fl-transfer">${h.from?esc(h.from):'Begins with'} ${h.from?'<span class="arrow">→</span>':''} ${esc(h.team)}</div>
-        <div class="fl-context">${esc(h.context)}</div></div>`).join(''):'<div class="fl-no-results">No title changes match that nation search.</div>';
+        <div class="fl-context-row">
+          <div class="fl-context">${esc(h.context)}</div>
+          <button class="fl-share-btn" type="button" data-lineage-share="${h.date}" data-lineage-team="${esc(h.team)}" aria-label="Share this title change" title="Share this title change">
+            <svg viewBox="0 0 18 18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14L14 4"/><path d="M8.5 4H14V9.5"/></svg>
+          </button>
+        </div></div>`).join(''):'<div class="fl-no-results">No title changes match that nation search.</div>';
       more.style.display=(!q && filtered.length>10)?'block':'none';
     };
     render();
