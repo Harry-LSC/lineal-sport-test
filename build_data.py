@@ -82,26 +82,26 @@ def read_baseline(ws):
     idx = {name: headers.index(name) + 1 for name in required}
     result = {}
 
-    for r in range(2, ws.max_row + 1):
-        championship = clean(ws.cell(r, idx["Championship"]).value)
+    for r, row in enumerate(ws.iter_rows(min_row=2, values_only=True), start=2):
+        championship = clean(row[idx["Championship"] - 1])
         if not championship:
             continue
 
         if championship in result:
             fail(f"Duplicate championship in Baseline: {championship}")
 
-        holder = clean(ws.cell(r, idx["Baseline Holder"]).value)
-        since = ws.cell(r, idx["Baseline Since"]).value
+        holder = clean(row[idx["Baseline Holder"] - 1])
+        since = row[idx["Baseline Since"] - 1]
 
         result[championship] = {
             "championship": championship,
-            "sport": clean(ws.cell(r, idx["Sport"]).value),
-            "competition": clean(ws.cell(r, idx["Competition"]).value),
+            "sport": clean(row[idx["Sport"] - 1]),
+            "competition": clean(row[idx["Competition"] - 1]),
             "current_holder": holder,
             "current_since": iso_date(since),
-            "current_defences": int(ws.cell(r, idx["Current Defences"]).value or 0),
-            "transfers": int(ws.cell(r, idx["Transfers"]).value or 0),
-            "total_defences": int(ws.cell(r, idx["Total Defences"]).value or 0),
+            "current_defences": int(row[idx["Current Defences"] - 1] or 0),
+            "transfers": int(row[idx["Transfers"] - 1] or 0),
+            "total_defences": int(row[idx["Total Defences"] - 1] or 0),
         }
 
     if not result:
@@ -130,11 +130,11 @@ def read_updates(ws, known_championships):
     idx = {name: headers.index(name) + 1 for name in required}
     events = []
 
-    for r in range(2, ws.max_row + 1):
-        championship = clean(ws.cell(r, idx["Championship"]).value)
-        fixture_date_raw = ws.cell(r, idx["Fixture Date"]).value
-        opponent = clean(ws.cell(r, idx["Opponent"]).value)
-        status = clean(ws.cell(r, idx["Status"]).value)
+    for r, row in enumerate(ws.iter_rows(min_row=2, values_only=True), start=2):
+        championship = clean(row[idx["Championship"] - 1])
+        fixture_date_raw = row[idx["Fixture Date"] - 1]
+        opponent = clean(row[idx["Opponent"] - 1])
+        status = clean(row[idx["Status"] - 1])
 
         # Ignore genuinely blank rows.
         if not any([championship, fixture_date_raw, opponent, status]):
@@ -151,8 +151,8 @@ def read_updates(ws, known_championships):
         if status not in VALID_STATUSES:
             fail(f"Updates row {r}: Invalid Status '{status}'.")
 
-        result_type = clean(ws.cell(r, idx["Result Type"]).value)
-        score = clean(ws.cell(r, idx["Result / Score"]).value)
+        result_type = clean(row[idx["Result Type"] - 1])
+        score = clean(row[idx["Result / Score"] - 1])
 
         if status == "Completed":
             if result_type not in VALID_RESULTS:
@@ -173,12 +173,12 @@ def read_updates(ws, known_championships):
             "championship": championship,
             "fixture_date": iso_date(fixture_date_raw),
             "opponent": opponent,
-            "venue": clean(ws.cell(r, idx["Venue"]).value),
+            "venue": clean(row[idx["Venue"] - 1]),
             "status": status,
             "result_type": result_type or None,
             "result_score": str(score) if score != "" else None,
-            "source_url": clean(ws.cell(r, idx["Source URL"]).value) or None,
-            "notes": clean(ws.cell(r, idx["Notes"]).value) or None,
+            "source_url": clean(row[idx["Source URL"] - 1]) or None,
+            "notes": clean(row[idx["Notes"] - 1]) or None,
         }
         events.append(event)
 
