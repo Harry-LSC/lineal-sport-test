@@ -107,12 +107,17 @@
       "championship": "Uwe Seeler Trophy",
       "sport": "Football",
       "competition": "Bundesliga",
-      "current_holder": "VfB Stuttgart",
-      "current_since": "2026-08-28",
-      "current_defences": 1,
-      "transfers": 682,
+      "current_holder": "Bayern München",
+      "current_since": "2026-02-28",
+      "current_defences": 11,
+      "transfers": 681,
       "total_defences": 1443,
-      "next_defence": null
+      "next_defence": {
+        "date": "2026-09-04",
+        "opponent": "FC Schalke 04",
+        "venue": null,
+        "status": "Scheduled"
+      }
     },
     {
       "championship": "Heidi Mohr Pott",
@@ -137,23 +142,10 @@
       "date": "2026-08-28",
       "holder_before": "Bayern München",
       "challenger": "VfB Stuttgart",
-      "result_type": "Challenger win",
-      "result_score": "Bayern München 1 - VfB Stuttgart 5",
-      "outcome": "Transfer",
-      "holder_after": "VfB Stuttgart",
-      "venue": null,
-      "source_url": null,
-      "notes": "Fixture shown on current page; result not entered here."
-    },
-    {
-      "championship": "Uwe Seeler Trophy",
-      "date": "2026-08-30",
-      "holder_before": "VfB Stuttgart",
-      "challenger": "Weder Bremen",
       "result_type": "Holder win",
-      "result_score": "VfB Stuttgart 2 - Werder Bremen 0",
+      "result_score": "Bayern München 5 - VfB Stuttgart 1",
       "outcome": "Defence",
-      "holder_after": "VfB Stuttgart",
+      "holder_after": "Bayern München",
       "venue": null,
       "source_url": null,
       "notes": null
