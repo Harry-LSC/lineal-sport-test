@@ -128,6 +128,7 @@ def read_updates(ws, known_championships):
         fail(f"Updates sheet is missing columns: {', '.join(missing)}")
 
     idx = {name: headers.index(name) + 1 for name in required}
+    end_date_idx = headers.index("Fixture End Date (optional)") + 1 if "Fixture End Date (optional)" in headers else None
     events = []
 
     for r, row in enumerate(ws.iter_rows(min_row=2, values_only=True), start=2):
@@ -168,10 +169,16 @@ def read_updates(ws, known_championships):
                 f"Updates row {r}: Result Type should be blank until Status is Completed."
             )
 
+        fixture_date = iso_date(fixture_date_raw)
+        fixture_end_date = iso_date(row[end_date_idx - 1]) if end_date_idx and row[end_date_idx - 1] not in (None, "") else None
+        if fixture_end_date and fixture_end_date < fixture_date:
+            fail(f"Updates row {r}: Fixture End Date is before Fixture Date.")
+
         event = {
             "row": r,
             "championship": championship,
-            "fixture_date": iso_date(fixture_date_raw),
+            "fixture_date": fixture_date,
+            "fixture_end_date": fixture_end_date,
             "opponent": opponent,
             "venue": clean(row[idx["Venue"] - 1]),
             "status": status,
@@ -187,7 +194,7 @@ def read_updates(ws, known_championships):
     last_date = {}
     for event in events:
         champ = event["championship"]
-        dt = event["fixture_date"]
+        dt = event["fixture_end_date"] or event["fixture_date"]
         if champ in last_date and dt < last_date[champ]:
             fail(
                 f"Updates row {event['row']}: chronology goes backwards for "
@@ -211,12 +218,13 @@ def build_state(baseline, events):
         if status == "Completed":
             holder_before = state["current_holder"]
             result_type = event["result_type"]
+            result_date = event["fixture_end_date"] or event["fixture_date"]
 
             if result_type == "Challenger win":
                 outcome = "Transfer"
                 holder_after = event["opponent"]
                 state["current_holder"] = holder_after
-                state["current_since"] = event["fixture_date"]
+                state["current_since"] = result_date
                 state["current_defences"] = 0
                 state["transfers"] += 1
 
@@ -236,7 +244,9 @@ def build_state(baseline, events):
             lineage_updates.append(
                 {
                     "championship": champ,
-                    "date": event["fixture_date"],
+                    "date": result_date,
+                    "fixture_start_date": event["fixture_date"],
+                    "fixture_end_date": event["fixture_end_date"],
                     "holder_before": holder_before,
                     "challenger": event["opponent"],
                     "result_type": result_type,
@@ -270,6 +280,7 @@ def build_state(baseline, events):
                 "next_defence": (
                     {
                         "date": next_event["fixture_date"],
+                        "end_date": next_event["fixture_end_date"],
                         "opponent": next_event["opponent"],
                         "venue": next_event["venue"] or None,
                         "status": next_event["status"],
