@@ -1279,8 +1279,10 @@ window.BANNERMAN_DATA = {"current_champion":"Bayern München","current_since":"2
     // historical page is later regenerated to include an old workbook event.
     const staticLastDate=D.timeline_events.reduce((m,e)=>e.date>m?e.date:m,'0000-00-00');
     const staticHolder=D.current_champion, staticSince=D.current_since;
+    const normTeam=s=>String(s||'').trim().replace(/\s+/g,' ');
     const baseRows=D.leaderboard.map(r=>({...r}));
-    const staticCurrentRow=baseRows.find(r=>r.team===staticHolder);
+    const baseDefences=new Map(baseRows.map(r=>[normTeam(r.team),Number(r.defences)||0]));
+    const staticCurrentRow=baseRows.find(r=>normTeam(r.team)===normTeam(staticHolder));
     if(staticCurrentRow && typeof D.current_team_completed_days==='number'){
       staticCurrentRow.days=D.current_team_completed_days;
       staticCurrentRow.avg_reign=Math.round((staticCurrentRow.days/staticCurrentRow.reigns)*10)/10;
@@ -1293,8 +1295,9 @@ window.BANNERMAN_DATA = {"current_champion":"Bayern München","current_since":"2
     let holder=staticHolder, since=staticSince;
     const rows=baseRows;
     const getRow=team=>{
-      let r=rows.find(x=>x.team===team);
-      if(!r){r={team,reigns:0,days:0,defences:0,matches:0,avg_reign:0,defences_current:0};rows.push(r); if(!D.all_nations.includes(team))D.all_nations.push(team);}
+      const clean=normTeam(team);
+      let r=rows.find(x=>normTeam(x.team)===clean);
+      if(!r){r={team:clean,reigns:0,days:0,defences:0,matches:0,avg_reign:0,defences_current:0};rows.push(r); if(!D.all_nations.some(x=>normTeam(x)===clean))D.all_nations.push(clean);}
       return r;
     };
 
@@ -1319,6 +1322,19 @@ window.BANNERMAN_DATA = {"current_champion":"Bayern München","current_since":"2
       if(u.outcome==='Transfer'){
         D.recent_transfers.unshift({date:u.date,from:before,to:u.holder_after||u.challenger,context:u.result_score||`${before} vs ${u.challenger}`,competition:'League match'});
       }
+    });
+
+    // Reconcile aggregate defence totals deterministically from the static
+    // audited baseline plus workbook defence events. Team names are normalised
+    // so harmless trailing/double spaces in Excel cannot create a second club.
+    const defenceAdds=new Map();
+    updates.filter(u=>u.outcome==='Defence').forEach(u=>{
+      const key=normTeam(u.holder_before||u.holder_after||holder);
+      defenceAdds.set(key,(defenceAdds.get(key)||0)+1);
+    });
+    rows.forEach(r=>{
+      const key=normTeam(r.team);
+      if(baseDefences.has(key)) r.defences=(baseDefences.get(key)||0)+(defenceAdds.get(key)||0);
     });
 
     // Update the most visible live fields immediately, before any secondary
