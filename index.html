@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>LSC Test — Uwe Seeler Trophy</title>
+  <style>
+    :root{
+      --bg:#08141d;
+      --panel:#10212d;
+      --line:#29404f;
+      --text:#f4f7f8;
+      --muted:#a9bac4;
+      --gold:#d0a94a;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Arial,Helvetica,sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      min-height:100vh;
+    }
+    main{
+      width:min(920px,calc(100% - 32px));
+      margin:0 auto;
+      padding:48px 0 72px;
+    }
+    .eyebrow{
+      color:var(--gold);
+      text-transform:uppercase;
+      letter-spacing:.12em;
+      font-size:.78rem;
+      font-weight:700;
+      margin-bottom:12px;
+    }
+    h1{
+      margin:0 0 8px;
+      font-size:clamp(2rem,6vw,4.5rem);
+      line-height:.95;
+    }
+    .sub{
+      color:var(--muted);
+      margin:0 0 36px;
+      font-size:1rem;
+    }
+    .card{
+      background:var(--panel);
+      border:1px solid var(--line);
+      border-radius:18px;
+      overflow:hidden;
+    }
+    .hero{
+      padding:28px;
+      border-bottom:1px solid var(--line);
+    }
+    .hero-label{
+      color:var(--muted);
+      font-size:.82rem;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      margin-bottom:8px;
+    }
+    .holder{
+      font-size:clamp(2rem,5vw,3.5rem);
+      font-weight:700;
+      margin-bottom:8px;
+    }
+    .since{
+      color:var(--muted);
+    }
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+    }
+    .stat{
+      padding:24px 28px;
+      border-right:1px solid var(--line);
+    }
+    .stat:last-child{border-right:0}
+    .num{
+      font-size:2rem;
+      font-weight:700;
+      margin-bottom:5px;
+    }
+    .label{
+      color:var(--muted);
+      font-size:.88rem;
+    }
+    .next{
+      padding:28px;
+      border-top:1px solid var(--line);
+    }
+    .next-title{
+      color:var(--muted);
+      font-size:.82rem;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      margin-bottom:10px;
+    }
+    .fixture{
+      font-size:1.35rem;
+      font-weight:700;
+    }
+    .venue{
+      color:var(--muted);
+      margin-top:6px;
+    }
+    .status{
+      margin-top:28px;
+      color:var(--muted);
+      font-size:.85rem;
+    }
+    .error{
+      padding:24px;
+      border:1px solid #7a3030;
+      border-radius:14px;
+      background:#2a1515;
+    }
+    @media(max-width:650px){
+      .stats{grid-template-columns:1fr}
+      .stat{
+        border-right:0;
+        border-bottom:1px solid var(--line);
+      }
+      .stat:last-child{border-bottom:0}
+    }
+  </style>
+</head>
+<body>
+<main>
+  <div class="eyebrow">Lineal Sport Championship — test site</div>
+  <h1>Uwe Seeler Trophy</h1>
+  <p class="sub">Temporary GitHub test page driven entirely by sports-data.json.</p>
+
+  <section class="card" id="content">
+    <div class="hero">
+      <div class="hero-label">Current champion</div>
+      <div class="holder" id="holder">Loading…</div>
+      <div class="since" id="since"></div>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="num" id="defences">—</div>
+        <div class="label">Current reign defences</div>
+      </div>
+      <div class="stat">
+        <div class="num" id="transfers">—</div>
+        <div class="label">Transfers</div>
+      </div>
+      <div class="stat">
+        <div class="num" id="total-defences">—</div>
+        <div class="label">Total successful defences</div>
+      </div>
+    </div>
+
+    <div class="next">
+      <div class="next-title">Next defence</div>
+      <div class="fixture" id="fixture">Loading…</div>
+      <div class="venue" id="venue"></div>
+    </div>
+  </section>
+
+  <div class="status" id="status"></div>
+</main>
+
+<script>
+function prettyDate(iso) {
+  if (!iso) return "TBD";
+  const [y,m,d] = iso.split("-").map(Number);
+  return new Intl.DateTimeFormat("en-GB", {
+    day:"numeric", month:"short", year:"numeric"
+  }).format(new Date(Date.UTC(y,m-1,d)));
+}
+
+async function loadData() {
+  const response = await fetch("./data/sports-data.json", { cache: "no-store" });
+  if (!response.ok) throw new Error("Could not load sports-data.json");
+  const data = await response.json();
+
+  const uwe = data.championships.find(
+    item => item.championship === "Uwe Seeler Trophy"
+  );
+  if (!uwe) throw new Error("Uwe Seeler Trophy not found in JSON");
+
+  document.getElementById("holder").textContent = uwe.current_holder;
+  document.getElementById("since").textContent =
+    "Current since " + prettyDate(uwe.current_since);
+  document.getElementById("defences").textContent = uwe.current_defences;
+  document.getElementById("transfers").textContent = uwe.transfers;
+  document.getElementById("total-defences").textContent = uwe.total_defences;
+
+  if (uwe.next_defence) {
+    document.getElementById("fixture").textContent =
+      prettyDate(uwe.next_defence.date) + " · vs " + uwe.next_defence.opponent;
+    document.getElementById("venue").textContent =
+      uwe.next_defence.venue || "Venue TBD";
+  } else {
+    document.getElementById("fixture").textContent = "TBD";
+    document.getElementById("venue").textContent = "";
+  }
+
+  document.getElementById("status").textContent =
+    "Loaded successfully from data/sports-data.json";
+}
+
+loadData().catch(err => {
+  document.getElementById("content").innerHTML =
+    '<div class="error"><strong>Test page error:</strong> ' +
+    err.message +
+    '</div>';
+  document.getElementById("status").textContent = "";
+});
+</script>
+</body>
+</html>
