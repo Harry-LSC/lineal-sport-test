@@ -1278,7 +1278,7 @@ window.BANNERMAN_DATA = {"current_champion":"Bayern München","current_since":"2
     // newer than that cutoff. This prevents double-counting if the static
     // historical page is later regenerated to include an old workbook event.
     const staticLastDate=D.timeline_events.reduce((m,e)=>e.date>m?e.date:m,'0000-00-00');
-    const staticHolder=D.current_champion, staticSince=D.current_since;
+    const staticHolder=D.current_champion, staticSince=D.current_since, staticCurrentDefences=Number(D.current_defences)||0;
     const normTeam=s=>String(s||'').trim().replace(/\s+/g,' ');
     const baseRows=D.leaderboard.map(r=>({...r}));
     const baseDefences=new Map(baseRows.map(r=>[normTeam(r.team),Number(r.defences)||0]));
@@ -1399,23 +1399,32 @@ window.BANNERMAN_DATA = {"current_champion":"Bayern München","current_since":"2
     // Rebuild every dependent section from the same updated in-memory state.
     const safeRun=(name,fn)=>{try{fn();}catch(e){console.error('Uwe live rebuild failed:',name,e);}};
     safeRun('leaderboard',()=>renderLB());
-    // Final deterministic leaderboard sync. Use the audited static aggregate
-    // plus workbook defence events, independent of any chart/render state.
+    // Final deterministic leaderboard sync. For an unchanged current reign,
+    // the aggregate club total advances by exactly the increase in the live
+    // current-reign defence count. This avoids depending on update-row matching.
     safeRun('leaderboard defence sync',()=>{
       const liveKey=normTeam(live.current_holder);
       const audited=baseDefences.get(liveKey);
-      const added=updates.filter(u=>u.outcome==='Defence' && normTeam(u.holder_before||u.holder_after)===liveKey).length;
-      if(audited!=null){
-        const target=audited+added;
+      let target=null;
+      if(audited!=null && normTeam(live.current_holder)===normTeam(staticHolder) && live.current_since===staticSince){
+        target=audited + Math.max(0,(Number(live.current_defences)||0)-staticCurrentDefences);
+      }
+      if(target!=null){
         const liveRow=D.leaderboard.find(r=>normTeam(r.team)===liveKey);
         if(liveRow) liveRow.defences=target;
-        document.querySelectorAll('#lb-body tr').forEach(tr=>{
-          const team=tr.querySelector('.lb-team span')?.textContent;
-          if(normTeam(team)===liveKey){
-            const cells=tr.querySelectorAll('td');
-            if(cells[4]) cells[4].textContent=target;
+        const forceCell=()=>{
+          for(const tr of document.querySelectorAll('#lb-body tr')){
+            const team=tr.querySelector('.lb-team span')?.textContent;
+            if(normTeam(team)===liveKey){
+              const cells=tr.querySelectorAll('td');
+              if(cells.length>4) cells[4].textContent=String(target);
+            }
           }
-        });
+        };
+        forceCell();
+        requestAnimationFrame(forceCell);
+        setTimeout(forceCell,50);
+        setTimeout(forceCell,250);
       }
     });
     safeRun('ownership',()=>rebuildDonut(D));
@@ -1437,6 +1446,6 @@ window.BANNERMAN_DATA = {"current_champion":"Bayern München","current_since":"2
 })();
 </script>
 
-<!-- JSON integration build: v5 -->
+<!-- JSON integration build: v6 -->
 </body>
 </html>
