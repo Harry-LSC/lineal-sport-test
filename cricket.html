@@ -1,0 +1,115 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Lineal Sport Championship — Cricket</title><meta name="description" content="Cricket's lineal champions across Tests, ODIs, T20Is and the IPL."><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"><style>
+:root{
+ --bg:#06111b;--bg-deep:#040c13;--panel:#091722;--panel2:#07131d;--line:#23323e;--line2:#30414e;
+ --cream:#f2ecdf;--text:#d7d6d1;--muted:#99a6af;--gold:#c49a47;--gold-bright:#d5ab55;
+ --cricket:#6f8d6d;--cricket-bright:#94ad91;--max:1180px;
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth;background:var(--bg-deep)}
+body{margin:0;background:radial-gradient(circle at 50% -15%,#0c1b28 0,#06111b 42%,#050e16 100%);color:var(--text);font-family:Inter,system-ui,sans-serif;line-height:1.5}
+a{color:inherit}.wrap{width:min(var(--max),calc(100% - 48px));margin:auto}
+header{position:sticky;top:0;z-index:20;background:rgba(4,12,19,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav{height:76px;display:flex;align-items:center;justify-content:space-between;gap:30px}.brand-wrap{display:flex;align-items:center;gap:14px;min-width:0}.brand{width:48px;height:48px;border:2px solid var(--gold);border-radius:50%;display:grid;place-items:center;text-decoration:none;color:transparent;flex:0 0 auto}.brand-copy{line-height:1.08}.brand-name{font:600 18px/1.05 "Cormorant Garamond",serif;letter-spacing:.06em;text-transform:uppercase;color:var(--cream)}.brand-context{font-size:11px;color:var(--cricket-bright);letter-spacing:.12em;text-transform:uppercase;margin-top:4px}.nav-links{display:flex;align-items:center;gap:28px}.nav-links a{position:relative;text-decoration:none;color:#aab3ba;font-size:13px;font-weight:500;padding:29px 0 27px}.nav-links a:hover,.nav-links a.active{color:var(--gold-bright)}.nav-links a.active:after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--cricket)}
+.hero{padding:72px 0 54px;border-bottom:1px solid var(--line)}.crumb a{color:inherit;text-decoration:none}.crumb a:hover{color:var(--gold-bright)}.crumb{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--cricket-bright);margin-bottom:16px}.hero-grid{display:block;max-width:860px}.hero h1{margin:0;color:var(--cream);font:600 clamp(50px,6.2vw,82px)/.92 "Cormorant Garamond",serif;letter-spacing:-.025em;white-space:nowrap}.hero-copy{max-width:none;margin:21px 0 0;color:#b8c0c6;font-size:16px;white-space:nowrap}.hero-note{display:none}
+.section{padding:66px 0}.section-head{display:flex;align-items:end;justify-content:space-between;gap:28px;margin-bottom:28px}.eyebrow{font:600 13px/1.1 "Cormorant Garamond",serif;letter-spacing:.08em;text-transform:uppercase;color:var(--cricket-bright);margin-bottom:7px}.section-title{font:600 38px/1 "Cormorant Garamond",serif;color:var(--cream)}.section-note{max-width:420px;color:#9da8b0;font-size:12px;text-align:right}
+.group-title{display:flex;align-items:center;gap:16px;margin:34px 0 14px;color:var(--cricket-bright);font:600 14px/1 "Cormorant Garamond",serif;text-transform:uppercase;letter-spacing:.09em}.group-title:after{content:"";height:1px;background:var(--line);flex:1}.group-title:first-of-type{margin-top:0}
+.championships{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.champ-row{--nation:#777;position:relative;display:grid;grid-template-columns:1fr auto;grid-template-areas:"id holder" "take stats" "next next";gap:23px 28px;min-height:250px;padding:28px 28px 24px;background:linear-gradient(180deg,rgba(255,255,255,.018),rgba(255,255,255,.008));border:1px solid var(--line);border-radius:5px;text-decoration:none;color:inherit;overflow:hidden;transition:border-color .15s ease,transform .15s ease,background .15s ease}.champ-row:before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--nation)}.champ-row:hover{transform:translateY(-2px);border-color:#3c4b56;background:rgba(255,255,255,.026)}.title-id{grid-area:id;display:flex;gap:14px;align-items:center;min-width:0}.format{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.11em;color:#9eabb4}.trophy{font:600 23px/1.02 "Cormorant Garamond",serif;color:var(--gold-bright);margin-top:4px}.holder{grid-area:holder;display:flex;align-items:center;gap:10px;justify-self:end}.flag{width:42px;height:25px;border-radius:3px;overflow:hidden;box-shadow:0 0 0 1px rgba(255,255,255,.12)}.flag svg{display:block;width:100%;height:100%}.holder-name{font:600 22px/1 "Cormorant Garamond",serif;color:var(--cream);text-align:right}.since{font-size:10px;color:#9da8b0;margin-top:4px;text-align:right}.champ-row>div:nth-child(3){grid-area:take}.takeover{font-size:12.5px;color:#b2bbc1}.takeover b{color:var(--cream)}.venue{font-size:10.5px;color:#8f9ca5;margin-top:5px}.stats{grid-area:stats;display:grid;grid-template-columns:repeat(3,auto);gap:17px;align-items:start}.stat-num{font:600 22px/1 "Cormorant Garamond",serif;color:var(--cream);text-align:right}.stat-lab{font-size:8.5px;text-transform:uppercase;letter-spacing:.08em;color:#8f9ca5;margin-top:4px;text-align:right}.next{grid-area:next;border-top:1px solid rgba(148,173,145,.34);padding-top:15px;margin-top:4px;display:flex;align-items:baseline;gap:9px;font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:var(--cricket-bright)}.next b{font:600 15px/1.25 "Cormorant Garamond",serif;letter-spacing:0;text-transform:none;color:var(--cream)}
+.franchise-card{position:relative;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);grid-template-areas:"identity holder" "take stats" "next next";gap:20px 34px;padding:25px 28px 21px;background:linear-gradient(100deg,rgba(111,141,109,.08),rgba(255,255,255,.01));border:1px solid var(--line);border-radius:5px;text-decoration:none;color:inherit;overflow:hidden;transition:border-color .15s ease,transform .15s ease,background .15s ease}.franchise-card:before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--cricket)}.franchise-card:hover{transform:translateY(-2px);border-color:#3c4b56;background:rgba(255,255,255,.026)}.franchise-main{grid-area:identity;display:flex;align-items:center;gap:16px;min-width:0}.franchise-card .trophy{font-size:28px}.franchise-holder{grid-area:holder;display:flex;align-items:center;justify-self:end;text-align:right;min-width:0}.franchise-holder-name{font:600 30px/1.02 "Cormorant Garamond",serif;color:var(--cream)}.franchise-since{font-size:11px;color:#9da8b0;margin-top:6px}.franchise-take{grid-area:take;align-self:start}.franchise-meta{grid-area:stats;display:grid;grid-template-columns:repeat(3,auto);gap:28px;align-items:start;justify-content:end}.franchise-stat strong{display:block;font:600 28px/1 "Cormorant Garamond",serif;color:var(--cream);text-align:right}.franchise-stat span{display:block;font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:#8f9ca5;margin-top:5px;text-align:right}.franchise-next{grid-area:next;border-top:1px solid rgba(148,173,145,.34);padding-top:12px;margin-top:1px;display:flex;align-items:baseline;gap:9px;font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:var(--cricket-bright)}.franchise-next b{font:600 15px/1.25 "Cormorant Garamond",serif;letter-spacing:0;text-transform:none;color:var(--cream)}
+.method{border-top:1px solid var(--line);padding:62px 0 70px}.context{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(280px,.75fr);gap:64px}.context h2{font:600 34px/1 "Cormorant Garamond",serif;color:var(--cream);margin:0 0 14px}.context p{color:#aab4bb;font-size:14px;max-width:740px}.method-list{list-style:none;padding:0;margin:20px 0 0}.method-list li{padding:12px 0;border-top:1px solid var(--line);font-size:13px;color:#aab4bb}.method-list li b{color:var(--cricket-bright)}.source-panel{border-left:1px solid var(--line);padding-left:30px}.source-panel h3{margin:0 0 12px;font:600 22px/1 "Cormorant Garamond",serif;color:var(--gold-bright)}.source-panel p{font-size:12.5px;color:#aab4bb}.disclaimer{border-top:1px solid var(--line);padding-top:15px;margin-top:18px;font-size:10.5px;color:#84919b}
+footer{border-top:1px solid var(--line);padding:27px 0 38px}.footer-inner{display:flex;flex-direction:column;align-items:center;gap:7px;font-size:10.5px;color:#84919b;text-align:center}.footer-inner a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(132,145,155,.45)}
+@media(max-width:900px){.wrap{width:min(var(--max),calc(100% - 32px))}.hero-grid,.context{grid-template-columns:1fr;gap:30px}.championships{grid-template-columns:1fr}.hero-note{max-width:500px}.franchise-card{grid-template-columns:1fr;grid-template-areas:"identity" "holder" "take" "stats" "next"}.source-panel{border-left:0;border-top:1px solid var(--line);padding:28px 0 0}.section-note{text-align:left}.section-head{display:block}.section-note{margin-top:8px}}
+@media(max-width:640px){.hero-copy{white-space:normal}.hero h1{white-space:normal;}.nav{height:66px}.nav-links{display:none}.brand{width:40px;height:40px}.brand-name{font-size:16px}.brand-context{font-size:9px}.hero{padding:44px 0 39px}.hero h1{font-size:50px}.hero-copy{font-size:14.5px}.section{padding:48px 0}.section-title{font-size:33px}.champ-row{display:block;min-height:0;padding:21px}.champ-row>div{margin-bottom:17px}.holder{justify-content:flex-start}.holder-name,.since{text-align:left}.stats{display:grid;grid-template-columns:repeat(3,1fr)}.stat-num,.stat-lab{text-align:left}.next{margin-bottom:0!important}.franchise-main{align-items:flex-start}.franchise-holder{justify-self:start;text-align:left}.franchise-holder-name{font-size:27px}.franchise-meta{grid-template-columns:repeat(3,1fr);justify-content:stretch;width:100%}.franchise-stat strong,.franchise-stat span{text-align:left}.footer-inner{display:block}.footer-inner div+div{margin-top:7px}}
+</style></head><body>
+<header><div class="wrap nav"><div class="brand-wrap"><a class="brand" href="index.html" aria-label="Lineal Sport Championship home">LSC</a><div class="brand-copy"><div class="brand-name">Lineal Sport Championship</div><div class="brand-context">Cricket</div></div></div><nav class="nav-links" aria-label="Primary"><a class="active" href="#champions">Championships</a><a href="#method">Method</a><a href="#sources">Sources</a></nav></div></header>
+<main>
+<section class="hero"><div class="wrap hero-grid"><div><div class="crumb"><a href="index.html" aria-label="Back to Lineal Sport Championship home">Lineal Sport Championship</a> / Cricket</div><h1>Cricket's Lineal Champions</h1><p class="hero-copy">Seven active championship lineages across international cricket and the Indian Premier League.</p></div></div></section>
+<section class="section" id="champions"><div class="wrap"><div class="section-head"><div><div class="eyebrow">Current holders</div><div class="section-title">Current champions</div></div><div class="section-note" id="updatedNote">Days held are calculated automatically from the winning date.</div></div><div class="group-title">International cricket</div><div class="championships" id="championships"></div><div class="group-title">Domestic / franchise cricket</div><a class="franchise-card" href="yusuf-pathan-plate.html" aria-label="Open Yusuf Pathan Plate championship page"><div class="franchise-main"><div><div class="format">Indian Premier League</div><div class="trophy">Yusuf Pathan Plate</div></div></div><div class="franchise-holder"><div><div class="franchise-holder-name">Royal Challengers Bengaluru</div><div class="franchise-since">Since 31 May 2026</div></div></div><div class="franchise-take"><div class="takeover">def. <b>Gujarat Titans</b> by 5 wickets in the Final</div><div class="venue">Indian Premier League · Final</div></div><div class="franchise-meta"><div class="franchise-stat"><strong id="iplDays">0</strong><span>Days held</span></div><div class="franchise-stat"><strong>0</strong><span>Defences</span></div><div class="franchise-stat"><strong>150</strong><span>Transfers</span></div></div><div class="franchise-next"><span>Next defence</span><b>TBD</b></div></a></div></section>
+<section class="method" id="method"><div class="wrap context"><div><h2>Method</h2><ul class="method-list"><li><b>Official tiebreak:</b> if a Super Over or other official tiebreak produces a match winner, that result is treated as an ordinary win or loss.</li><li><b>Test dates:</b> a reign begins on the date the Test is completed, not the first day of the match.</li><li><b>Same-day matches:</b> official match numbering determines chronological order.</li><li><b>Eligibility:</b> tournament matches and bilateral matches count equally. Associate nations are eligible when they appear in the official match record.</li><li><b>Dormancy:</b> inactivity does not strip the title. The championship remains with its holder until an eligible defeat transfers it.</li></ul></div><aside class="source-panel" id="sources"><div class="eyebrow">Data & transparency</div><h3>Built from official match records.</h3><p>Official competition and national-board records are used first for current results and fixtures; reputable historical score databases are used where primary archives are incomplete. Format-specific source notes belong on each championship page.</p><p>Each named championship honours the standout player from that format’s inaugural match — usually the official Player of the Match where such awards existed.</p></aside></div></section>
+</main><footer><div class="wrap footer-inner"><div>© <span id="copyright-year">2026</span> Lineal Sport Championship</div><div>An independent fan project. Not affiliated with any governing body, league or club.</div><div><a href="mailto:?subject=Lineal%20Sport%20Championship%20correction">Found an error? Let us know.</a></div></div></footer><script>document.getElementById('copyright-year').textContent = new Date().getFullYear();</script>
+<script>
+(function(){
+  const FALLBACK = [
+    {trophy:'Charles Bannerman Belt',format:"Men’s Test",champion:'South Africa',since:'2025-10-23',defences:2,transfers:172,from:'Pakistan',margin:'8 wickets',venue:'Rawalpindi',next:'9–13 October v Australia'},
+    {trophy:'Myrtle Maclagan Medal',format:"Women’s Test",champion:'Australia',since:'2026-03-08',defences:0,transfers:8,from:'India',margin:'10 wickets',venue:'WACA Ground, Perth',next:'8–11 April 2027 v South Africa'},
+    {trophy:'John Edrich Jug',format:"Men’s ODI",champion:'Australia',since:'2026-06-14',defences:0,transfers:358,from:'Bangladesh',margin:'1 wicket',venue:'Mirpur, Dhaka',next:'15 September v Zimbabwe'},
+    {trophy:'Tina Macpherson Trophy',format:"Women’s ODI",champion:'Australia',since:'2026-02-24',defences:5,transfers:120,from:'India',margin:'6 wickets',venue:'Allan Border Field, Brisbane',next:'9 October v Bangladesh'},
+    {trophy:'Rebecca Rolls Ribbon',format:"Women’s T20I",champion:'Australia',since:'2026-06-13',defences:6,transfers:76,from:'South Africa',margin:'65 runs',venue:'Old Trafford, Manchester',next:'18 October v New Zealand, North Sydney Oval'},
+    {trophy:'Ricky Ponting Ribbon',format:"Men’s T20I",champion:'Ireland',since:'2026-06-26',defences:1,transfers:89,from:'India',margin:'34 runs',venue:'Belfast',next:'TBD'}
+  ];
+  const IPL_FALLBACK={trophy:'Yusuf Pathan Plate',format:'Indian Premier League',champion:'Royal Challengers Bengaluru',since:'2026-05-31',defences:0,transfers:150,from:'Gujarat Titans',margin:'5 wickets in the Final',venue:'Indian Premier League · Final',next:'TBD'};
+
+  const LINKS={
+    'Charles Bannerman Belt':'charles-bannerman-belt.html',
+    'Myrtle Maclagan Medal':'myrtle-maclagan-medal.html',
+    'John Edrich Jug':'john-edrich-jug.html',
+    'Tina Macpherson Trophy':'tina-macpherson-trophy.html',
+    'Rebecca Rolls Ribbon':'rebecca-rolls-ribbon.html',
+    'Ricky Ponting Ribbon':'ricky-ponting-ribbon.html'
+  };
+  const COLORS={Australia:'#f4c430',England:'#1b3a6b',India:'#2f6fd6',Pakistan:'#0b6623','South Africa':'#8a9a3d','West Indies':'#7a1f2b','New Zealand':'#7a828c','Sri Lanka':'#17458c',Bangladesh:'#145a32',Afghanistan:'#4fa8d8',Ireland:'#2fa84f',Scotland:'#0065bd',Zimbabwe:'#c1440e'};
+  const FLAGS={
+    'Australia':'<rect width="60" height="36" fill="#00247d"/><rect width="30" height="18" fill="#00247d"/><path d="M0 0L30 18M30 0L0 18" stroke="#fff" stroke-width="3.5"/><path d="M15 0V18M0 9H30" stroke="#fff" stroke-width="5"/><path d="M15 0V18M0 9H30" stroke="#cf142b" stroke-width="2"/><circle cx="45" cy="10" r="2.5" fill="#fff"/><circle cx="50" cy="21" r="2.5" fill="#fff"/><circle cx="41" cy="29" r="2.5" fill="#fff"/><circle cx="14" cy="28" r="3" fill="#fff"/>',
+    'South Africa':'<rect width="60" height="18" fill="#DE3831"/><rect y="18" width="60" height="18" fill="#002395"/><path d="M0 0L22 18H60M0 36L22 18" fill="none" stroke="#fff" stroke-width="12"/><path d="M0 0L22 18H60M0 36L22 18" fill="none" stroke="#007A4D" stroke-width="7"/><polygon points="0,0 0,36 17,18" fill="#FFB612"/><polygon points="0,3 0,33 14,18" fill="#000"/>',
+    'Ireland':'<rect width="20" height="36" fill="#169B62"/><rect x="20" width="20" height="36" fill="#fff"/><rect x="40" width="20" height="36" fill="#FF883E"/>'
+  };
+  const ORDER={'Charles Bannerman Belt':1,'Myrtle Maclagan Medal':2,'John Edrich Jug':3,'Tina Macpherson Trophy':4,'Rebecca Rolls Ribbon':5,'Ricky Ponting Ribbon':6};
+
+  function flag(team){const body=FLAGS[team]||'<rect width="60" height="36" fill="#222b37"/><text x="30" y="22" text-anchor="middle" font-size="10" fill="#fff">'+team.slice(0,3).toUpperCase()+'</text>';return '<svg viewBox="0 0 60 36" aria-label="'+team+' flag" role="img">'+body+'</svg>'}
+  function parseDate(s){const [y,m,d]=s.split('-').map(Number);return Date.UTC(y,m-1,d)}
+  function daysHeld(s){return Math.max(0,Math.floor((Date.now()-parseDate(s))/86400000))}
+  function fmtDate(s){const [y,m,d]=s.split('-').map(Number);return new Intl.DateTimeFormat('en-GB',{day:'numeric',month:'short',year:'numeric',timeZone:'UTC'}).format(new Date(Date.UTC(y,m-1,d)))}
+  function fmtShortDate(s){const [y,m,d]=s.split('-').map(Number);return new Intl.DateTimeFormat('en-GB',{day:'numeric',month:'short',year:'numeric',timeZone:'UTC'}).format(new Date(Date.UTC(y,m-1,d)))}
+  function fmtNext(n){
+    if(!n||!n.date) return 'TBD';
+    if(n.end_date){
+      const [sy,sm,sd]=n.date.split('-').map(Number), [ey,em,ed]=n.end_date.split('-').map(Number);
+      const sameMonth=sy===ey&&sm===em;
+      const start=sameMonth?String(sd):new Intl.DateTimeFormat('en-GB',{day:'numeric',month:'short',timeZone:'UTC'}).format(new Date(Date.UTC(sy,sm-1,sd)));
+      const finish=new Intl.DateTimeFormat('en-GB',{day:'numeric',month:'short',year:'numeric',timeZone:'UTC'}).format(new Date(Date.UTC(ey,em-1,ed)));
+      return `${start}–${finish} v ${n.opponent}`;
+    }
+    return `${fmtShortDate(n.date)} v ${n.opponent}`;
+  }
+  function liveMap(payload){
+    const m=new Map();
+    (payload?.championships||[]).forEach(x=>m.set(x.championship,x));
+    return m;
+  }
+  function mergeBase(base,live){
+    if(!live) return {...base};
+    return {...base,champion:live.current_holder||base.champion,since:live.current_since||base.since,defences:live.current_defences??base.defences,transfers:live.transfers??base.transfers,next:fmtNext(live.next_defence)};
+  }
+  function render(data,ipl){
+    data.sort((a,b)=>(ORDER[a.trophy]||999)-(ORDER[b.trophy]||999));
+    document.getElementById('championships').innerHTML=data.map(c=>`
+      <a class="champ-row" href="${LINKS[c.trophy]||'#'}" style="--nation:${COLORS[c.champion]||'#7f8794'}" aria-label="Open ${c.trophy} championship page">
+        <div class="title-id"><div><div class="format">${c.format}</div><div class="trophy">${c.trophy}</div></div></div>
+        <div class="holder"><div class="flag">${flag(c.champion)}</div><div><div class="holder-name">${c.champion}</div><div class="since">Since ${fmtDate(c.since)}</div></div></div>
+        <div><div class="takeover">def. <b>${c.from}</b> by ${c.margin}</div><div class="venue">${c.venue}</div></div>
+        <div class="stats"><div><div class="stat-num">${daysHeld(c.since).toLocaleString()}</div><div class="stat-lab">Days held</div></div><div><div class="stat-num">${c.defences}</div><div class="stat-lab">Defences</div></div><div><div class="stat-num">${c.transfers}</div><div class="stat-lab">Transfers</div></div></div>
+        <div class="next"><span>Next defence</span><b>${c.next}</b></div>
+      </a>`).join('');
+
+    const card=document.querySelector('.franchise-card');
+    if(card){
+      card.querySelector('.franchise-holder-name').textContent=ipl.champion;
+      card.querySelector('.franchise-since').textContent='Since '+fmtDate(ipl.since);
+      const nums=card.querySelectorAll('.franchise-stat strong');
+      if(nums[0]) nums[0].textContent=daysHeld(ipl.since).toLocaleString();
+      if(nums[1]) nums[1].textContent=ipl.defences;
+      if(nums[2]) nums[2].textContent=ipl.transfers;
+      const next=card.querySelector('.franchise-next b'); if(next) next.textContent=ipl.next;
+    }
+  }
+
+  render(FALLBACK.map(x=>({...x})),{...IPL_FALLBACK});
+  fetch('data/sports-data.json',{cache:'no-store'})
+    .then(r=>{if(!r.ok) throw new Error('HTTP '+r.status);return r.json()})
+    .then(payload=>{
+      const live=liveMap(payload);
+      render(FALLBACK.map(x=>mergeBase(x,live.get(x.trophy))),mergeBase(IPL_FALLBACK,live.get(IPL_FALLBACK.trophy)));
+      const note=document.getElementById('updatedNote');
+      if(note) note.textContent='Current holders and next defences update automatically from the championship data.';
+    })
+    .catch(err=>console.warn('Cricket hub live data unavailable; using audited fallback values.',err));
+})();
+</script></body></html>
