@@ -74,9 +74,22 @@ footer{border-top:1px solid var(--line);padding:27px 0 38px}.footer-inner{displa
     (payload?.championships||[]).forEach(x=>m.set(x.championship,x));
     return m;
   }
-  function mergeBase(base,live){
+  function latestTransfers(payload){
+    const m=new Map();
+    (payload?.lineage_updates||[]).forEach(x=>{
+      if(x.outcome!=='Transfer' || !x.championship) return;
+      const prev=m.get(x.championship);
+      if(!prev || String(x.date||'')>String(prev.date||'')) m.set(x.championship,x);
+    });
+    return m;
+  }
+  function transferSummary(base,event){
+    if(!event) return {};
+    return {from:event.holder_before||base.from,margin:null,venue:event.venue||base.venue,transferResult:event.result_score||''};
+  }
+  function mergeBase(base,live,transfer){
     if(!live) return {...base};
-    return {...base,champion:live.current_holder||base.champion,since:live.current_since||base.since,defences:live.current_defences??base.defences,transfers:live.transfers??base.transfers,next:fmtNext(live.next_defence)};
+    return {...base,...transferSummary(base,transfer),champion:live.current_holder||base.champion,since:live.current_since||base.since,defences:live.current_defences??base.defences,transfers:live.transfers??base.transfers,next:fmtNext(live.next_defence)};
   }
   function render(data,ipl){
     data.sort((a,b)=>(ORDER[a.trophy]||999)-(ORDER[b.trophy]||999));
@@ -84,7 +97,7 @@ footer{border-top:1px solid var(--line);padding:27px 0 38px}.footer-inner{displa
       <a class="champ-row" href="${LINKS[c.trophy]||'#'}" style="--nation:${COLORS[c.champion]||'#7f8794'}" aria-label="Open ${c.trophy} championship page">
         <div class="title-id"><div><div class="format">${c.format}</div><div class="trophy">${c.trophy}</div></div></div>
         <div class="holder"><div class="flag">${flag(c.champion)}</div><div><div class="holder-name">${c.champion}</div><div class="since">Since ${fmtDate(c.since)}</div></div></div>
-        <div><div class="takeover">def. <b>${c.from}</b> by ${c.margin}</div><div class="venue">${c.venue}</div></div>
+        <div><div class="takeover">${c.margin?`def. <b>${c.from}</b> by ${c.margin}`:`took the title from <b>${c.from}</b>`}</div><div class="venue">${c.transferResult||c.venue}</div></div>
         <div class="stats"><div><div class="stat-num">${daysHeld(c.since).toLocaleString()}</div><div class="stat-lab">Days held</div></div><div><div class="stat-num">${c.defences}</div><div class="stat-lab">Defences</div></div><div><div class="stat-num">${c.transfers}</div><div class="stat-lab">Transfers</div></div></div>
         <div class="next"><span>Next defence</span><b>${c.next}</b></div>
       </a>`).join('');
@@ -106,7 +119,8 @@ footer{border-top:1px solid var(--line);padding:27px 0 38px}.footer-inner{displa
     .then(r=>{if(!r.ok) throw new Error('HTTP '+r.status);return r.json()})
     .then(payload=>{
       const live=liveMap(payload);
-      render(FALLBACK.map(x=>mergeBase(x,live.get(x.trophy))),mergeBase(IPL_FALLBACK,live.get(IPL_FALLBACK.trophy)));
+      const transfers=latestTransfers(payload);
+      render(FALLBACK.map(x=>mergeBase(x,live.get(x.trophy),transfers.get(x.trophy))),mergeBase(IPL_FALLBACK,live.get(IPL_FALLBACK.trophy),transfers.get(IPL_FALLBACK.trophy)));
       const note=document.getElementById('updatedNote');
       if(note) note.textContent='Current holders and next defences update automatically from the championship data.';
     })
