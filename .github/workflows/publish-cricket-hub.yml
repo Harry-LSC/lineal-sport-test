@@ -1,0 +1,26 @@
+name: Publish cricket hub copy update
+
+on:
+  push:
+    paths:
+      - '.github/workflows/publish-cricket-hub.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patch cricket hub
+        run: python .github/scripts/patch-cricket-hub.py
+      - name: Commit hub and remove temporary files
+        run: |
+          rm .github/workflows/publish-cricket-hub.yml
+          rm .github/scripts/patch-cricket-hub.py
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add cricket.html .github/workflows/publish-cricket-hub.yml .github/scripts/patch-cricket-hub.py
+          git commit -m "Update cricket hub copy and layout"
+          git push
