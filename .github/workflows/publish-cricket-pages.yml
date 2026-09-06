@@ -1,0 +1,26 @@
+name: Publish cricket page UX fixes
+
+on:
+  push:
+    paths:
+      - '.github/workflows/publish-cricket-pages.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patch cricket pages
+        run: python patch_cricket_pages.py
+      - name: Commit changes and clean temporary files
+        run: |
+          rm patch_cricket_pages.py
+          rm .github/workflows/publish-cricket-pages.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add charles-bannerman-belt.html myrtle-maclagan-medal.html john-edrich-jug.html tina-macpherson-trophy.html rebecca-rolls-ribbon.html ricky-ponting-ribbon.html yusuf-pathan-plate.html patch_cricket_pages.py .github/workflows/publish-cricket-pages.yml
+          git commit -m "Link cricket breadcrumbs and justify footer copy"
+          git push
