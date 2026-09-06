@@ -1,0 +1,20 @@
+name: Publish contact link fix
+on:
+  push:
+    paths:
+      - '.github/workflows/publish-contact-fix.yml'
+permissions:
+  contents: write
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python .github/patch_contact.py
+      - run: |
+          rm .github/patch_contact.py .github/workflows/publish-contact-fix.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html cricket.html .github/patch_contact.py .github/workflows/publish-contact-fix.yml
+          git commit -m "Fix public contact links"
+          git push
