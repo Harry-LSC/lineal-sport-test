@@ -54,7 +54,8 @@ jobs:
             .github/ireland-payload-00 .github/ireland-payload-01 .github/ireland-payload-02 .github/ireland-payload-03 \
             .github/ireland-payload-04 .github/ireland-payload-05 .github/ireland-payload-06 .github/ireland-payload-07 \
             .github/ireland-payload-08 .github/ireland-payload-09 .github/ireland-payload-10 .github/ireland-payload-11 \
-            .github/ireland-payload-11a .github/ireland-payload-11b \
+            .github/ireland-payload-11a .github/ireland-payload-11b .github/ireland-payload-11b1 .github/ireland-payload-11b2 \
+            .github/ireland-payload-11b2a .github/ireland-payload-11b2b \
             .github/workflows/publish-ireland-badge.yml
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
