@@ -21,19 +21,16 @@ TRICOLOUR = re.compile(
     re.I,
 )
 
-payload_paths = [
-    Path('.github/ireland-cricket-badge.b64'),
-    Path('.github/ireland-cricket-badge.tail1'),
-    Path('.github/ireland-cricket-badge.tail1b'),
-    Path('.github/ireland-cricket-badge.tail2'),
-    Path('.github/ireland-cricket-badge.tail2b'),
+payload_paths = [Path(f'.github/ireland-payload-{i:02d}') for i in range(11)] + [
+    Path('.github/ireland-payload-11a'), Path('.github/ireland-payload-11b')
 ]
 payload = ''.join(p.read_text(encoding='ascii').strip() for p in payload_paths)
 if len(payload) != 47416:
     raise SystemExit(f"Approved Ireland badge payload length mismatch: {len(payload)}")
 raw = base64.b64decode(payload, validate=True)
-if hashlib.sha256(raw).hexdigest() != EXPECTED_SHA256:
-    raise SystemExit("Approved Ireland badge hash mismatch")
+actual = hashlib.sha256(raw).hexdigest()
+if actual != EXPECTED_SHA256:
+    raise SystemExit(f"Approved Ireland badge hash mismatch: {actual}")
 ASSET.write_bytes(raw)
 
 summary = []
@@ -62,4 +59,4 @@ for name in TARGETS:
 print("Ireland badge patch complete")
 for row in summary:
     print(f"{row[0]}: badge renderers={row[1]}, share emoji fallbacks={row[2]}, byte_delta={row[3]}")
-print(f"Asset sha256={EXPECTED_SHA256} bytes={len(raw)}")
+print(f"Asset sha256={actual} bytes={len(raw)}")
