@@ -21,7 +21,15 @@ TRICOLOUR = re.compile(
     re.I,
 )
 
-raw = base64.b64decode(Path('.github/ireland-cricket-badge.b64').read_text(encoding='ascii').strip())
+payload_paths = [
+    Path('.github/ireland-cricket-badge.b64'),
+    Path('.github/ireland-cricket-badge.tail1'),
+    Path('.github/ireland-cricket-badge.tail2'),
+]
+payload = ''.join(p.read_text(encoding='ascii').strip() for p in payload_paths)
+if len(payload) != 47416:
+    raise SystemExit(f"Approved Ireland badge payload length mismatch: {len(payload)}")
+raw = base64.b64decode(payload, validate=True)
 if hashlib.sha256(raw).hexdigest() != EXPECTED_SHA256:
     raise SystemExit("Approved Ireland badge hash mismatch")
 ASSET.write_bytes(raw)
