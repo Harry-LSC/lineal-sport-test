@@ -24,7 +24,9 @@ TRICOLOUR = re.compile(
 payload_paths = [
     Path('.github/ireland-cricket-badge.b64'),
     Path('.github/ireland-cricket-badge.tail1'),
+    Path('.github/ireland-cricket-badge.tail1b'),
     Path('.github/ireland-cricket-badge.tail2'),
+    Path('.github/ireland-cricket-badge.tail2b'),
 ]
 payload = ''.join(p.read_text(encoding='ascii').strip() for p in payload_paths)
 if len(payload) != 47416:
