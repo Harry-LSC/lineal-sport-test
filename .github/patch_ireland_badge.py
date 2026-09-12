@@ -22,7 +22,10 @@ TRICOLOUR = re.compile(
 )
 
 payload_paths = [Path(f'.github/ireland-payload-{i:02d}') for i in range(11)] + [
-    Path('.github/ireland-payload-11a'), Path('.github/ireland-payload-11b')
+    Path('.github/ireland-payload-11a'),
+    Path('.github/ireland-payload-11b1'),
+    Path('.github/ireland-payload-11b2a'),
+    Path('.github/ireland-payload-11b2b'),
 ]
 payload = ''.join(p.read_text(encoding='ascii').strip() for p in payload_paths)
 if len(payload) != 47416:
