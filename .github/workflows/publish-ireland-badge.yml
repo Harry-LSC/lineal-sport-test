@@ -36,7 +36,7 @@ jobs:
               if 'ireland-cricket.png' not in text:
                   raise SystemExit(f'{name}: approved badge reference missing')
               scripts=re.findall(r'<script(?:\s[^>]*)?>(.*?)</script>', text, flags=re.S|re.I)
-              for i, script in enumerate(scripts):
+              for script in scripts:
                   with tempfile.NamedTemporaryFile('w', suffix='.js', encoding='utf-8', delete=False) as f:
                       f.write(script)
                       tmp=f.name
@@ -48,9 +48,9 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          rm .github/patch_ireland_badge.py .github/ireland-cricket-badge.b64 .github/workflows/publish-ireland-badge.yml
+          rm .github/patch_ireland_badge.py .github/ireland-cricket-badge.b64 .github/ireland-cricket-badge.tail1 .github/ireland-cricket-badge.tail2 .github/workflows/publish-ireland-badge.yml
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add cricket.html charles-bannerman-belt.html myrtle-maclagan-medal.html john-edrich-jug.html tina-macpherson-trophy.html rebecca-rolls-ribbon.html ricky-ponting-ribbon.html yusuf-pathan-plate.html ireland-cricket.png .github/patch_ireland_badge.py .github/ireland-cricket-badge.b64 .github/workflows/publish-ireland-badge.yml
+          git add cricket.html charles-bannerman-belt.html myrtle-maclagan-medal.html john-edrich-jug.html tina-macpherson-trophy.html rebecca-rolls-ribbon.html ricky-ponting-ribbon.html yusuf-pathan-plate.html ireland-cricket.png .github/patch_ireland_badge.py .github/ireland-cricket-badge.b64 .github/ireland-cricket-badge.tail1 .github/ireland-cricket-badge.tail2 .github/workflows/publish-ireland-badge.yml
           git commit -m "Fix Ireland cricket badge sitewide"
           git push
