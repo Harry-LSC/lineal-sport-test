@@ -48,9 +48,16 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          rm .github/patch_ireland_badge.py .github/ireland-cricket-badge.b64 .github/ireland-cricket-badge.tail1 .github/ireland-cricket-badge.tail1b .github/ireland-cricket-badge.tail2 .github/ireland-cricket-badge.tail2b .github/workflows/publish-ireland-badge.yml
+          rm -f .github/patch_ireland_badge.py \
+            .github/ireland-cricket-badge.b64 .github/ireland-cricket-badge.tail1 .github/ireland-cricket-badge.tail1b \
+            .github/ireland-cricket-badge.tail2 .github/ireland-cricket-badge.tail2b \
+            .github/ireland-payload-00 .github/ireland-payload-01 .github/ireland-payload-02 .github/ireland-payload-03 \
+            .github/ireland-payload-04 .github/ireland-payload-05 .github/ireland-payload-06 .github/ireland-payload-07 \
+            .github/ireland-payload-08 .github/ireland-payload-09 .github/ireland-payload-10 .github/ireland-payload-11 \
+            .github/ireland-payload-11a .github/ireland-payload-11b \
+            .github/workflows/publish-ireland-badge.yml
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add cricket.html charles-bannerman-belt.html myrtle-maclagan-medal.html john-edrich-jug.html tina-macpherson-trophy.html rebecca-rolls-ribbon.html ricky-ponting-ribbon.html yusuf-pathan-plate.html ireland-cricket.png .github/patch_ireland_badge.py .github/ireland-cricket-badge.b64 .github/ireland-cricket-badge.tail1 .github/ireland-cricket-badge.tail1b .github/ireland-cricket-badge.tail2 .github/ireland-cricket-badge.tail2b .github/workflows/publish-ireland-badge.yml
+          git add -A
           git commit -m "Fix Ireland cricket badge sitewide"
           git push
