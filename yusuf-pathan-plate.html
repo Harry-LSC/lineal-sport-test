@@ -604,7 +604,6 @@ body, button, input, select, textarea {
       </div>
       <div class="copyright footer-meta">
         <div class="lineage-verified">Current lineage state verified 31 August 2026.</div>
-        <div id="live-footer-status" style="font-size:10px;color:var(--slate-dim);margin-bottom:5px;">Live update state pending.</div>
         <div>© <span class="lsc-current-year">2026</span> Lineal Sport Championship</div>
         <div>An independent fan project. Not affiliated with any governing body, league or club.</div>
         <div><a class="footer-error-link" href="mailto:?subject=Lineal%20Sport%20Championship%20correction">Found an error? Let us know.</a></div>
@@ -1547,12 +1546,8 @@ window.BANNERMAN_DATA = {"current_champion": "Royal Challengers Bengaluru", "cur
     safeRun('title changes per year',()=>rebuildTCY(D));
     safeRun('defence success',()=>rebuildDSR(D));
 
-    const footer=document.getElementById('live-footer-status');
-    if(footer){const nt=live.next_defence?`Next defence ${prettyRange(live.next_defence.date,live.next_defence.end_date)} vs ${live.next_defence.opponent}.`:'Next defence TBD.';footer.innerHTML=`Live Yusuf Pathan state loaded from sports-data.json · ${esc(nt)} · Pathan Y1`;}
   }catch(err){
     console.error('Live Yusuf Pathan data hydration failed:',err);
-    const footer=document.getElementById('live-footer-status');
-    if(footer)footer.textContent='Live data failed to load · Pathan Y1';
   }
 })();
 
