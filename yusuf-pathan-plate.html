@@ -731,7 +731,7 @@ window.BANNERMAN_DATA = {"current_champion": "Royal Challengers Bengaluru", "cur
            <polygon points="${starPts(9,18,4.6,1.9,5)}" fill="#D40000"/>`;
     },
     'Afghanistan': () => `<rect width="20" height="36" fill="#000"/><rect x="20" width="20" height="36" fill="#D32011"/><rect x="40" width="20" height="36" fill="#007A36"/>`,
-    'Ireland': () => `<rect width="20" height="36" fill="#169B62"/><rect x="20" width="20" height="36" fill="#fff"/><rect x="40" width="20" height="36" fill="#FF883E"/>`,
+    'Ireland': () => `<image href="ireland-cricket.png" x="0" y="0" width="60" height="36" preserveAspectRatio="xMidYMid meet"/>`,
     'Scotland': () => `<rect width="60" height="36" fill="#0065BD"/><path d="M0,0 L60,36 M60,0 L0,36" stroke="#fff" stroke-width="6"/>`,
     'West Indies': () => `<rect width="60" height="36" fill="#7A1E3C"/>
       <polygon points="10,30 10,16 8,18 10,10 12,18 10,16" fill="none"/>
@@ -1572,7 +1572,7 @@ window.BANNERMAN_DATA = {"current_champion": "Royal Challengers Bengaluru", "cur
   const championship=(document.querySelector('.hero-title')?.textContent||'Lineal Championship').trim().replace(/\s+/g,' ');
   const slug=(location.pathname.split('/').pop()||'lineal-championship').replace(/\.html?$/i,'')||'lineal-championship';
   const fmtDate=d=>new Date(d+'T00:00:00').toLocaleDateString('en-US',{day:'numeric',month:'short',year:'numeric'});
-  const FLAG_EMOJI={'Australia':'🇦🇺','England':'🏴','India':'🇮🇳','Pakistan':'🇵🇰','South Africa':'🇿🇦','New Zealand':'🇳🇿','Sri Lanka':'🇱🇰','Bangladesh':'🇧🇩','West Indies':'🏝️','Zimbabwe':'🇿🇼','Afghanistan':'🇦🇫','Ireland':'🇮🇪','Scotland':'🏴󠁧󠁢󠁳󠁣󠁴󠁿','Netherlands':'🇳🇱','U.A.E.':'🇦🇪','Kenya':'🇰🇪'};
+  const FLAG_EMOJI={'Australia':'🇦🇺','England':'🏴','India':'🇮🇳','Pakistan':'🇵🇰','South Africa':'🇿🇦','New Zealand':'🇳🇿','Sri Lanka':'🇱🇰','Bangladesh':'🇧🇩','West Indies':'🏝️','Zimbabwe':'🇿🇼','Afghanistan':'🇦🇫','Ireland':'☘️','Scotland':'🏴󠁧󠁢󠁳󠁣󠁴󠁿','Netherlands':'🇳🇱','U.A.E.':'🇦🇪','Kenya':'🇰🇪'};
   const flag=t=>FLAG_EMOJI[t]||'';
   let activeSpec={type:'champion'};
   const line=y=>{ctx.fillStyle='#c7a85a';ctx.fillRect(82,y,916,2);};
