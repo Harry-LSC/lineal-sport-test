@@ -1,0 +1,35 @@
+name: Fix Cricket dormancy rule
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/fix-cricket-dormancy.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patch dormancy wording
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('cricket.html')
+          s = p.read_text(encoding='utf-8')
+          old = '<li><b>Dormancy:</b> inactivity does not strip the title. A championship remains with its holder until that holder is defeated in an official match. This can create very long dormant reigns, most notably when South Africa was banned from international cricket from 1970–1991.</li>'
+          new = '<li><b>Dormancy:</b> inactivity does not strip the title. A championship remains with its holder until that holder is defeated in an official match. An exception applies to South Africa’s period of international isolation: when the country was excluded from Test cricket after March 1970, the championship reverted to the previous holder, Australia.</li>'
+          if old not in s:
+              raise SystemExit('Expected Dormancy wording not found; refusing to modify file.')
+          p.write_text(s.replace(old, new, 1), encoding='utf-8')
+          PY
+      - name: Commit fix
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add cricket.html
+          git commit -m "Clarify South Africa dormancy exception"
+          git push
