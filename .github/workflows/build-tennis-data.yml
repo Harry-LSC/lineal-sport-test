@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - tennis-publication-preview
+      - main
     paths:
       - "LSC_Tennis_Update_System.xlsx"
       - "create_tennis_workbook.py"
