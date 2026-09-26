@@ -10,6 +10,7 @@ from datetime import date
 from pathlib import Path
 
 from openpyxl import Workbook
+import pycountry
 from openpyxl.styles import Alignment, Font, PatternFill, Border, Side
 from openpyxl.worksheet.datavalidation import DataValidation
 
@@ -24,6 +25,8 @@ ws_readme = wb.active
 ws_readme.title = "README"
 ws_baseline = wb.create_sheet("Baseline")
 ws_updates = wb.create_sheet("Updates")
+ws_players = wb.create_sheet("Players")
+ws_countries = wb.create_sheet("Countries")
 ws_lists = wb.create_sheet("Lists")
 ws_examples = wb.create_sheet("Examples")
 
@@ -53,6 +56,12 @@ ws_readme["A4"] = (
     "plus future eligible match updates only."
 )
 ws_readme["A4"].alignment = Alignment(wrap_text=True, vertical="top")
+ws_readme["A6"] = "Player representation / flags"
+ws_readme["A6"].font = Font(bold=True, color=green_bright)
+ws_readme["A7"] = ("Players contains one row per player. Choose a Country from the Countries lookup. "
+                    "The builder derives the Unicode flag automatically. Use Flag Override only for "
+                    "historical/special representations where a modern flag would be misleading.")
+ws_readme["A7"].alignment = Alignment(wrap_text=True, vertical="top")
 ws_readme["A8"] = "How to use"
 ws_readme["A8"].font = Font(bold=True, color=green_bright)
 rules = [
@@ -104,6 +113,23 @@ ws_updates["N1"].font = Font(bold=True, color=green_bright)
 ws_updates["N2"] = "Append only real holder matches here. See Examples for test patterns."
 ws_updates["N2"].alignment = Alignment(wrap_text=True)
 
+# Players
+player_headers = ["Player", "Country", "Country Code", "Flag Override", "Notes"]
+ws_players.append(player_headers)
+ws_players.append(["Jannik Sinner", "Italy", "ITA", "", "Current men's baseline holder."])
+ws_players.append(["Elena Rybakina", "Kazakhstan", "KAZ", "", "Current women's baseline holder."])
+
+# Countries — standard ISO country lookup with generated Unicode flags.
+country_rows = []
+for country in sorted(pycountry.countries, key=lambda c: c.name):
+    alpha2 = country.alpha_2
+    flag = "".join(chr(127397 + ord(ch)) for ch in alpha2)
+    country_rows.append([country.name, country.alpha_3, alpha2, flag])
+
+ws_countries.append(["Country", "ISO3", "ISO2", "Flag"])
+for row in country_rows:
+    ws_countries.append(row)
+
 # Lists
 list_columns = {
     "A": ("Lineage", ["Men's Singles", "Women's Singles"]),
@@ -137,7 +163,7 @@ ws_examples.append([
 ])
 
 # Shared formatting
-for ws in [ws_baseline, ws_updates, ws_lists, ws_examples]:
+for ws in [ws_baseline, ws_updates, ws_players, ws_countries, ws_lists, ws_examples]:
     for cell in ws[1]:
         cell.fill = green_fill
         cell.font = Font(bold=True, color=white)
@@ -145,7 +171,7 @@ for ws in [ws_baseline, ws_updates, ws_lists, ws_examples]:
         cell.border = Border(bottom=thin)
     ws.freeze_panes = "A2"
 
-for ws in [ws_baseline, ws_updates, ws_examples]:
+for ws in [ws_baseline, ws_updates, ws_players, ws_examples]:
     for col in range(1, 16):
         ws.column_dimensions[chr(64 + col)].width = 16
     ws.column_dimensions["C"].width = 22
@@ -172,6 +198,9 @@ def add_list_validation(cell_range, formula):
     dv.add(cell_range)
 
 add_list_validation("A2:A500", "Lists!$A$2:$A$3")
+dv_country = DataValidation(type="list", formula1=f"Countries!$A$2:$A{len(country_rows)+1{'}'}", allow_blank=True)
+ws_players.add_data_validation(dv_country)
+dv_country.add("B2:B1000")
 add_list_validation("E2:E500", "Lists!$F$2:$F$10")
 add_list_validation("F2:F500", "Lists!$B$2:$B$5")
 add_list_validation("G2:G500", "Lists!$C$2:$C$6")
