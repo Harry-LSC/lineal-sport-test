@@ -5,19 +5,19 @@
     {
       "lineage": "Men's Singles",
       "tour": "ATP",
-      "current_holder": "Pipeline test opponent",
-      "current_since": "2026-09-29",
-      "won_from": "Jannik Sinner",
+      "current_holder": "Jannik Sinner",
+      "current_since": "2026-07-12",
+      "won_from": "Alexander Zverev",
       "acquisition": {
-        "tournament": "Pipeline test event",
+        "tournament": "Wimbledon",
         "round": "F",
-        "surface": "Hard",
-        "score": "6-4, 6-4"
+        "surface": "Grass",
+        "score": "6–7(7) 7–6(2) 6–3 6–4"
       },
       "current_defences": 0,
-      "transfers": 1611,
+      "transfers": 1610,
       "total_defences": 4072,
-      "played_title_matches": 5683,
+      "played_title_matches": 5682,
       "checkpoint_date": "2026-09-18",
       "notes": "Frozen publication baseline. No successful defence after acquisition through checkpoint.",
       "next_match": null
@@ -43,26 +43,7 @@
       "next_match": null
     }
   ],
-  "lineage_updates": [
-    {
-      "lineage": "Men's Singles",
-      "match_date": "2026-09-29",
-      "opponent": "Pipeline test opponent",
-      "tournament": "Pipeline test event",
-      "round": "F",
-      "surface": "Hard",
-      "status": "Completed",
-      "played": "Yes",
-      "result_type": "Challenger win",
-      "result_score": "6-4, 6-4",
-      "source_url": "www.exampleurl.com",
-      "notes": null,
-      "holder_before": "Jannik Sinner",
-      "holder_after": "Pipeline test opponent",
-      "outcome": "Transfer",
-      "counts_as_title_match": true
-    }
-  ],
+  "lineage_updates": [],
   "players": [
     {
       "player": "Jannik Sinner",
@@ -79,14 +60,6 @@
       "flag": "🇰🇿",
       "flag_override": null,
       "notes": "Current women's baseline holder."
-    },
-    {
-      "player": "Pipeline test opponent",
-      "country": "India",
-      "country_code": "IND",
-      "flag": "🇮🇳",
-      "flag_override": null,
-      "notes": null
     }
   ]
 }
