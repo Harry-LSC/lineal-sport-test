@@ -1,9 +1,10 @@
-name: Assemble tennis preview pages
+name: Assemble tennis pages
 
 on:
   push:
     branches:
       - tennis-publication-preview
+      - main
     paths:
       - ".tennis-page-src/**"
       - "assemble_tennis_pages.py"
