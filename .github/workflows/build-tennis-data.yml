@@ -53,4 +53,5 @@ jobs:
 
           git add LSC_Tennis_Update_System.xlsx data/tennis-data.json
           git commit -m "Initialize generated tennis update data"
+          git pull --rebase origin "$GITHUB_REF_NAME"
           git push
