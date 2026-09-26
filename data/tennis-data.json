@@ -5,19 +5,19 @@
     {
       "lineage": "Men's Singles",
       "tour": "ATP",
-      "current_holder": "Jannik Sinner",
-      "current_since": "2026-07-12",
-      "won_from": "Alexander Zverev",
+      "current_holder": "Test Challenger",
+      "current_since": "2026-09-20",
+      "won_from": "Jannik Sinner",
       "acquisition": {
-        "tournament": "Wimbledon",
-        "round": "F",
-        "surface": "Grass",
-        "score": "6–7(7) 7–6(2) 6–3 6–4"
+        "tournament": "Pipeline Test Event",
+        "round": "SF",
+        "surface": "Hard",
+        "score": "4–6 6–3 6–2"
       },
-      "current_defences": 0,
-      "transfers": 1610,
-      "total_defences": 4072,
-      "played_title_matches": 5682,
+      "current_defences": 1,
+      "transfers": 1611,
+      "total_defences": 4074,
+      "played_title_matches": 5685,
       "checkpoint_date": "2026-09-18",
       "notes": "Frozen publication baseline. No successful defence after acquisition through checkpoint.",
       "next_match": null
@@ -43,5 +43,60 @@
       "next_match": null
     }
   ],
-  "lineage_updates": []
+  "lineage_updates": [
+    {
+      "lineage": "Men's Singles",
+      "match_date": "2026-09-19",
+      "opponent": "Test Opponent A",
+      "tournament": "Pipeline Test Event",
+      "round": "QF",
+      "surface": "Hard",
+      "status": "Completed",
+      "played": "Yes",
+      "result_type": "Holder win",
+      "result_score": "6–4 6–4",
+      "source_url": "https://example.com/test-defence-1",
+      "notes": "PIPELINE TEST: holder defence",
+      "holder_before": "Jannik Sinner",
+      "holder_after": "Jannik Sinner",
+      "outcome": "Defence",
+      "counts_as_title_match": true
+    },
+    {
+      "lineage": "Men's Singles",
+      "match_date": "2026-09-20",
+      "opponent": "Test Challenger",
+      "tournament": "Pipeline Test Event",
+      "round": "SF",
+      "surface": "Hard",
+      "status": "Completed",
+      "played": "Yes",
+      "result_type": "Challenger win",
+      "result_score": "4–6 6–3 6–2",
+      "source_url": "https://example.com/test-transfer",
+      "notes": "PIPELINE TEST: title transfer",
+      "holder_before": "Jannik Sinner",
+      "holder_after": "Test Challenger",
+      "outcome": "Transfer",
+      "counts_as_title_match": true
+    },
+    {
+      "lineage": "Men's Singles",
+      "match_date": "2026-09-21",
+      "opponent": "Test Opponent B",
+      "tournament": "Pipeline Test Event",
+      "round": "F",
+      "surface": "Hard",
+      "status": "Completed",
+      "played": "Yes",
+      "result_type": "Holder win",
+      "result_score": "7–5 6–3",
+      "source_url": "https://example.com/test-defence-2",
+      "notes": "PIPELINE TEST: new holder defence",
+      "holder_before": "Test Challenger",
+      "holder_after": "Test Challenger",
+      "outcome": "Defence",
+      "counts_as_title_match": true
+    }
+  ]
 }
