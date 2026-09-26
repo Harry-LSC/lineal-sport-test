@@ -129,6 +129,57 @@ def read_baseline(ws):
     return result
 
 
+def country_flag_from_alpha2(alpha2):
+    if not alpha2 or len(alpha2) != 2:
+        return None
+    return "".join(chr(127397 + ord(ch)) for ch in alpha2.upper())
+
+
+def read_players(ws_players, ws_countries):
+    country_headers = [clean(c.value) for c in ws_countries[1]]
+    for req in ("Country", "ISO3", "ISO2", "Flag"):
+        if req not in country_headers:
+            fail(f"Countries sheet is missing column: {req}")
+    cidx = {h: country_headers.index(h) for h in country_headers}
+    countries = {}
+    for row in ws_countries.iter_rows(min_row=2, values_only=True):
+        name = clean(row[cidx["Country"]])
+        if not name:
+            continue
+        countries[name] = {
+            "country": name,
+            "country_code": clean(row[cidx["ISO3"]]) or None,
+            "iso2": clean(row[cidx["ISO2"]]) or None,
+            "flag": clean(row[cidx["Flag"]]) or country_flag_from_alpha2(clean(row[cidx["ISO2"]])),
+        }
+
+    required = ["Player", "Country", "Country Code", "Flag Override", "Notes"]
+    idx = header_map(ws_players, required)
+    players = {}
+    for r, row in enumerate(ws_players.iter_rows(min_row=2, values_only=True), start=2):
+        player = clean(row[idx["Player"]])
+        if not player:
+            continue
+        if player in players:
+            fail(f"Players row {r}: duplicate player '{player}'.")
+        country = clean(row[idx["Country"]])
+        if not country:
+            fail(f"Players row {r}: Country is blank for '{player}'.")
+        if country not in countries:
+            fail(f"Players row {r}: unknown Country '{country}' for '{player}'.")
+        country_code = clean(row[idx["Country Code"]]) or countries[country]["country_code"]
+        flag_override = clean(row[idx["Flag Override"]])
+        players[player] = {
+            "player": player,
+            "country": country,
+            "country_code": country_code,
+            "flag": flag_override or countries[country]["flag"],
+            "flag_override": flag_override or None,
+            "notes": clean(row[idx["Notes"]]) or None,
+        }
+    return players
+
+
 def read_updates(ws, baseline):
     required = [
         "Lineage", "Match Date", "Opponent", "Tournament", "Round", "Surface",
@@ -233,7 +284,12 @@ def read_updates(ws, baseline):
     return events
 
 
-def build_state(baseline, events):
+def build_state(baseline, events, players):
+    for lineage, state in baseline.items():
+        holder = state["current_holder"]
+        if holder not in players:
+            fail(f"Baseline current holder '{holder}' ({lineage}) is missing from Players sheet.")
+
     states = {name: dict(values) for name, values in baseline.items()}
     for state in states.values():
         state["acquisition"] = dict(state["acquisition"])
@@ -270,6 +326,11 @@ def build_state(baseline, events):
             elif event["result_type"] == "Challenger win":
                 outcome = "Transfer"
                 holder_after = event["opponent"]
+                if holder_after not in players:
+                    fail(
+                        f"New holder '{holder_after}' is missing from Players sheet. "
+                        "Add the player and representation before publishing."
+                    )
                 state["current_holder"] = holder_after
                 state["current_since"] = event["match_date"]
                 state["won_from"] = holder_before
@@ -318,6 +379,7 @@ def build_state(baseline, events):
         "system": "LSC Tennis Update System",
         "lineages": lineages,
         "lineage_updates": lineage_updates,
+        "players": list(players.values()),
     }
 
 
@@ -326,13 +388,14 @@ def main():
         fail(f"Workbook not found: {WORKBOOK}")
 
     wb = load_workbook(WORKBOOK, data_only=False, read_only=True)
-    for sheet in ("Baseline", "Updates"):
+    for sheet in ("Baseline", "Updates", "Players", "Countries"):
         if sheet not in wb.sheetnames:
             fail(f"Workbook is missing required sheet: {sheet}")
 
     baseline = read_baseline(wb["Baseline"])
+    players = read_players(wb["Players"], wb["Countries"])
     events = read_updates(wb["Updates"], baseline)
-    output = build_state(baseline, events)
+    output = build_state(baseline, events, players)
 
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT.write_text(json.dumps(output, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
