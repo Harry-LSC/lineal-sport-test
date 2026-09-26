@@ -20,7 +20,15 @@
       "played_title_matches": 5682,
       "checkpoint_date": "2026-09-18",
       "notes": "Frozen publication baseline. No successful defence after acquisition through checkpoint.",
-      "next_match": null
+      "next_match": {
+        "date": "2026-09-29",
+        "opponent": "Pipeline test opponent",
+        "tournament": "Pipeline test event",
+        "round": "F",
+        "surface": "Hard",
+        "status": "Scheduled",
+        "source_url": null
+      }
     },
     {
       "lineage": "Women's Singles",
