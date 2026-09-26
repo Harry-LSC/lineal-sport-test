@@ -1,33 +1,75 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Tennis · Lineal Sport Championship</title>
-<style>
-:root{--bg:#07141c;--panel:#0b1d25;--line:#29413f;--cream:#f1ebdd;--muted:#aebdb8;--green:#3e8b68;--green2:#7fbea1;--gold:#c49a47}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--cream);font-family:Inter,system-ui,sans-serif}
-.wrap{max-width:1100px;margin:auto;padding:0 22px}.top{padding:22px 0;border-bottom:1px solid var(--line)}
-.crumb{font-size:12px;color:var(--muted)}.crumb a{color:inherit;text-decoration:none}.crumb a:hover{color:var(--green2)}
-.hero{padding:72px 0 48px}.eyebrow{color:var(--green2);text-transform:uppercase;letter-spacing:.14em;font-size:11px;font-weight:700}
-h1{font-family:Georgia,serif;font-size:54px;line-height:.98;margin:12px 0 16px}p{color:var(--muted);max-width:720px;line-height:1.6}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;padding-bottom:70px}
-.card{display:block;border:1px solid var(--line);border-radius:10px;background:var(--panel);padding:26px;text-decoration:none;color:inherit}
-.card:hover{border-color:var(--green2);transform:translateY(-1px)}.kicker{color:var(--gold);font-size:11px;text-transform:uppercase;letter-spacing:.12em;font-weight:700}
-.card h2{font-family:Georgia,serif;font-size:30px;margin:10px 0}.meta{font-size:13px;color:var(--muted)}
-.note{border-top:1px solid var(--line);padding:24px 0 50px;color:var(--muted);font-size:12px}
-@media(max-width:700px){h1{font-size:42px}.grid{grid-template-columns:1fr}}
-</style>
-</head>
-<body>
-<div class="top"><div class="wrap crumb"><a href="index.html">Lineal Sport Championship</a> / Tennis</div></div>
-<main class="wrap">
-<section class="hero"><div class="eyebrow">Lineal tennis</div><h1>Tennis</h1>
-<p>Open Era singles lineages reconstructed match by match. Choose the men’s or women’s championship.</p></section>
-<section class="grid">
-<a class="card" href="mens-tennis.html"><div class="kicker">ATP / Men</div><h2>Men’s Singles</h2><div class="meta">Current holder and full Open Era lineage</div></a>
-<a class="card" href="womens-tennis.html"><div class="kicker">WTA / Women</div><h2>Women’s Singles</h2><div class="meta">Current holder and full Open Era lineage</div></a>
-</section>
-<div class="note">Preview-branch tennis hub. Not yet linked from the live site.</div>
-</main>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Lineal Sport Championship — Tennis</title><meta name="description" content="The men's and women's Open Era lineal tennis championships."><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"><style>
+:root{
+ --bg:#06111b;--bg-deep:#040c13;--panel:#091722;--line:#23323e;--line2:#30414e;
+ --cream:#f2ecdf;--text:#d7d6d1;--muted:#99a6af;--gold:#c49a47;--gold-bright:#d5ab55;
+ --tennis:#3e8b68;--tennis-bright:#7fbea1;--max:1180px;
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth;background:var(--bg-deep)}
+body{margin:0;background:radial-gradient(circle at 50% -15%,#0c1b28 0,#06111b 42%,#050e16 100%);color:var(--text);font-family:Inter,system-ui,sans-serif;line-height:1.5}
+a{color:inherit}.wrap{width:min(var(--max),calc(100% - 48px));margin:auto}
+header{position:sticky;top:0;z-index:20;background:rgba(4,12,19,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav{height:76px;display:flex;align-items:center;justify-content:space-between;gap:30px}.brand-wrap{display:flex;align-items:center;gap:14px;min-width:0}.brand{width:48px;height:48px;border:2px solid var(--gold);border-radius:50%;display:grid;place-items:center;text-decoration:none;color:transparent;flex:0 0 auto}.brand-copy{line-height:1.08}.brand-name{font:600 18px/1.05 "Cormorant Garamond",serif;letter-spacing:.06em;text-transform:uppercase;color:var(--cream)}.brand-context{font-size:11px;color:var(--tennis-bright);letter-spacing:.12em;text-transform:uppercase;margin-top:4px}.nav-links{display:flex;align-items:center;gap:28px}.nav-links a{position:relative;text-decoration:none;color:#aab3ba;font-size:13px;font-weight:500;padding:29px 0 27px}.nav-links a:hover,.nav-links a.active{color:var(--gold-bright)}.nav-links a.active:after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--tennis)}
+.hero{padding:72px 0 54px;border-bottom:1px solid var(--line)}.crumb a{color:inherit;text-decoration:none}.crumb a:hover{color:var(--gold-bright)}.crumb{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--tennis-bright);margin-bottom:16px}.hero-grid{display:block;max-width:900px}.hero h1{margin:0;color:var(--cream);font:600 clamp(50px,6.2vw,82px)/.92 "Cormorant Garamond",serif;letter-spacing:-.025em;white-space:nowrap}.hero-copy{max-width:none;margin:21px 0 0;color:#b8c0c6;font-size:16px}
+.section{padding:66px 0}.section-head{display:flex;align-items:end;justify-content:space-between;gap:28px;margin-bottom:28px}.eyebrow{font:600 13px/1.1 "Cormorant Garamond",serif;letter-spacing:.08em;text-transform:uppercase;color:var(--tennis-bright);margin-bottom:7px}.section-title{font:600 38px/1 "Cormorant Garamond",serif;color:var(--cream)}.section-note-below{margin-top:14px;color:#9da8b0;font-size:12px;text-align:right}
+.championships{display:grid;grid-template-columns:1fr;gap:14px}.champ-row{--nation:#777;position:relative;display:grid;grid-template-columns:minmax(0,.9fr) minmax(260px,.8fr);grid-template-areas:"id holder" "take stats" "next next";gap:20px 34px;padding:27px 28px 23px;background:linear-gradient(100deg,rgba(62,139,104,.07),rgba(255,255,255,.01));border:1px solid var(--line);border-radius:5px;text-decoration:none;color:inherit;overflow:hidden;transition:border-color .15s ease,transform .15s ease,background .15s ease}.champ-row:before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--nation)}.champ-row:hover{transform:translateY(-2px);border-color:#3c4b56;background:rgba(255,255,255,.026)}
+.title-id{grid-area:id;display:flex;align-items:center;min-width:0}.format{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.11em;color:#9eabb4}.trophy{font:600 29px/1.02 "Cormorant Garamond",serif;color:var(--gold-bright);margin-top:4px}.holder{grid-area:holder;display:flex;align-items:center;gap:11px;justify-self:end}.flag{font-size:30px;line-height:1;filter:saturate(.95)}.holder-name{font:600 30px/1 "Cormorant Garamond",serif;color:var(--cream);text-align:right}.since{font-size:11px;color:#9da8b0;margin-top:5px;text-align:right}.take{grid-area:take;align-self:start}.takeover{font-size:12.5px;color:#b2bbc1}.takeover b{color:var(--cream)}.venue{font-size:10.5px;color:#8f9ca5;margin-top:5px}.stats{grid-area:stats;display:grid;grid-template-columns:repeat(3,auto);gap:28px;align-items:start;justify-content:end}.stat-num{font:600 27px/1 "Cormorant Garamond",serif;color:var(--cream);text-align:right}.stat-lab{font-size:8.5px;text-transform:uppercase;letter-spacing:.08em;color:#8f9ca5;margin-top:5px;text-align:right}.next{grid-area:next;border-top:1px solid rgba(127,190,161,.34);padding-top:13px;margin-top:1px;display:flex;align-items:baseline;gap:9px;font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:var(--tennis-bright)}.next b{font:600 16px/1.25 "Cormorant Garamond",serif;letter-spacing:0;text-transform:none;color:var(--cream)}.next-meta{font-size:10px;color:#8f9ca5;text-transform:none;letter-spacing:0}
+.method{border-top:1px solid var(--line);padding:62px 0 70px}.context{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(280px,.75fr);gap:64px}.context h2{font:600 34px/1 "Cormorant Garamond",serif;color:var(--cream);margin:0 0 14px}.method-list{list-style:none;padding:0;margin:20px 0 0}.method-list li{padding:12px 0;border-top:1px solid var(--line);font-size:13px;color:#aab4bb;text-align:justify;text-justify:inter-word}.method-list li b{color:var(--tennis-bright)}.source-panel{border-left:1px solid var(--line);padding-left:30px}.source-panel h3{margin:0 0 12px;font:600 22px/1 "Cormorant Garamond",serif;color:var(--gold-bright)}.source-panel p{font-size:12.5px;color:#aab4bb;text-align:justify;text-justify:inter-word}
+footer{border-top:1px solid var(--line);padding:27px 0 38px}.footer-inner{display:flex;flex-direction:column;align-items:center;gap:7px;font-size:10.5px;color:#84919b;text-align:center}.footer-inner a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(132,145,155,.45)}
+@media(max-width:900px){.wrap{width:min(var(--max),calc(100% - 32px))}.context{grid-template-columns:1fr;gap:30px}.champ-row{grid-template-columns:1fr;grid-template-areas:"id" "holder" "take" "stats" "next"}.holder{justify-self:start}.holder-name,.since{text-align:left}.stats{justify-content:start}.source-panel{border-left:0;border-top:1px solid var(--line);padding:28px 0 0}}
+@media(max-width:640px){.hero h1{white-space:normal}.nav{height:66px}.nav-links{display:none}.brand{width:40px;height:40px}.brand-name{font-size:16px}.brand-context{font-size:9px}.hero{padding:44px 0 39px}.hero h1{font-size:50px}.hero-copy{font-size:14.5px}.section{padding:48px 0}.section-title{font-size:33px}.champ-row{padding:21px}.trophy{font-size:26px}.holder-name{font-size:27px}.stats{grid-template-columns:repeat(3,1fr);gap:16px;width:100%}.stat-num,.stat-lab{text-align:left}.next{display:block}.next b{display:block;margin-top:5px}.next-meta{display:block;margin-top:4px}.footer-inner{display:block}.footer-inner div+div{margin-top:7px}}
+</style></head><body>
+<header><div class="wrap nav"><div class="brand-wrap"><a class="brand" href="index.html" aria-label="Lineal Sport Championship home">LSC</a><div class="brand-copy"><div class="brand-name">Lineal Sport Championship</div><div class="brand-context">Tennis</div></div></div><nav class="nav-links" aria-label="Primary"><a class="active" href="#champions">Championships</a><a href="#method">Method</a><a href="#sources">Sources</a></nav></div></header>
+<main>
+<section class="hero"><div class="wrap hero-grid"><div><div class="crumb"><a href="index.html" aria-label="Back to Lineal Sport Championship home">Lineal Sport Championship</a> / Tennis</div><h1>Tennis Lineal Championship</h1><p class="hero-copy">Two active Open Era singles lineages, reconstructed match by match.</p></div></div></section>
+<section class="section" id="champions"><div class="wrap"><div class="section-head"><div><div class="eyebrow">Current holders</div><div class="section-title">Current champions</div></div></div><div class="championships" id="championships"></div><div class="section-note-below" id="updatedNote">Current holders and next defences update automatically from the tennis championship data.</div></div></section>
+<section class="method" id="method"><div class="wrap context"><div><h2>Method</h2><ul class="method-list"><li><b>Seed:</b> each lineage begins from its audited Open Era starting point and then follows the championship match by match.</li><li><b>Transfer:</b> beat the reigning holder in a played match and the championship changes hands. A new champion begins with zero successful defences.</li><li><b>Defence:</b> when the reigning holder wins a played title match, the reign continues and one defence is added.</li><li><b>Walkovers:</b> do not transfer the championship and do not count as defences or played title matches.</li><li><b>Retirements and defaults:</b> a played match can transfer the championship when the official result records the holder as losing.</li><li><b>Representation:</b> player country and flag data follow the recorded historical representation used in the publication data. Unknown representation is never guessed.</li></ul></div><aside class="source-panel" id="sources"><div class="eyebrow">Data & transparency</div><h3>Independently reconstructed.</h3><p>The men’s and women’s Open Era lineages were reconstructed and audited match by match. Current publication data is maintained through the LSC Tennis Update System.</p><p>These are independent lineal championships rather than official ATP or WTA titles. Dates, surfaces, results and player representation are published from the audited record rather than inferred when uncertain.</p></aside></div></section>
+</main><footer><div class="wrap footer-inner"><div>© <span id="copyright-year">2026</span> Lineal Sport Championship</div><div>An independent fan project. Not affiliated with the ATP, WTA, ITF or any tournament.</div><div><a href="mailto:linealsportchamp@gmail.com?subject=Lineal%20Sport%20Championship%20correction">Found an error? Let us know.</a></div></div></footer><script>document.getElementById('copyright-year').textContent = new Date().getFullYear();</script>
+<script>
+(function(){
+  const FALLBACK=[
+    {lineage:"Men's Singles",tour:"ATP",holder:"Jannik Sinner",flag:"🇮🇹",country:"Italy",since:"2026-07-12",wonFrom:"Alexander Zverev",tournament:"Wimbledon",round:"F",surface:"Grass",defences:0,transfers:1610,next:null,href:"mens-tennis.html"},
+    {lineage:"Women's Singles",tour:"WTA",holder:"Elena Rybakina",flag:"🇰🇿",country:"Kazakhstan",since:"2026-09-11",wonFrom:"Coco Gauff",tournament:"US Open",round:"SF",surface:"Hard",defences:1,transfers:1087,next:null,href:"womens-tennis.html"}
+  ];
+
+  function parseDate(s){const [y,m,d]=s.split('-').map(Number);return Date.UTC(y,m-1,d)}
+  function daysHeld(s){return Math.max(0,Math.floor((Date.now()-parseDate(s))/86400000))}
+  function fmtDate(s){if(!s)return'';const [y,m,d]=s.split('-').map(Number);return new Intl.DateTimeFormat('en-GB',{day:'numeric',month:'short',year:'numeric',timeZone:'UTC'}).format(new Date(Date.UTC(y,m-1,d)))}
+  function fmtRound(r){return r==='F'?'Final':r==='SF'?'Semi-final':r==='QF'?'Quarter-final':r||''}
+  function nextText(n){
+    if(!n||!n.date)return {main:'TBD',meta:''};
+    const main=fmtDate(n.date)+' v '+n.opponent;
+    const details=[n.tournament,fmtRound(n.round)].filter(Boolean).join(' · ');
+    return {main,meta:details};
+  }
+  function colour(country){return country==='Italy'?'#169b62':country==='Kazakhstan'?'#00afca':'#7f8794'}
+  function merge(base,state,players){
+    if(!state)return {...base};
+    const p=(players||[]).find(x=>x.player===state.current_holder)||{};
+    return {...base,holder:state.current_holder||base.holder,flag:p.flag||base.flag,country:p.country||base.country,since:state.current_since||base.since,wonFrom:state.won_from||base.wonFrom,tournament:state.acquisition?.tournament||base.tournament,round:state.acquisition?.round||base.round,surface:state.acquisition?.surface||base.surface,defences:state.current_defences??base.defences,transfers:state.transfers??base.transfers,next:state.next_match||null};
+  }
+  function render(rows){
+    document.getElementById('championships').innerHTML=rows.map(c=>{
+      const n=nextText(c.next);
+      return `<a class="champ-row" href="${c.href}" style="--nation:${colour(c.country)}" aria-label="Open ${c.lineage} championship page">
+        <div class="title-id"><div><div class="format">${c.tour} / ${c.lineage.includes("Men's")?'Men':'Women'}</div><div class="trophy">${c.lineage}</div></div></div>
+        <div class="holder"><div class="flag" role="img" aria-label="${c.country} flag" title="${c.country}">${c.flag}</div><div><div class="holder-name">${c.holder}</div><div class="since">Since ${fmtDate(c.since)}</div></div></div>
+        <div class="take"><div class="takeover">won the championship from <b>${c.wonFrom}</b></div><div class="venue">${c.tournament} · ${fmtRound(c.round)} · ${c.surface}</div></div>
+        <div class="stats"><div><div class="stat-num">${daysHeld(c.since).toLocaleString()}</div><div class="stat-lab">Days held</div></div><div><div class="stat-num">${c.defences}</div><div class="stat-lab">Defences</div></div><div><div class="stat-num">${c.transfers.toLocaleString()}</div><div class="stat-lab">Transfers</div></div></div>
+        <div class="next"><span>Next defence</span><b>${n.main}</b>${n.meta?`<span class="next-meta">${n.meta}</span>`:''}</div>
+      </a>`;
+    }).join('');
+  }
+
+  render(FALLBACK.map(x=>({...x})));
+  fetch('data/tennis-data.json',{cache:'no-store'})
+    .then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.json()})
+    .then(payload=>{
+      const byLineage=new Map((payload.lineages||[]).map(x=>[x.lineage,x]));
+      render(FALLBACK.map(x=>merge(x,byLineage.get(x.lineage),payload.players||[])));
+      const note=document.getElementById('updatedNote');
+      if(note)note.textContent='Current holders and next defences update automatically from the tennis championship data.';
+    })
+    .catch(err=>console.warn('Tennis hub live data unavailable; using audited fallback values.',err));
+})();
+</script>
 </body></html>
