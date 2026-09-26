@@ -229,8 +229,6 @@ def read_updates(ws, baseline):
         if status == "Completed":
             if played not in VALID_PLAYED:
                 fail(f"Updates row {r}: Completed match requires Played? = Yes or No.")
-            if not source_url:
-                fail(f"Updates row {r}: Completed match requires a Source URL.")
 
             if played == "Yes":
                 if result_type not in {"Holder win", "Challenger win"}:
