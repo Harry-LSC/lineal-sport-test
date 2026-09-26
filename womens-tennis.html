@@ -2205,9 +2205,15 @@ const SURFACE_LEADER_DATA = {"transfers":{"All":[{"player":"Chris Evert","value"
     const livePlayer = (PIPELINE.players || []).find(p => p.player === state.current_holder);
     const meta = typeof HOLDER_COUNTRY_AUDIT !== 'undefined' ? HOLDER_COUNTRY_AUDIT[state.current_holder] : null;
     if (livePlayer?.flag) {
-      const flagEl = document.querySelector('#champion .holder-flag, #champion [data-flag], #champion .flag');
-      if (flagEl) { flagEl.textContent = livePlayer.flag; flagEl.title = livePlayer.country || ''; }
-      else setChampionFlag({iso2:meta?.iso2 || '',country:livePlayer.country || meta?.country || state.current_holder,fallback:livePlayer.country_code || meta?.ioc || ''});
+      const shell = document.getElementById('holderFlag');
+      const img = document.getElementById('holderFlagImg');
+      const fb = document.getElementById('holderFlagFallback');
+      if (shell) {
+        shell.setAttribute('aria-label', (livePlayer.country || state.current_holder) + ' flag');
+        shell.classList.add('is-fallback');
+      }
+      if (img) img.removeAttribute('src');
+      if (fb) fb.textContent = livePlayer.flag;
     } else {
       setChampionFlag({iso2:meta?.iso2 || '',country:meta?.country || state.current_holder,fallback:meta?.ioc || ''});
     }
@@ -2261,7 +2267,7 @@ const SURFACE_LEADER_DATA = {"transfers":{"All":[{"player":"Chris Evert","value"
       d.transfers=(d.transfers||0)+1;
       d.played_transfers=(d.played_transfers||0)+1;
       d.transfers_rows=d.transfers_rows||[];
-      d.transfers_rows.push({date:u.match_date,year:+y,from:u.holder_before,to:u.holder_after,event:u.tournament,round:u.round,score:u.result_score,date_status:'PIPELINE TEST',source:u.source_url,kind:'transfer'});
+      d.transfers_rows.push({date:u.match_date,year:+y,from:u.holder_before,to:u.holder_after,event:u.tournament,round:u.round,score:u.result_score,date_status:'exact',source:u.source_url,kind:'transfer'});
       const counts={};
       d.transfers_rows.forEach(r=>{counts[r.event||'—']=(counts[r.event||'—']||0)+1});
       const best=Object.entries(counts).sort((a,b)=>b[1]-a[1])[0];
@@ -2312,14 +2318,14 @@ const SURFACE_LEADER_DATA = {"transfers":{"All":[{"player":"Chris Evert","value"
       next.reigns += 1;
       next.longest=Math.max(next.longest,currentDays);
     }
-    next.recent_reigns=[{id:'PIPELINE-TEST',holder:next.player,start:firstTransfer.match_date,end:null,days:currentDays,ended_by:null,context:'Current'},...(next.recent_reigns||[])].slice(0,5);
-    next.recent_transfers=[{date:firstTransfer.match_date,year:+firstTransfer.match_date.slice(0,4),from:firstTransfer.holder_before,to:firstTransfer.holder_after,event:firstTransfer.tournament,round:firstTransfer.round,score:firstTransfer.result_score,date_status:'PIPELINE TEST',source:firstTransfer.source_url,kind:'transfer'},...(next.recent_transfers||[])].slice(0,5);
+    next.recent_reigns=[{id:'LIVE-'+firstTransfer.match_date+'-'+firstTransfer.holder_after,holder:next.player,start:firstTransfer.match_date,end:null,days:currentDays,ended_by:null,context:'Current'},...(next.recent_reigns||[])].slice(0,5);
+    next.recent_transfers=[{date:firstTransfer.match_date,year:+firstTransfer.match_date.slice(0,4),from:firstTransfer.holder_before,to:firstTransfer.holder_after,event:firstTransfer.tournament,round:firstTransfer.round,score:firstTransfer.result_score,date_status:'exact',source:firstTransfer.source_url,kind:'transfer'},...(next.recent_transfers||[])].slice(0,5);
   }
   updates.filter(u=>u.outcome==='Defence').forEach(u=>{
     const p=championByName(u.holder_after);
     if(p) p.defences += 1;
     CHAMPION_DEFENCES[u.holder_after]=CHAMPION_DEFENCES[u.holder_after]||[];
-    CHAMPION_DEFENCES[u.holder_after].unshift({date:u.match_date,year:+u.match_date.slice(0,4),holder:u.holder_after,opponent:u.opponent,event:u.tournament,round:u.round,score:u.result_score,number:CHAMPION_DEFENCES[u.holder_after].length+1,precision:'PIPELINE TEST',source:u.source_url});
+    CHAMPION_DEFENCES[u.holder_after].unshift({date:u.match_date,year:+u.match_date.slice(0,4),holder:u.holder_after,opponent:u.opponent,event:u.tournament,round:u.round,score:u.result_score,number:CHAMPION_DEFENCES[u.holder_after].length+1,precision:'exact',source:u.source_url});
   });
 
   const zeroSurface=()=>({transfers:0,defences:0,total:0});
