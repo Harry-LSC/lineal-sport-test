@@ -63,6 +63,9 @@ h1{margin:0;color:var(--cream);font:600 clamp(46px,5.25vw,76px)/.98 "Cormorant G
 .sport-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .sport-stack{display:grid;grid-template-rows:auto 1fr;gap:14px;min-width:0}
 .sport-stack .coming-card{min-height:0}
+.competition-main.single-line{display:block}
+.competition-main.single-line .competition-title{display:block;text-align:left}
+.competition-main.single-line .competition-title::before{display:none}
 .sport-card{border:1px solid var(--line);border-radius:7px;background:linear-gradient(180deg,#091824,#07131d);overflow:hidden;display:flex;flex-direction:column;min-width:0}
 .sport-heading{display:flex;align-items:center;justify-content:center;gap:18px;padding:15px 26px 10px;text-align:center}
 .sport-icon{width:58px;height:58px;color:var(--gold-bright);flex:0 0 auto;display:grid;place-items:center}
@@ -373,8 +376,8 @@ footer{border-top:1px solid #222d36;padding:18px 0 30px;color:#888f94;text-align
 <a class="sport-link" href="tennis.html">Explore Tennis <span aria-hidden="true">→</span></a>
 <div class="sport-top"><div class="sport-count">2 lineages</div></div>
 <div aria-label="Tennis championships" class="competition-list">
-<a class="competition" href="mens-tennis.html"><span class="competition-main"><span class="competition-format">Men's Tennis</span><span class="competition-title">Men's Singles</span></span><span aria-hidden="true" class="competition-arrow">→</span></a>
-<a class="competition" href="womens-tennis.html"><span class="competition-main"><span class="competition-format">Women's Tennis</span><span class="competition-title">Women's Singles</span></span><span aria-hidden="true" class="competition-arrow">→</span></a>
+<a class="competition" href="mens-tennis.html"><span class="competition-main single-line"><span class="competition-title">Men's Tennis</span></span><span aria-hidden="true" class="competition-arrow">→</span></a>
+<a class="competition" href="womens-tennis.html"><span class="competition-main single-line"><span class="competition-title">Women's Tennis</span></span><span aria-hidden="true" class="competition-arrow">→</span></a>
 </div>
 </div>
 </article>
