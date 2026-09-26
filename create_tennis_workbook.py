@@ -198,7 +198,7 @@ def add_list_validation(cell_range, formula):
     dv.add(cell_range)
 
 add_list_validation("A2:A500", "Lists!$A$2:$A$3")
-dv_country = DataValidation(type="list", formula1=f"Countries!$A$2:$A{len(country_rows)+1{'}'}", allow_blank=True)
+dv_country = DataValidation(type="list", formula1="Countries!$A$2:$A$" + str(len(country_rows)+1), allow_blank=True)
 ws_players.add_data_validation(dv_country)
 dv_country.add("B2:B1000")
 add_list_validation("E2:E500", "Lists!$F$2:$F$10")
