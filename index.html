@@ -61,6 +61,11 @@ h1{margin:0;color:var(--cream);font:600 clamp(46px,5.25vw,76px)/.98 "Cormorant G
 /* Sport panels */
 .sports{padding:16px 0 42px}
 .sport-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.sport-stack{display:grid;grid-template-rows:auto 1fr;gap:14px;min-width:0}
+.sport-stack .coming-card{min-height:0}
+.competition-main.single-line{display:block}
+.competition-main.single-line .competition-title{display:block;text-align:left}
+.competition-main.single-line .competition-title::before{display:none}
 .sport-card{border:1px solid var(--line);border-radius:7px;background:linear-gradient(180deg,#091824,#07131d);overflow:hidden;display:flex;flex-direction:column;min-width:0}
 .sport-heading{display:flex;align-items:center;justify-content:center;gap:18px;padding:15px 26px 10px;text-align:center}
 .sport-icon{width:58px;height:58px;color:var(--gold-bright);flex:0 0 auto;display:grid;place-items:center}
@@ -153,6 +158,7 @@ footer{border-top:1px solid #222d36;padding:18px 0 30px;color:#888f94;text-align
   .rule:first-child,.rule:nth-child(2){border-top:0}
   .rule:last-child{grid-column:1/-1;border-left:0}
   .sport-grid{grid-template-columns:1fr;gap:18px}
+  .sport-stack{grid-template-rows:auto auto;gap:18px}
   .sport-visual{height:300px}
 }
 @media(max-width:640px){
@@ -361,10 +367,25 @@ footer{border-top:1px solid #222d36;padding:18px 0 30px;color:#888f94;text-align
 <div class="more">More to follow</div>
 </div>
 </article>
+<div class="sport-stack">
+<article class="sport-card">
+<div class="sport-heading">
+<h2 class="sport-name">Tennis</h2>
+</div>
+<div class="sport-body">
+<a class="sport-link" href="tennis.html">Explore Tennis <span aria-hidden="true">→</span></a>
+<div class="sport-top"><div class="sport-count">2 lineages</div></div>
+<div aria-label="Tennis championships" class="competition-list">
+<a class="competition" href="mens-tennis.html"><span class="competition-main single-line"><span class="competition-title">Men's Tennis</span></span><span aria-hidden="true" class="competition-arrow">→</span></a>
+<a class="competition" href="womens-tennis.html"><span class="competition-main single-line"><span class="competition-title">Women's Tennis</span></span><span aria-hidden="true" class="competition-arrow">→</span></a>
+</div>
+</div>
+</article>
 <article class="sport-card coming-card">
 <div class="sport-heading"><h2 class="sport-name">More sports to follow</h2></div>
 <div class="coming-soon-lineages"><div class="coming-soon-copy">Watch this space for other sports.</div></div>
 </article>
+</div>
 </div>
 
 <section class="full-rules-section" id="full-rules" aria-labelledby="fullRulesTitle">

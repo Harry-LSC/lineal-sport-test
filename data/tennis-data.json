@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "system": "LSC Tennis Update System",
+  "lineages": [
+    {
+      "lineage": "Men's Singles",
+      "tour": "ATP",
+      "current_holder": "Jannik Sinner",
+      "current_since": "2026-07-12",
+      "won_from": "Alexander Zverev",
+      "acquisition": {
+        "tournament": "Wimbledon",
+        "round": "F",
+        "surface": "Grass",
+        "score": "6–7(7) 7–6(2) 6–3 6–4"
+      },
+      "current_defences": 0,
+      "transfers": 1610,
+      "total_defences": 4072,
+      "played_title_matches": 5682,
+      "checkpoint_date": "2026-09-18",
+      "notes": "Frozen publication baseline. No successful defence after acquisition through checkpoint.",
+      "next_match": null
+    },
+    {
+      "lineage": "Women's Singles",
+      "tour": "WTA",
+      "current_holder": "Elena Rybakina",
+      "current_since": "2026-09-11",
+      "won_from": "Coco Gauff",
+      "acquisition": {
+        "tournament": "US Open",
+        "round": "SF",
+        "surface": "Hard",
+        "score": "3–6, 6–4, 6–4"
+      },
+      "current_defences": 1,
+      "transfers": 1087,
+      "total_defences": 3381,
+      "played_title_matches": 4468,
+      "checkpoint_date": "2026-09-12",
+      "notes": "Frozen publication baseline. One successful defence: 12 Sep 2026 US Open F vs Aryna Sabalenka.",
+      "next_match": null
+    }
+  ],
+  "lineage_updates": [],
+  "players": [
+    {
+      "player": "Jannik Sinner",
+      "country": "Italy",
+      "country_code": "ITA",
+      "flag": "🇮🇹",
+      "flag_override": null,
+      "notes": "Current men's baseline holder."
+    },
+    {
+      "player": "Elena Rybakina",
+      "country": "Kazakhstan",
+      "country_code": "KAZ",
+      "flag": "🇰🇿",
+      "flag_override": null,
+      "notes": "Current women's baseline holder."
+    }
+  ]
+}

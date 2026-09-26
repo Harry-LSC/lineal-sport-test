@@ -1,0 +1,1692 @@
+<!doctype html>
+<html lang="en" data-tennis-lineage="Women's Singles">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LSC — Women's Lineal Tennis Championship — Hero v2</title>
+<style>
+:root{
+  --bg:#050d14;
+  --panel:#091923;
+  --panel2:#07131d;
+  --cream:#f2ecdf;
+  --text:#d6d8d3;
+  --muted:#8f9da0;
+  --line:#23343b;
+  --line2:#345148;
+  --gold:#c49a47;
+  --gold2:#d5ab55;
+  --green:#1f5f46;
+  --green2:#3e8b68;
+  --green-bright:#7fbea1;
+  --max:1180px;
+}
+*{box-sizing:border-box}
+html{background:var(--bg)}
+body{
+  margin:0;
+  color:var(--text);
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  background:
+    radial-gradient(circle at 50% -10%,#10272a 0,#07131d 35%,#050d14 76%);
+  line-height:1.45;
+}
+.wrap{width:min(var(--max),calc(100% - 44px));margin:auto}
+a{color:inherit;text-decoration:none}
+
+/* shared LSC header, Tennis typography */
+header{
+  position:sticky;top:0;z-index:20;
+  background:rgba(4,12,19,.94);
+  backdrop-filter:blur(13px);
+  border-bottom:1px solid #20303a;
+}
+.nav{height:62px;display:flex;align-items:center;gap:16px}
+.logo{
+  width:38px;height:38px;border:1px solid var(--gold);border-radius:50%;
+  display:grid;place-items:center;color:var(--gold2);
+  font:600 12px Georgia,serif;
+}
+.brand b{
+  display:block;color:var(--cream);
+  font:600 16px Georgia,serif;
+  letter-spacing:.035em;
+}
+.brand span{
+  font-size:9px;color:var(--green-bright);
+  text-transform:uppercase;letter-spacing:.12em;
+}
+.navlinks{margin-left:auto;display:flex;gap:22px}
+.navlinks a{
+  color:#bfc6c3;text-decoration:none;font-size:10px;
+  text-transform:uppercase;letter-spacing:.08em;
+}
+
+/* breadcrumb requested: stop at Tennis */
+.crumb{
+  padding-top:20px;
+  font-size:9px;
+  text-transform:uppercase;
+  letter-spacing:.16em;
+  color:var(--green-bright);
+}
+
+/* Bannerman hierarchy, Tennis visual identity */
+.hero{padding:48px 0 34px}
+.kicker{
+  font-size:9px;text-transform:uppercase;letter-spacing:.16em;
+  color:var(--green-bright);font-weight:700;
+}
+.hero h1{
+  font-family:"Cormorant Garamond",Georgia,serif;
+  font-size:clamp(44px,6vw,76px);
+  line-height:.9;
+  font-weight:600;
+  margin:8px 0 14px;
+  color:var(--cream);
+  letter-spacing:-.035em;
+}
+.hero h1 span{color:var(--gold2)}
+.hero p{
+  max-width:680px;margin:0;color:#b7c1bf;font-size:14px;
+}
+
+/* current holder banner */
+.holder-row{
+  display:flex;align-items:stretch;margin-top:28px;
+  border:1px solid var(--line2);border-radius:14px;overflow:hidden;
+  background:linear-gradient(180deg,rgba(10,28,35,.96),rgba(7,20,28,.96));
+}
+.holder-main{
+  display:flex;align-items:center;gap:22px;
+  padding:24px 28px;
+  border-right:1px solid var(--line);
+  flex:1 1 410px;min-width:0;
+}
+
+/*
+  UNIVERSAL FLAG COMPONENT
+  ------------------------
+  No flag-specific CSS.
+  The outer box is always the same size.
+  The image is never stretched or cropped.
+  Flags with unusual proportions are centred inside the same box.
+*/
+.flag-shell{
+  width:58px;
+  aspect-ratio:5 / 3;
+  flex:0 0 58px;
+  border-radius:0;
+  overflow:visible;
+  border:0;
+  background:transparent;
+  box-shadow:none;
+  display:grid;
+  place-items:center;
+  position:relative;
+}
+.flag-shell img{
+  width:100%;
+  height:100%;
+  display:block;
+  object-fit:contain;
+  object-position:center;
+  background:#061119;
+}
+.flag-shell .flag-fallback{
+  display:none;
+  font:600 17px/1 Inter,sans-serif;
+  letter-spacing:.08em;
+  color:var(--cream);
+}
+.flag-shell.is-fallback img{display:none}
+.flag-shell.is-fallback .flag-fallback{display:block}
+
+.holder-copy{min-width:0}
+.labelrow{display:flex;align-items:center;gap:2px}
+.holder-label{
+  font-size:9px;text-transform:uppercase;letter-spacing:.16em;
+  color:var(--green-bright);font-weight:700;
+}
+.share{
+  width:22px;height:22px;padding:0;border:0;
+  background:transparent;color:var(--gold);
+  display:grid;place-items:center;cursor:pointer;border-radius:50%;
+}
+.share:hover{background:rgba(196,154,71,.08);color:var(--gold2)}
+.holder-name{
+  font:600 clamp(31px,3.2vw,42px)/1 Georgia,serif;
+  color:var(--cream);margin-top:4px;
+}
+.holder-since{font-size:11px;color:#a5b0af;margin-top:7px}
+.holder-result{
+  font-size:10.5px;color:#9eaaaa;margin-top:4px;
+  white-space:normal;
+}
+
+/* Bannerman-style stat cells, Tennis fonts */
+.holder-stat{
+  padding:18px 20px;border-right:1px solid var(--line);
+  text-align:center;min-width:128px;
+  display:flex;flex-direction:column;justify-content:center;
+}
+.holder-stat:last-child{
+  border-right:0;
+  background:rgba(31,95,70,.10);
+  min-width:170px;
+}
+.holder-stat .n{
+  font:600 27px/1 "Cormorant Garamond",Georgia,serif;
+  color:var(--gold2);
+}
+.holder-stat .l{
+  font-size:8px;text-transform:uppercase;letter-spacing:.10em;
+  color:#819296;margin-top:7px;
+}
+.holder-stat .sub{
+  font-size:9px;line-height:1.5;color:#8f9da0;margin-top:7px;
+}
+.holder-stat:last-child .n{color:var(--green-bright);font-size:22px}
+
+.qa-note{
+  margin-top:16px;font-size:9px;color:#65777a;
+}
+
+@media(max-width:900px){
+  .holder-row{display:grid;grid-template-columns:1fr 1fr}
+  .holder-main{
+    grid-column:1/-1;border-right:0;border-bottom:1px solid var(--line)
+  }
+  .holder-stat:nth-of-type(2){border-bottom:1px solid var(--line)}
+  .holder-stat:last-child{grid-column:1/-1}
+}
+@media(max-width:600px){
+  .wrap{width:calc(100% - 26px)}
+  .navlinks{display:none}
+  .hero{padding-top:40px}
+  .holder-row{display:block}
+  .holder-main,.holder-stat{
+    border-right:0;border-bottom:1px solid var(--line)
+  }
+  .holder-stat:last-child{border-bottom:0}
+  .flag-shell{width:92px;flex-basis:92px}
+}
+
+/* Tennis at-a-glance, using Bannerman skeleton only */
+.glance-wrap{padding:8px 0 34px}
+.glance-panel{
+  border:1px solid var(--line2);
+  border-radius:14px;
+  background:linear-gradient(180deg,rgba(10,28,35,.96),rgba(7,20,28,.96));
+  overflow:hidden;
+}
+.glance-title{
+  padding:15px 18px 11px;
+  font-size:9px;
+  text-transform:uppercase;
+  letter-spacing:.16em;
+  color:var(--green-bright);
+  font-weight:700;
+  border-bottom:1px solid var(--line);
+}
+.glance-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+}
+.glance-cell{
+  padding:18px 18px 20px;
+  border-right:1px solid var(--line);
+  text-align:center;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+.glance-cell:last-child{border-right:0}
+.glance-number{
+  font:600 27px/1 "Cormorant Garamond",Georgia,serif;
+  color:var(--gold2);
+}
+.glance-label{
+  margin-top:8px;
+  font-size:10px;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  color:var(--cream);
+}
+.glance-sub{
+  margin-top:7px;
+  font-size:9px;
+  color:#8f9da0;
+  line-height:1.5;
+}
+@media(max-width:800px){
+  .glance-grid{grid-template-columns:1fr 1fr}
+  .glance-cell:nth-child(2){border-right:0}
+  .glance-cell:nth-child(-n+2){border-bottom:1px solid var(--line)}
+}
+@media(max-width:520px){
+  .glance-grid{grid-template-columns:1fr}
+  .glance-cell{
+    border-right:0!important;
+    border-bottom:1px solid var(--line);
+  }
+  .glance-cell:last-child{border-bottom:0}
+}
+
+
+/* Last 6 title changes — John Edrich skeleton, Tennis design language */
+.last6-wrap{padding:10px 0 42px}
+.last6-head{margin-bottom:16px}
+.last6-head h2{
+  margin:0;
+  font:600 32px/1 "Cormorant Garamond",Georgia,serif;
+  color:var(--cream);
+  letter-spacing:-.02em;
+}
+.tc-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+}
+.tc-card{
+  background:linear-gradient(180deg,rgba(10,28,35,.96),rgba(7,20,28,.96));
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:17px;
+}
+.tc-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-bottom:15px;
+}
+.tc-date{
+  font-size:9px;
+  color:#8fa09e;
+  letter-spacing:.04em;
+}
+.tc-stage{
+  font-size:8px;
+  font-weight:600;
+  color:var(--gold2);
+  background:rgba(196,154,71,.09);
+  border:1px solid rgba(196,154,71,.18);
+  padding:4px 8px;
+  border-radius:999px;
+  white-space:nowrap;
+}
+.tc-match{
+  display:grid;
+  grid-template-columns:1fr 26px 1fr;
+  gap:10px;
+  align-items:center;
+}
+.tc-player{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  min-width:0;
+}
+.tc-flag{
+  width:18px;
+  height:13px;
+  flex:0 0 auto;
+  border-radius:2px;
+  overflow:hidden;
+  border:1px solid rgba(196,154,71,.24);
+  background:#061119;
+  display:grid;
+  place-items:center;
+}
+.tc-flag.square{
+  width:14px;
+  height:14px;
+}
+.tc-flag img{
+  width:100%;
+  height:100%;
+  display:block;
+  object-fit:contain;
+  object-position:center;
+  background:#061119;
+}
+.tc-flag span{
+  display:none;
+  font-size:7px;
+  font-weight:700;
+  color:var(--cream);
+  letter-spacing:.04em;
+}
+.tc-flag.is-fallback img{display:none}
+.tc-flag.is-fallback span{display:block}
+.tc-name{
+  font:600 17px/1.08 Georgia,serif;
+  color:var(--cream);
+}
+.tc-player.new .tc-name{color:var(--gold2)}
+.tc-arrow{
+  text-align:center;
+  color:var(--green-bright);
+  font-size:15px;
+}
+.tc-result{
+  margin-top:14px;
+  padding-top:12px;
+  border-top:1px solid var(--line);
+  text-align:center;
+}
+.tc-result b{
+  display:block;
+  font:600 13px/1.25 Georgia,serif;
+  color:var(--cream);
+}
+.tc-result span{
+  display:block;
+  margin-top:4px;
+  font-size:9px;
+  color:#899a9b;
+}
+@media(max-width:900px){
+  .tc-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:600px){
+  .tc-grid{grid-template-columns:1fr}
+}
+
+
+/* Historical timeline explorer */
+.history-wrap{padding:8px 0 44px}
+.history-head h2{margin:0 0 14px;font:600 32px/1 "Cormorant Garamond",Georgia,serif;color:var(--cream);letter-spacing:-.02em;}
+.history-panel{border:1px solid var(--line2);border-radius:14px;background:linear-gradient(180deg,rgba(10,28,35,.96),rgba(7,20,28,.96));overflow:hidden;}
+.history-top{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:18px 20px;border-bottom:1px solid var(--line);flex-wrap:wrap;}
+.history-title{font:600 28px/1 "Cormorant Garamond",Georgia,serif;color:var(--cream);}
+.history-title span{color:var(--gold2)}
+.history-control{display:flex;align-items:center;gap:10px;}
+.history-control label{font-size:9px;text-transform:uppercase;letter-spacing:.12em;color:var(--green-bright);font-weight:700;}
+.history-select{min-width:126px;padding:10px 12px;border-radius:8px;border:1px solid var(--line2);background:#08141c;color:var(--cream);font:500 13px Inter,sans-serif;}
+.history-select:focus{outline:none;border-color:var(--gold)}
+.history-summary{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--line);}
+.hy-cell{padding:18px 18px 16px;border-right:1px solid var(--line);text-align:center;}
+.hy-cell:last-child{border-right:0}
+.hy-big{font:600 26px/1 "Cormorant Garamond",Georgia,serif;color:var(--gold2);}
+.hy-label{margin-top:8px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.10em;color:var(--cream);}
+.hy-sub{margin-top:6px;font-size:10px;line-height:1.5;color:#8f9da0;}
+.history-overview-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  border-bottom:1px solid var(--line);
+}
+.history-overview-cell{
+  padding:16px 20px;
+  border-right:1px solid var(--line);
+}
+.history-overview-cell:last-child{border-right:0}
+.history-overview-label{
+  font-size:9px;
+  text-transform:uppercase;
+  letter-spacing:.11em;
+  color:var(--green-bright);
+  font-weight:700;
+  margin-bottom:6px;
+}
+.history-overview-value{
+  font:600 18px/1.15 Georgia,serif;
+  color:var(--cream);
+}
+.history-body{display:grid;grid-template-columns:1.1fr .9fr;gap:0;}
+.history-left{padding:18px 20px 22px;border-right:1px solid var(--line);}
+.history-right{padding:18px 20px 22px;}
+.section-mini{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--green-bright);font-weight:700;margin-bottom:12px;}
+.transfer-list{display:flex;flex-direction:column;gap:11px;max-height:620px;overflow:auto;padding-right:4px}
+.transfer-item{border:1px solid var(--line);border-radius:10px;padding:12px 13px;background:rgba(255,255,255,.015);}
+.transfer-date{font-size:10px;color:var(--gold2);margin-bottom:6px;}
+.transfer-line{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px;}
+.pair{display:inline-flex;align-items:center;gap:6px;min-width:0;}
+.tflag{width:16px;height:12px;flex:0 0 auto;border-radius:2px;overflow:hidden;border:1px solid rgba(196,154,71,.24);background:#061119;display:grid;place-items:center;}
+.tflag.square{width:12px;height:12px}
+.tflag img{width:100%;height:100%;display:block;object-fit:contain;object-position:center;background:#061119}
+.tflag span{display:none;font-size:6px;font-weight:700;color:var(--cream)}
+.tflag.is-fallback img{display:none}.tflag.is-fallback span{display:block}
+.pname{font:600 16px/1.05 Georgia,serif;color:var(--cream);}
+.arrow{color:var(--green-bright);font-size:15px}
+.transfer-meta{font-size:10px;color:#8f9da0;}
+.insight-card{border:1px solid var(--line);border-radius:10px;padding:14px 14px 12px;background:rgba(255,255,255,.015);margin-bottom:12px;}
+.insight-card b{display:block;font:600 18px/1.1 Georgia,serif;color:var(--cream);}
+.insight-card span{display:block;margin-top:5px;font-size:10px;line-height:1.5;color:#8f9da0;}
+.defence-list{display:flex;flex-direction:column;gap:8px;margin-top:2px}
+.defence-row{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-top:1px solid var(--line)}
+.defence-row:first-child{border-top:0}
+.defence-name{display:inline-flex;align-items:center;gap:6px;min-width:0;}
+.defence-count{font:600 17px/1 "Cormorant Garamond",Georgia,serif;color:var(--gold2);}
+.history-empty{color:#8f9da0;font-size:11px;}
+@media(max-width:920px){
+  .history-summary{grid-template-columns:repeat(2,1fr)}
+  .hy-cell:nth-child(2){border-right:0}
+  .hy-cell:nth-child(-n+2){border-bottom:1px solid var(--line)}
+  .history-overview-row{grid-template-columns:1fr}
+  .history-overview-cell{border-right:0;border-bottom:1px solid var(--line)}
+  .history-overview-cell:last-child{border-bottom:0}
+  .history-body{grid-template-columns:1fr}
+  .history-left{border-right:0;border-bottom:1px solid var(--line)}
+}
+@media(max-width:600px){
+  .history-top{align-items:flex-start}
+  .history-title{font-size:24px}
+  .history-summary{grid-template-columns:1fr}
+  .hy-cell{border-right:0!important;border-bottom:1px solid var(--line)}
+  .hy-cell:last-child{border-bottom:0}
+}
+
+
+/* Complete year rail: 1968–latest, fill height driven by yearly transfer count */
+.year-rail-wrap{
+  padding:14px 16px 16px;
+  border-bottom:1px solid var(--line);
+  background:#061119;
+}
+.year-rail{
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  gap:5px;
+}
+.year-box{
+  position:relative;
+  min-height:46px;
+  border:1px solid #2f4444;
+  background:#0a1a20;
+  color:#c3ceca;
+  border-radius:5px;
+  cursor:pointer;
+  overflow:hidden;
+  font:600 9px/1 Inter,sans-serif;
+  transition:border-color .15s,color .15s,transform .15s;
+}
+.year-box::before{
+  content:"";
+  position:absolute;
+  left:0;right:0;bottom:0;
+  height:var(--fill,5%);
+  background:linear-gradient(180deg,rgba(62,139,104,.20),rgba(62,139,104,.52));
+}
+.year-box span{
+  position:relative;
+  z-index:1;
+  display:grid;
+  place-items:center;
+  height:100%;
+  min-height:44px;
+}
+.year-box:hover{
+  border-color:var(--gold);
+  color:var(--cream);
+  transform:translateY(-1px);
+}
+.year-box.active{
+  border-color:var(--gold2);
+  color:var(--cream);
+  box-shadow:0 0 0 1px rgba(213,171,85,.22);
+}
+.year-box.active::before{
+  background:linear-gradient(180deg,rgba(196,154,71,.18),rgba(196,154,71,.48));
+}
+@media(max-width:1050px){.year-rail{grid-template-columns:repeat(10,1fr)}}
+@media(max-width:850px){.year-rail{grid-template-columns:repeat(8,1fr)}}
+@media(max-width:650px){.year-rail{grid-template-columns:repeat(5,1fr)}}
+
+
+/* Leaderboard */
+.leaderboard-wrap{padding:8px 0 48px}
+.leaderboard-head h2{
+  margin:0 0 16px;
+  font:600 32px/1 "Cormorant Garamond",Georgia,serif;
+  color:var(--cream);
+  letter-spacing:-.02em;
+}
+.leader-tabs{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+  margin-bottom:14px;
+}
+.leader-tab{
+  appearance:none;
+  border:1px solid var(--line2);
+  border-radius:9px;
+  background:#081921;
+  color:#aeb9b6;
+  padding:12px 14px;
+  cursor:pointer;
+  text-align:center;
+  font:600 13px/1.2 Inter,sans-serif;
+  transition:.15s;
+}
+.leader-tab:hover{
+  border-color:var(--gold);
+  color:var(--cream);
+}
+.leader-tab.active{
+  border-color:var(--gold2);
+  background:rgba(196,154,71,.09);
+  color:var(--cream);
+  box-shadow:0 0 0 1px rgba(196,154,71,.12);
+}
+.leader-panel{
+  border:1px solid var(--line2);
+  border-radius:14px;
+  background:linear-gradient(180deg,rgba(10,28,35,.96),rgba(7,20,28,.96));
+  overflow:hidden;
+}
+.leader-table-head,
+.leader-row{
+  display:grid;
+  grid-template-columns:52px 1fr 160px;
+  gap:12px;
+  align-items:center;
+}
+.leader-table-head{
+  padding:12px 18px;
+  border-bottom:1px solid var(--line);
+  font-size:9px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.10em;
+  color:var(--green-bright);
+}
+.leader-row{
+  padding:12px 18px;
+  border-top:1px solid var(--line);
+}
+.leader-row:first-child{border-top:0}
+.leader-rank{
+  font:600 18px/1 "Cormorant Garamond",Georgia,serif;
+  color:#71858a;
+}
+.leader-name{
+  font:600 17px/1.1 Georgia,serif;
+  color:var(--cream);
+}
+.leader-value{
+  text-align:right;
+  font:600 22px/1 "Cormorant Garamond",Georgia,serif;
+  color:var(--gold2);
+}
+.leader-value small{
+  display:block;
+  margin-top:4px;
+  font:500 9px/1.3 Inter,sans-serif;
+  color:#859698;
+}
+@media(max-width:760px){
+  .leader-tabs{grid-template-columns:1fr 1fr}
+}
+@media(max-width:520px){
+  .leader-tabs{grid-template-columns:1fr}
+  .leader-table-head,.leader-row{grid-template-columns:38px 1fr 105px}
+  .leader-name{font-size:15px}
+}
+
+
+/* Champion explorer */
+.champ-wrap{padding:8px 0 52px}
+.champ-head{display:flex;justify-content:space-between;gap:24px;align-items:end;margin-bottom:16px}
+.champ-kicker{font-size:9px;text-transform:uppercase;letter-spacing:.16em;color:var(--green-bright);font-weight:700}
+.champ-head h2{margin:4px 0 0;font:600 32px/1 "Cormorant Garamond",Georgia,serif;color:var(--cream);letter-spacing:-.02em}
+.champ-head p{margin:0;max-width:440px;text-align:right;font-size:11px;color:#8f9da0}
+.champ-grid{display:grid;grid-template-columns:300px 1fr;gap:14px}
+.champ-panel{border:1px solid var(--line2);border-radius:14px;background:linear-gradient(180deg,rgba(10,28,35,.96),rgba(7,20,28,.96));padding:16px}
+.champ-search{padding-bottom:10px}
+.champ-search input{width:100%;background:#071820;color:var(--cream);border:1px solid var(--line2);border-radius:7px;padding:10px 11px;font:500 12px Inter,sans-serif}
+.champ-list{border-top:1px solid var(--line);max-height:500px;overflow-y:auto;scrollbar-gutter:stable}
+.champ-item{display:flex;justify-content:space-between;gap:10px;padding:10px 4px;border-bottom:1px solid #142129;cursor:pointer}
+.champ-item:hover,.champ-item.active{background:rgba(196,154,71,.06)}
+.champ-item b{font:600 14px/1.15 Georgia,serif;color:var(--cream)}
+.champ-item span{font-size:9px;color:#7f9294}
+.champ-selected-top{display:flex;align-items:center;gap:9px}
+.champ-selected-flag{width:22px;height:16px;border-radius:2px;overflow:hidden;border:1px solid rgba(196,154,71,.28);background:#061119;display:grid;place-items:center;flex:0 0 auto}
+.champ-selected-flag.square{width:16px;height:16px}
+.champ-selected-flag img{width:100%;height:100%;display:block;object-fit:contain;object-position:center;background:#061119}
+.champ-selected-flag span{display:none;font-size:7px;font-weight:700;color:var(--cream)}
+.champ-selected-flag.is-fallback img{display:none}.champ-selected-flag.is-fallback span{display:block}
+.champ-name{font:600 31px/1 Georgia,serif;color:var(--cream)}
+.champ-four{display:grid;grid-template-columns:repeat(4,1fr);margin:16px 0;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.champ-four div{padding:12px;border-left:1px solid var(--line);text-align:center}
+.champ-four div:first-child{border-left:0}
+.champ-four b{display:block;font:600 21px/1 "Cormorant Garamond",Georgia,serif;color:var(--gold2)}
+.champ-four span{font-size:8px;color:#7f9294;text-transform:uppercase;letter-spacing:.08em}
+.champ-detail-lower{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.champ-detail-col{border:1px solid var(--line);border-radius:9px;padding:12px 13px;background:rgba(255,255,255,.012)}
+.champ-mini-title{font-size:9px;text-transform:uppercase;letter-spacing:.12em;color:var(--green-bright);font-weight:700;margin:0 0 8px}
+.champ-mini{border-top:1px solid var(--line)}
+.champ-mini-row{padding:9px 0;border-bottom:1px solid #142129}
+.champ-mini-row b{font:600 13px/1.15 Georgia,serif;color:var(--cream)}
+.champ-mini-row span{display:block;font-size:9px;color:#849698;margin-top:3px;line-height:1.45}
+.champ-empty{font-size:10px;color:#849698;padding:10px 0}
+@media(max-width:700px){.champ-detail-lower{grid-template-columns:1fr}}
+@media(max-width:850px){
+  .champ-grid{grid-template-columns:1fr}
+  .champ-head{display:block}
+  .champ-head p{text-align:left;margin-top:7px}
+}
+@media(max-width:600px){
+  .champ-four{grid-template-columns:1fr 1fr}
+}
+
+
+#champion,#last6,#timeline,#leaderboard,#champions,#archive{
+  scroll-margin-top:82px;
+}
+
+
+/* Full archive */
+.archive-wrap{padding:8px 0 54px}
+.archive-head{margin-bottom:16px}
+.archive-kicker{
+  font-size:9px;
+  text-transform:uppercase;
+  letter-spacing:.16em;
+  color:var(--green-bright);
+  font-weight:700;
+}
+.archive-head h2{
+  margin:4px 0 0;
+  font:600 32px/1 "Cormorant Garamond",Georgia,serif;
+  color:var(--cream);
+  letter-spacing:-.02em;
+}
+.archive-panel{
+  border:1px solid var(--line2);
+  border-radius:14px;
+  background:linear-gradient(180deg,rgba(10,28,35,.96),rgba(7,20,28,.96));
+  padding:16px;
+}
+.archive-controls{
+  display:grid;
+  grid-template-columns:1fr 165px 130px;
+  gap:8px;
+  margin-bottom:12px;
+}
+.archive-controls input,
+.archive-controls select{
+  width:100%;
+  background:#071820;
+  color:var(--cream);
+  border:1px solid var(--line2);
+  border-radius:7px;
+  padding:10px 11px;
+  font:500 11px Inter,sans-serif;
+}
+.archive-controls input:focus,
+.archive-controls select:focus{outline:none;border-color:var(--gold)}
+.archive-table-head,
+.archive-row{
+  display:grid;
+  grid-template-columns:100px 82px 1fr 1.7fr;
+  gap:12px;
+  align-items:center;
+}
+.archive-table-head{
+  padding:10px 6px;
+  border-bottom:1px solid var(--line);
+  font-size:8.5px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.09em;
+  color:var(--green-bright);
+}
+.archive-row{
+  padding:10px 6px;
+  border-top:1px solid var(--line);
+  font-size:10px;
+  color:#9aa8a8;
+}
+.archive-row:first-child{border-top:0}
+.archive-date{color:#8da09d}
+.archive-type{
+  font-size:8px;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  color:var(--gold2);
+}
+.archive-main{
+  font:600 14px/1.1 Georgia,serif;
+  color:var(--cream);
+}
+.archive-context{line-height:1.45}
+.archive-footer{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  margin-top:12px;
+  padding-top:12px;
+  border-top:1px solid var(--line);
+  font-size:9px;
+  color:#7f9294;
+}
+.archive-footer button{
+  border:1px solid var(--line2);
+  background:#081921;
+  color:#b9c2c0;
+  border-radius:6px;
+  padding:7px 10px;
+  cursor:pointer;
+}
+.archive-footer button:disabled{opacity:.35;cursor:default}
+.archive-footer button:not(:disabled):hover{border-color:var(--gold);color:var(--cream)}
+@media(max-width:800px){
+  .archive-controls{grid-template-columns:1fr}
+  .archive-table-head,.archive-row{grid-template-columns:82px 66px 1fr}
+  .archive-table-head>*:nth-child(4),.archive-row>*:nth-child(4){display:none}
+}
+
+
+.navlinks .nav-current{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  line-height:1.02;
+  gap:1px;
+}
+#methodology{scroll-margin-top:82px}
+
+/* Methodology */
+.method-wrap{padding:10px 0 54px}
+.method-head{margin-bottom:16px}
+.method-kicker{
+  font-size:9px;
+  text-transform:uppercase;
+  letter-spacing:.16em;
+  color:var(--green-bright);
+  font-weight:700;
+}
+.method-head h2{
+  margin:4px 0 0;
+  font:600 32px/1 "Cormorant Garamond",Georgia,serif;
+  color:var(--cream);
+  letter-spacing:-.02em;
+}
+.method-intro{
+  max-width:850px;
+  margin:10px 0 0;
+  color:#98a7a5;
+  font-size:11.5px;
+  line-height:1.7;
+}
+.method-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+}
+.method-card{
+  border:1px solid var(--line2);
+  border-radius:12px;
+  background:linear-gradient(180deg,rgba(10,28,35,.96),rgba(7,20,28,.96));
+  padding:18px;
+}
+.method-card h3{
+  margin:0 0 10px;
+  font:600 20px/1.05 "Cormorant Garamond",Georgia,serif;
+  color:var(--cream);
+}
+.method-card p{
+  margin:0;
+  color:#96a4a4;
+  font-size:10.5px;
+  line-height:1.7;
+}
+.method-card p + p{margin-top:9px}
+.method-rule-list{
+  display:grid;
+  gap:0;
+  border-top:1px solid var(--line);
+  margin-top:12px;
+}
+.method-rule{
+  display:grid;
+  grid-template-columns:150px 1fr;
+  gap:14px;
+  padding:11px 0;
+  border-bottom:1px solid var(--line);
+}
+.method-rule b{
+  font:600 13px/1.25 Georgia,serif;
+  color:var(--cream);
+}
+.method-rule span{
+  font-size:10px;
+  color:#8f9da0;
+  line-height:1.6;
+}
+.method-source-note{
+  margin-top:14px;
+  border-left:3px solid var(--green2);
+  padding:10px 0 10px 13px;
+  color:#aeb9b6;
+  font-size:10.5px;
+  line-height:1.7;
+}
+@media(max-width:800px){
+  .method-grid{grid-template-columns:1fr}
+  .method-rule{grid-template-columns:1fr}
+}
+
+/* Footer — cricket skeleton, Tennis language */
+footer{
+  border-top:1px solid var(--line);
+  margin-top:22px;
+  padding:34px 0 44px;
+}
+.footer-grid{
+  display:grid;
+  grid-template-columns:2fr 1fr;
+  gap:40px;
+}
+.footer-title{
+  font-size:9px;
+  letter-spacing:.13em;
+  color:var(--green-bright);
+  text-transform:uppercase;
+  font-weight:700;
+  margin-bottom:10px;
+}
+.footer-text{
+  font-size:11px;
+  color:#839395;
+  line-height:1.75;
+}
+.footer-brand-title{
+  font:600 18px/1.05 "Cormorant Garamond",Georgia,serif;
+  color:var(--cream);
+  margin-bottom:10px;
+}
+.footer-meta{
+  font-size:10px;
+  color:#718186;
+  line-height:1.8;
+}
+.footer-meta .lineage-verified{
+  color:#91a19e;
+  margin-bottom:5px;
+}
+.footer-error-link{
+  color:var(--green-bright);
+  text-decoration:none;
+  border-bottom:1px solid rgba(127,190,161,.35);
+}
+.footer-error-link:hover{
+  color:var(--cream);
+  border-bottom-color:var(--cream);
+}
+@media(max-width:850px){
+  .footer-grid{grid-template-columns:1fr}
+}
+
+
+/* Context banner */
+.data-banner-wrap{padding:0 0 40px}
+.data-banner{
+  border:1px solid var(--line2);
+  border-left:3px solid var(--gold2);
+  border-radius:10px;
+  background:linear-gradient(180deg,rgba(196,154,71,.06),rgba(7,20,28,.96));
+  padding:16px 18px;
+}
+.data-banner-kicker{
+  font-size:8.5px;
+  text-transform:uppercase;
+  letter-spacing:.13em;
+  color:var(--green-bright);
+  font-weight:700;
+  margin-bottom:6px;
+}
+.data-banner-title{
+  font:600 20px/1.1 "Cormorant Garamond",Georgia,serif;
+  color:var(--cream);
+  margin-bottom:6px;
+}
+.data-banner-text{
+  font-size:11.5px;
+  line-height:1.72;
+  color:#94a3a2;
+  max-width:none;
+  width:100%;
+}
+.data-banner-text b{color:var(--gold2);font-weight:600}
+
+
+.hero-distinction{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  margin-top:10px;
+  padding:7px 10px;
+  border:1px solid var(--line2);
+  border-radius:999px;
+  background:rgba(31,95,70,.10);
+  color:#a9b8b4;
+  font-size:9.5px;
+  line-height:1.35;
+}
+.hero-distinction b{
+  color:var(--green-bright);
+  font-weight:700;
+}
+
+
+/* Self-contained flag rendering: no external image requests. */
+.flag-shell img,
+.tc-flag img,
+.tflag img,
+.champ-selected-flag img{display:none !important;}
+
+.flag-shell .flag-fallback,
+.tc-flag span,
+.tflag span,
+.champ-selected-flag span{
+  display:block !important;
+  overflow:visible;
+  white-space:nowrap;
+  text-align:center;
+  line-height:1;
+}
+.flag-shell .flag-fallback{font-size:40px;}
+.tc-flag span{font-size:13px;}
+.tflag span{font-size:11px;}
+.champ-selected-flag span{font-size:17px;}
+.champ-selected-flag.historic-code{
+  width:auto;
+  min-width:25px;
+  height:16px;
+  padding:0 4px;
+  border:1px solid var(--line2);
+  border-radius:3px;
+  background:#081921;
+}
+.champ-selected-flag.historic-code span{
+  font:700 8px/16px Inter,Arial,sans-serif;
+  letter-spacing:.04em;
+  color:var(--cream);
+}
+
+.tc-flag,.tflag,.champ-selected-flag{
+  overflow:visible;
+  border:0;
+  background:transparent;
+}
+.tc-flag.square,.tflag.square,.champ-selected-flag.square{width:auto;height:auto;}
+
+
+.country-note-wrap{padding:0 0 42px}
+.country-note{
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:14px 16px;
+  background:rgba(255,255,255,.012);
+}
+.country-note-title{
+  font-size:8.5px;
+  text-transform:uppercase;
+  letter-spacing:.13em;
+  color:var(--green-bright);
+  font-weight:700;
+  margin-bottom:7px;
+}
+.country-note p{
+  margin:0;
+  color:#89999a;
+  font-size:10px;
+  line-height:1.7;
+}
+.country-note a{
+  color:#b6c1be;
+  border-bottom:1px solid rgba(182,193,190,.25);
+}
+
+
+
+
+\n/* Surface performance extension */
+.surface-wrap{padding:8px 0 48px}
+.surface-head{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:16px}
+.surface-kicker{font-size:9px;text-transform:uppercase;letter-spacing:.16em;color:var(--green-bright);font-weight:700}
+.surface-head h2{margin:4px 0 0;font:600 32px/1 "Cormorant Garamond",Georgia,serif;color:var(--cream);letter-spacing:-.02em}
+.surface-head p{margin:0;max-width:510px;text-align:right;font-size:11px;color:#8f9da0}
+.surface-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
+.surface-summary-card{border:1px solid var(--line2);border-radius:10px;background:#081921;padding:13px 14px}
+.surface-summary-name{font:600 17px/1.1 Georgia,serif;color:var(--cream);margin-bottom:8px}
+.surface-summary-meta{font-size:10px;color:var(--muted);line-height:1.5}
+.surface-summary-meta b{color:var(--gold2);font-weight:700}
+.surface-panel{border:1px solid var(--line2);border-radius:14px;background:linear-gradient(180deg,rgba(10,28,35,.96),rgba(7,20,28,.96));overflow:hidden}
+.surface-controls{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.55fr);gap:16px;padding:16px 18px;border-bottom:1px solid var(--line)}
+.surface-control-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.10em;color:var(--green-bright);margin-bottom:8px}
+.surface-buttons{display:flex;gap:7px;flex-wrap:wrap}
+.surface-btn{appearance:none;border:1px solid var(--line2);border-radius:8px;background:#071820;color:#aeb9b6;padding:9px 11px;cursor:pointer;font:600 11px/1.15 Inter,sans-serif;transition:.15s}
+.surface-btn:hover{border-color:var(--gold);color:var(--cream)}
+.surface-btn.active{border-color:var(--gold2);background:rgba(196,154,71,.09);color:var(--cream);box-shadow:0 0 0 1px rgba(196,154,71,.12)}
+.surface-table-head,.surface-row{display:grid;grid-template-columns:52px 1fr 160px;gap:12px;align-items:center}
+.surface-table-head{padding:12px 18px;border-bottom:1px solid var(--line);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.10em;color:var(--green-bright)}
+.surface-row{padding:11px 18px;border-top:1px solid var(--line)}
+.surface-row:first-child{border-top:0}
+.surface-rank{font:600 18px/1 "Cormorant Garamond",Georgia,serif;color:#71858a}
+.surface-player{font:600 17px/1.1 Georgia,serif;color:var(--cream)}
+.surface-value{text-align:right;font:600 22px/1 "Cormorant Garamond",Georgia,serif;color:var(--gold2)}
+.surface-value small{display:block;margin-top:4px;font:500 9px/1.3 Inter,sans-serif;color:#859698}
+.surface-note{padding:10px 18px 14px;border-top:1px solid var(--line);font-size:10px;color:#7f9094}
+@media(max-width:850px){.surface-head{display:block}.surface-head p{margin-top:8px;text-align:left}.surface-summary{grid-template-columns:1fr 1fr}.surface-controls{grid-template-columns:1fr}}
+@media(max-width:520px){.surface-summary{grid-template-columns:1fr}.surface-table-head,.surface-row{grid-template-columns:38px 1fr 105px}.surface-player{font-size:15px}.surface-btn{flex:1 1 auto}}\n
+/* Holder surface profile — intentionally scoped to Explore a Holder */
+.champ-surface-profile{
+  margin:18px 0 20px;
+  padding:16px 0 2px;
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+}
+.champ-surface-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:12px;
+  margin-bottom:12px;
+}
+.champ-surface-title{
+  font-size:11px;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+  font-weight:900;
+  color:var(--muted);
+}
+.champ-surface-note{
+  font-size:11px;
+  color:var(--muted);
+}
+.champ-surface-rows{
+  display:grid;
+  gap:9px;
+  padding-bottom:14px;
+}
+.champ-surface-row{
+  display:grid;
+  grid-template-columns:62px minmax(0,1fr) 126px;
+  align-items:center;
+  gap:10px;
+}
+.champ-surface-label{
+  font-size:12px;
+  font-weight:850;
+}
+.champ-surface-track{
+  height:14px;
+  border-radius:999px;
+  overflow:hidden;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.025);
+}
+.champ-surface-fill{
+  height:100%;
+  border-radius:999px;
+  min-width:0;
+}
+.champ-surface-fill.hard{background:#7686a1}
+.champ-surface-fill.clay{background:#a86f4b}
+.champ-surface-fill.grass{background:#718d68}
+.champ-surface-fill.carpet{background:#8c6d95}
+.champ-surface-value{
+  text-align:right;
+  font-size:11px;
+  color:var(--muted);
+  white-space:nowrap;
+}
+.champ-surface-value b{color:var(--text);font-size:12px}
+.champ-surface-empty{
+  color:var(--muted);
+  font-size:12px;
+  padding:2px 0 14px;
+}
+@media(max-width:640px){
+  .champ-surface-head{align-items:flex-start;flex-direction:column}
+  .champ-surface-row{grid-template-columns:52px minmax(0,1fr) 104px;gap:8px}
+  .champ-surface-value{font-size:10px}
+}
+
+
+/* 2026-09-25 refinement pass */
+.tc-stage{
+  color:var(--green-bright);
+  background:rgba(62,139,104,.10);
+  border-color:rgba(62,139,104,.26);
+}
+.year-box{
+  border-color:#355250;
+  color:#dfe7e4;
+  font:700 11px/1 Inter,sans-serif;
+  letter-spacing:.01em;
+}
+.year-box span{
+  color:#eef3f1;
+  text-shadow:0 1px 0 rgba(0,0,0,.28);
+}
+.year-box::before{
+  background:linear-gradient(180deg,rgba(176,132,60,.16),rgba(176,132,60,.42));
+}
+.year-box:hover{
+  border-color:var(--green-bright);
+  color:var(--cream);
+  box-shadow:0 0 0 1px rgba(62,139,104,.16);
+}
+.year-box.active{
+  border-color:var(--green-bright);
+  color:var(--cream);
+  box-shadow:0 0 0 1px rgba(62,139,104,.24), 0 10px 18px rgba(0,0,0,.18);
+}
+.year-box.active::before{
+  background:linear-gradient(180deg,rgba(196,154,71,.24),rgba(196,154,71,.58));
+}
+@media(max-width:650px){
+  .year-box{font-size:10px}
+}
+
+
+/* breadcrumb navigation */
+.crumb a{
+  color:inherit;
+  text-decoration:none;
+}
+.crumb a:hover,
+.crumb a:focus-visible{
+  color:var(--green-bright);
+  text-decoration:underline;
+  text-underline-offset:3px;
+}
+
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <div class="logo">LSC</div>
+    <div class="brand">
+      <b>LINEAL SPORT CHAMPIONSHIP</b>
+      <span>Tennis</span>
+    </div>
+    <div class="navlinks">
+      <a class="nav-current" href="#champion"><span>Current</span><span>Holder</span></a>
+      <a href="#timeline">Timeline</a>
+      <a href="#leaderboard">Leaderboard</a>
+      <a href="#champions">Past Holders</a>
+      <a href="#archive">Archive</a>
+      <a href="#methodology">Methodology</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap crumb"><a href="index.html">Lineal Sport Championship</a> / <a href="tennis.html">Tennis</a></div>
+
+<main class="wrap hero" id="champion">
+  <div class="kicker">Since 27 April 1968 · Open Era lineage</div>
+  <h1><span>Women's</span> Lineal Tennis Championship</h1>
+  <p>An unofficial match-by-match lineal championship history.</p>
+<div class="holder-row">
+    <div class="holder-main">
+      <div class="flag-shell" id="holderFlag" aria-label="Kazakhstan flag">
+        <img alt="Kazakhstan" id="holderFlagImg">
+        <span class="flag-fallback" id="holderFlagFallback">KAZ</span>
+      </div>
+
+      <div class="holder-copy">
+        <div class="labelrow">
+          <div class="holder-label">Current Holder</div>
+</div>
+
+        <div class="holder-name">Elena Rybakina</div>
+        <div class="holder-since">Won on 11 September 2026</div>
+        <div class="holder-result">def. Coco Gauff · US Open SF · 3–6, 6–4, 6–4</div>
+      </div>
+    </div>
+
+    <div class="holder-stat">
+      <div class="n" id="daysHeld">—</div>
+      <div class="l">Days held</div>
+      <div class="sub">Since 11 Sep 2026</div>
+    </div>
+
+    <div class="holder-stat">
+      <div class="n">1</div>
+      <div class="l">Defence</div>
+      <div class="sub">12 Sep · US Open F<br>def. Aryna Sabalenka<br>6–4, 5–7, 6–2</div>
+    </div>
+
+    <div class="holder-stat">
+      <div class="n">TBD</div>
+      <div class="l">Next match</div>
+      <div class="sub">No verified next defence yet</div>
+    </div>
+  </div>
+</main>
+
+<section class="wrap glance-wrap">
+  <div class="glance-panel">
+    <div class="glance-title">At a glance</div>
+    <div class="glance-grid">
+      <div class="glance-cell">
+        <div class="glance-number">1,087</div>
+        <div class="glance-label">Title changes</div>
+      </div>
+      <div class="glance-cell">
+        <div class="glance-number">270</div>
+        <div class="glance-label">Holders</div>
+      </div>
+      <div class="glance-cell">
+        <div class="glance-number">3,381</div>
+        <div class="glance-label">Successful defences</div>
+      </div>
+      <div class="glance-cell">
+        <div class="glance-number">4,467</div>
+        <div class="glance-label">Played title matches</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="wrap last6-wrap" id="last6">
+  <div class="last6-head"><h2>Last 6 title changes</h2></div>
+
+  <div class="tc-grid">
+<article class="tc-card">
+      <div class="tc-top"><div class="tc-date">11 September 2026</div><div class="tc-stage">US Open · SF</div></div>
+      <div class="tc-match">
+        <div class="tc-player">
+          <div class="tc-flag" data-flag="us" data-code="USA"><img alt="United States"><span>USA</span></div>
+          <div class="tc-name">Coco Gauff</div>
+        </div>
+        <div class="tc-arrow">→</div>
+        <div class="tc-player new">
+          <div class="tc-flag" data-flag="kz" data-code="KAZ"><img alt="Kazakhstan"><span>KAZ</span></div>
+          <div class="tc-name">Elena Rybakina</div>
+        </div>
+      </div>
+      <div class="tc-result"><b>Rybakina def. Gauff</b><span>3–6, 6–4, 6–4</span></div>
+    </article>
+
+<article class="tc-card">
+      <div class="tc-top"><div class="tc-date">23 August 2026</div><div class="tc-stage">Cincinnati · F</div></div>
+      <div class="tc-match">
+        <div class="tc-player">
+          <div class="tc-flag" data-flag="us" data-code="USA"><img alt="United States"><span>USA</span></div>
+          <div class="tc-name">Jessica Pegula</div>
+        </div>
+        <div class="tc-arrow">→</div>
+        <div class="tc-player new">
+          <div class="tc-flag" data-flag="us" data-code="USA"><img alt="United States"><span>USA</span></div>
+          <div class="tc-name">Coco Gauff</div>
+        </div>
+      </div>
+      <div class="tc-result"><b>Gauff def. Pegula</b><span>6–2, 6–4</span></div>
+    </article>
+
+<article class="tc-card">
+      <div class="tc-top"><div class="tc-date">22 August 2026</div><div class="tc-stage">Cincinnati · SF</div></div>
+      <div class="tc-match">
+        <div class="tc-player">
+          <div class="tc-flag" data-flag="pl" data-code="POL"><img alt="Poland"><span>POL</span></div>
+          <div class="tc-name">Iga Świątek</div>
+        </div>
+        <div class="tc-arrow">→</div>
+        <div class="tc-player new">
+          <div class="tc-flag" data-flag="us" data-code="USA"><img alt="United States"><span>USA</span></div>
+          <div class="tc-name">Jessica Pegula</div>
+        </div>
+      </div>
+      <div class="tc-result"><b>Pegula def. Świątek</b><span>7–5, 4–6, 6–4</span></div>
+    </article>
+
+<article class="tc-card">
+      <div class="tc-top"><div class="tc-date">19 August 2026</div><div class="tc-stage">Cincinnati · R16</div></div>
+      <div class="tc-match">
+        <div class="tc-player">
+          <div class="tc-flag" data-flag="fr" data-code="FRA"><img alt="France"><span>FRA</span></div>
+          <div class="tc-name">Diane Parry</div>
+        </div>
+        <div class="tc-arrow">→</div>
+        <div class="tc-player new">
+          <div class="tc-flag" data-flag="pl" data-code="POL"><img alt="Poland"><span>POL</span></div>
+          <div class="tc-name">Iga Świątek</div>
+        </div>
+      </div>
+      <div class="tc-result"><b>Świątek def. Parry</b><span>6–3, 6–3</span></div>
+    </article>
+
+<article class="tc-card">
+      <div class="tc-top"><div class="tc-date">17 August 2026</div><div class="tc-stage">Cincinnati · R32</div></div>
+      <div class="tc-match">
+        <div class="tc-player">
+          <div class="tc-flag" data-flag="fr" data-code="FRA"><img alt="France"><span>FRA</span></div>
+          <div class="tc-name">Loïs Boisson</div>
+        </div>
+        <div class="tc-arrow">→</div>
+        <div class="tc-player new">
+          <div class="tc-flag" data-flag="fr" data-code="FRA"><img alt="France"><span>FRA</span></div>
+          <div class="tc-name">Diane Parry</div>
+        </div>
+      </div>
+      <div class="tc-result"><b>Parry def. Boisson</b><span>4–6, 6–4, 6–3</span></div>
+    </article>
+
+<article class="tc-card">
+      <div class="tc-top"><div class="tc-date">16 August 2026</div><div class="tc-stage">Cincinnati · R64</div></div>
+      <div class="tc-match">
+        <div class="tc-player">
+          <div class="tc-flag square" data-flag="ch" data-code="SUI"><img alt="Switzerland"><span>SUI</span></div>
+          <div class="tc-name">Belinda Bencic</div>
+        </div>
+        <div class="tc-arrow">→</div>
+        <div class="tc-player new">
+          <div class="tc-flag" data-flag="fr" data-code="FRA"><img alt="France"><span>FRA</span></div>
+          <div class="tc-name">Loïs Boisson</div>
+        </div>
+      </div>
+      <div class="tc-result"><b>Boisson def. Bencic</b><span>6–3 · RET</span></div>
+    </article>
+  </div>
+</section>
+
+
+<section class="wrap history-wrap" id="timeline">
+  <div class="history-head"><h2>The Historical timeline</h2></div>
+  <div class="history-panel">
+    <div class="history-top">
+      <div class="history-title">Explore the lineage <span id="historyRangeLabel"></span></div>
+      <div class="history-control">
+        <label for="historyYearSelect">Year</label>
+        <select id="historyYearSelect" class="history-select"></select>
+      </div>
+    </div>
+
+    <div class="year-rail-wrap">
+      <div class="year-rail" id="historyYearRail"></div>
+    </div>
+
+    <div class="history-summary">
+      <div class="hy-cell">
+        <div class="hy-big" id="hyYear">—</div>
+        <div class="hy-label">Selected year</div>
+      </div>
+      <div class="hy-cell">
+        <div class="hy-big" id="hyTransfers">—</div>
+        <div class="hy-label">Title changes</div>
+      </div>
+      <div class="hy-cell">
+        <div class="hy-big" id="hyDefences">—</div>
+        <div class="hy-label">Successful defences</div>
+      </div>
+      <div class="hy-cell">
+        <div class="hy-big" id="hyMatches">—</div>
+        <div class="hy-label">Title matches</div>
+      </div>
+    </div>
+
+    <div class="history-overview-row">
+      <div class="history-overview-cell">
+        <div class="history-overview-label">Entering holder</div>
+        <div class="history-overview-value" id="hyEntryChampion">—</div>
+      </div>
+      <div class="history-overview-cell">
+        <div class="history-overview-label">Leaving holder</div>
+        <div class="history-overview-value" id="hyExitChampion">—</div>
+      </div>
+    </div>
+
+    <div class="history-body">
+      <div class="history-left">
+        <div class="section-mini" id="historyListTitle">Transfers in year</div>
+        <div class="transfer-list" id="historyTransfers"></div>
+      </div>
+      <div class="history-right">
+        <div class="section-mini">Defence leaders</div>
+        <div class="defence-list" id="historyLeaders"></div>
+
+        <div class="section-mini" style="margin-top:20px">Busiest transfer event</div>
+        <div class="insight-card">
+          <b id="hyBusyEvent">—</b>
+          <span id="hyBusyEventSub">—</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="wrap data-banner-wrap">
+  <div class="data-banner">
+    <div class="data-banner-kicker">Special lineage case · 2022</div>
+    <div class="data-banner-title">Ashleigh Barty → Shelby Rogers</div>
+    <div class="data-banner-text">
+      When Ashleigh Barty retired as the reigning holder, she never played another eligible official singles match. Under the retirement-succession rule, the title therefore passed the day after her retirement announcement to <b>Shelby Rogers</b>, the most recent player to have beaten Barty in eligible official singles. This counts as a lineage transfer, but not as a played title match.
+    </div>
+  </div>
+</section>
+
+<section class="wrap leaderboard-wrap" id="leaderboard">
+  <div class="leaderboard-head"><h2>Leaderboard</h2></div>
+
+  <div class="leader-tabs" id="leaderTabs">
+    <button class="leader-tab active" type="button" data-metric="days">Days in reign</button>
+    <button class="leader-tab" type="button" data-metric="defences">Most defences</button>
+    <button class="leader-tab" type="button" data-metric="reigns">Most reigns</button>
+    <button class="leader-tab" type="button" data-metric="longest">Longest single reign</button>
+  </div>
+
+  <div class="leader-panel">
+    <div class="leader-table-head">
+      <div>#</div>
+      <div>Holder</div>
+      <div style="text-align:right" id="leaderMetricHead">Days</div>
+    </div>
+    <div id="leaderRows"></div>
+  </div>
+</section>
+
+
+
+<section class="wrap surface-wrap" id="surface-performance">
+  <div class="surface-head">
+    <div><div class="surface-kicker">By court surface</div><h2>Surface performance</h2></div>
+  </div>
+  <div class="surface-summary"><div class="surface-summary-card"><div class="surface-summary-name">Hard</div><div class="surface-summary-meta"><b>505</b> title changes · <b>1,405</b> defences</div></div><div class="surface-summary-card"><div class="surface-summary-name">Clay</div><div class="surface-summary-meta"><b>277</b> title changes · <b>870</b> defences</div></div><div class="surface-summary-card"><div class="surface-summary-name">Grass</div><div class="surface-summary-meta"><b>174</b> title changes · <b>494</b> defences</div></div><div class="surface-summary-card"><div class="surface-summary-name">Carpet</div><div class="surface-summary-meta"><b>128</b> title changes · <b>608</b> defences</div></div></div>
+  <div class="surface-panel">
+    <div class="surface-controls">
+      <div><div class="surface-control-label">Metric</div><div class="surface-buttons" id="surfaceMetricButtons">
+        <button class="surface-btn" type="button" data-surface-metric="transfers">Title changes</button>
+        <button class="surface-btn active" type="button" data-surface-metric="defences">Successful defences</button>
+      </div></div>
+      <div><div class="surface-control-label">Surface</div><div class="surface-buttons" id="surfaceCourtButtons">
+        <button class="surface-btn active" type="button" data-surface-court="All">All</button>
+        <button class="surface-btn" type="button" data-surface-court="Hard">Hard</button>
+        <button class="surface-btn" type="button" data-surface-court="Clay">Clay</button>
+        <button class="surface-btn" type="button" data-surface-court="Grass">Grass</button>
+        <button class="surface-btn" type="button" data-surface-court="Carpet">Carpet</button>
+      </div></div>
+    </div>
+    <div class="surface-table-head"><div>#</div><div>Holder</div><div style="text-align:right" id="surfaceValueHead">Successful defences</div></div>
+    <div id="surfaceRows"></div>
+  </div>
+</section>
+
+<section class="wrap champ-wrap" id="champions">
+  <div class="champ-head">
+    <div>
+      <div class="champ-kicker">270 holders</div>
+      <h2>Explore a Holder</h2>
+    </div>
+    <p>Search your favourite player and see the data.</p>
+  </div>
+
+  <div class="champ-grid">
+    <div class="champ-panel">
+      <div class="champ-search">
+        <input id="champSearch" placeholder="Find a holder…">
+      </div>
+      <div class="champ-list" id="champList"></div>
+    </div>
+
+    <div class="champ-panel" id="champDetail"></div>
+  </div>
+</section>
+
+
+<section class="wrap archive-wrap" id="archive">
+  <div class="archive-head">
+    <div class="archive-kicker">Defences and transfers</div>
+    <h2>Full archive</h2>
+  </div>
+
+  <div class="archive-panel">
+    <div class="archive-controls">
+      <input id="archiveSearch" placeholder="Player, tournament, round or score…">
+      <select id="archiveType">
+        <option value="all">All records</option>
+        <option value="transfer">Transfers</option>
+        <option value="defence">Defences</option>
+      </select>
+      <select id="archiveYear">
+        <option value="all">All years</option>
+      </select>
+    </div>
+
+    <div class="archive-table-head">
+      <div>Date</div>
+      <div>Type</div>
+      <div>Holder</div>
+      <div>Match</div>
+    </div>
+    <div id="archiveRows"></div>
+
+    <div class="archive-footer">
+      <span id="archiveCount"></span>
+      <div>
+        <button id="archivePrev" type="button">Previous</button>
+        <button id="archiveNext" type="button">Next</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="wrap method-wrap" id="methodology">
+  <div class="method-head">
+    <div class="method-kicker">How the lineage is built</div>
+    <h2>Methodology</h2>
+    <p class="method-intro">
+      This page reconstructs an unofficial match-by-match women’s lineal tennis championship from the start of the Open Era. The championship does not follow tournament winners: it follows the holder. Every eligible official singles match played by the reigning holder can either extend the reign or transfer the title.
+    </p>
+  </div>
+
+  <div class="method-grid">
+    <div class="method-card">
+      <h3>Scope</h3>
+      <div class="method-rule-list">
+        <div class="method-rule"><b>Starting point</b><span>Virginia Wade, 27 April 1968, at Bournemouth. The lineage proceeds chronologically from there, match by match.</span></div>
+        <div class="method-rule"><b>Eligible competition</b><span>Grand Slams; WTA main-tour events and historical equivalents; Olympics; Federation Cup / Billie Jean King Cup; WTA Finals; recognised official top-level singles competition; and historical premier professional circuits or events.</span></div>
+        <div class="method-rule"><b>Excluded</b><span>Qualifying; lower ITF / Challenger / Futures-level competition; doubles, mixed doubles and juniors; unofficial exhibitions; standalone touring or one-night professional matches unless part of a formal recognised competition or league; World Team Tennis; and Laver Cup.</span></div>
+      </div>
+    </div>
+
+    <div class="method-card">
+      <h3>What counts</h3>
+      <div class="method-rule-list">
+        <div class="method-rule"><b>Title transfer</b><span>The title changes whenever the reigning holder loses an eligible completed singles match. It does not wait for the tournament final.</span></div>
+        <div class="method-rule"><b>Successful defence</b><span>An eligible match actually played and officially won by the holder counts as one successful defence.</span></div>
+        <div class="method-rule"><b>Walkover</b><span>A walkover before play begins is not a title match. There is no transfer and no defence.</span></div>
+        <div class="method-rule"><b>Retirement after play starts</b><span>The official winner decides the title. If the holder loses by retirement after play has begun, the championship transfers.</span></div>
+      </div>
+    </div>
+
+    <div class="method-card">
+      <h3>Chronology and dates</h3>
+      <div class="method-rule-list">
+        <div class="method-rule"><b>Match date</b><span>The actual match or completion date governs chronology. A tournament start date is never substituted for the match date.</span></div>
+        <div class="method-rule"><b>Date precision</b><span>Where an exact individual match day cannot be established, the record is labelled as reconstructed or tournament-order-only rather than assigning an invented exact date.</span></div>
+        <div class="method-rule"><b>Same-day transfers</b><span>Because the lineage is match by match, more than one transfer can occur on the same calendar day. Zero-day reigns are therefore possible and are retained in the record.</span></div>
+        <div class="method-rule"><b>Ordering</b><span>When multiple title matches occur within an event, draw order, round chronology and dated match evidence are used to preserve the sequence of the lineage.</span></div>
+      </div>
+    </div>
+
+    <div class="method-card">
+      <h3>Special cases and audit</h3>
+      <div class="method-rule-list">
+        <div class="method-rule"><b>Retirement succession</b><span>If a reigning holder officially retires and never plays another eligible official singles match, the title passes the day after the retirement announcement to the most recent player who had beaten her in eligible official singles.</span></div>
+        <div class="method-rule"><b>Dormancy</b><span>Injury, pregnancy, suspension, hiatus or simple inactivity does not strip the title.</span></div>
+        <div class="method-rule"><b>Sources</b><span>Match-level source references and date-status notes are retained in the research dataset. Exact dates are preferred; reconstructed chronology is explicitly labelled rather than presented as exact.</span></div>
+        <div class="method-rule"><b>Counting</b><span>Transfers and successful defences together make up played title matches. A succession caused by retirement is a lineage transfer but not a played match.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+
+function iso2FlagEmoji(iso2){
+  const s = String(iso2 || '').trim().toUpperCase();
+  if(!/^[A-Z]{2}$/.test(s)) return '';
+  return String.fromCodePoint(...[...s].map(ch => 127397 + ch.charCodeAt(0)));
+}
+
+/*
+  One self-contained flag renderer for every mapped holder.
+  Supply ISO 3166-1 alpha-2 + display country + optional 3-letter fallback.
+  No CSS changes per country.
+*/
+function setChampionFlag({iso2, country, fallback}) {
+  const shell = document.getElementById('holderFlag');
+  const fb = document.getElementById('holderFlagFallback');
+  shell.setAttribute('aria-label', country + ' flag');
+  const emoji = iso2FlagEmoji(iso2);
+  fb.textContent = emoji || fallback || country || '';
+  shell.classList.add('is-fallback');
+}
+
+setChampionFlag({
+  iso2: 'kz',
+  country: 'Kazakhstan',
+  fallback: 'KAZ'
+});
+
+// Dynamic days held: presentation value only.
+(function(){
+  const acquired = Date.UTC(2026,8,11);
+  const now = new Date();
+  const todayUTC = Date.UTC(now.getUTCFullYear(),now.getUTCMonth(),now.getUTCDate());
+  document.getElementById('daysHeld').textContent =
+    Math.max(0, Math.floor((todayUTC-acquired)/86400000)).toLocaleString();
+})();
+
+
+
+const esc = value => String(value ?? '')
+  .replaceAll('&','&amp;')
+  .replaceAll('<','&lt;')
+  .replaceAll('>','&gt;')
+  .replaceAll('"','&quot;')
+  .replaceAll("'","&#039;");
+
+const fmt = dateString => {
+  if(!dateString) return 'Date unresolved';
+  const parts = String(dateString).split('-').map(Number);
+  if(parts.length !== 3 || parts.some(Number.isNaN)) return String(dateString);
+  const d = new Date(Date.UTC(parts[0], parts[1]-1, parts[2]));
+  return new Intl.DateTimeFormat('en-GB',{
+    day:'numeric',
+    month:'short',
+    year:'numeric',
+    timeZone:'UTC'
+  }).format(d);
+};
+
+const HISTORY_YEAR_DATA = {"1968": {"entry": "Virginia Wade", "exit": "Pat Walkden", "transfers": 21, "played_transfers": 21, "defences": 47, "title_matches": 68, "undated_defences": 47, "defence_leaders": [{"player": "Margaret Court", "count": 23}, {"player": "Virginia Wade", "count": 11}, {"player": "Billie Jean King", "count": 4}, {"player": "Ann Jones", "count": 4}, {"player": "Julie Heldman", "count": 2}], "busiest_event": {"event": "Roland Garros", "transfers": 5}, "transfers_rows": [{"date": "1968-05-05", "year": 1968, "from": "Virginia Wade", "to": "Margaret Court", "event": "London Hard Court Championships / Hurlingham", "round": "F", "score": "6-3 6-2", "date_status": "EXACT", "source": "https://xn--meb.pisz.pl/Virginia_Wade", "kind": "transfer"}, {"date": "1968-05-12", "year": 1968, "from": "Margaret Court", "to": "Lesley Turner", "event": "Italian Open / Rome", "round": "F", "score": "2-6 6-2 6-3", "date_status": "RECONSTRUCTED - event final chronology", "source": "https://www.tennisabstract.com/seasons/1968_Womens_Season.html", "kind": "transfer"}, {"date": "1968-05-31", "year": 1968, "from": "Lesley Turner", "to": "Pat Walkden", "event": "Reggio Emilia", "round": "SF", "score": "1-6 6-3 6-4", "date_status": "RECONSTRUCTED - draw/day chronology", "source": "https://tennis-belt.com/lineage/", "kind": "transfer"}, {"date": "1968-06-01", "year": 1968, "from": "Julie Heldman", "to": "Françoise Dürr", "event": "Roland Garros", "round": "R32", "score": "6-1 7-5", "date_status": "RECONSTRUCTED - draw chronology", "source": "https://en.wikipedia.org/wiki/1968_French_Open_%E2%80%93_Women%27s_singles", "kind": "transfer"}, {"date": "1968-06-01", "year": 1968, "from": "Pat Walkden", "to": "Julie Heldman", "event": "Reggio Emilia", "round": "F", "score": "6-3 3-6 8-6", "date_status": "EXACT - event final day", "source": "https://it.wikipedia.org/wiki/Tornei_di_tennis_femminili_nel_1968", "kind": "transfer"}, {"date": "1968-06-03", "year": 1968, "from": "Françoise Dürr", "to": "Gail Sherriff", "event": "Roland Garros", "round": "R16", "score": "6-3 6-3", "date_status": "RECONSTRUCTED - draw chronology", "source": "https://en.wikipedia.org/wiki/1968_French_Open_%E2%80%93_Women%27s_singles", "kind": "transfer"}, {"date": "1968-06-05", "year": 1968, "from": "Gail Sherriff", "to": "Annette Van Zyl", "event": "Roland Garros", "round": "QF", "score": "8-6 6-3", "date_status": "RECONSTRUCTED - draw chronology", "source": "https://en.wikipedia.org/wiki/1968_French_Open_%E2%80%93_Women%27s_singles", "kind": "transfer"}, {"date": "1968-06-07", "year": 1968, "from": "Annette Van Zyl", "to": "Ann Jones", "event": "Roland Garros", "round": "SF", "score": "7-5 6-3", "date_status": "RECONSTRUCTED - draw chronology", "source": "https://en.wikipedia.org/wiki/1968_French_Open_%E2%80%93_Women%27s_singles", "kind": "transfer"}, {"date": "1968-06-09", "year": 1968, "from": "Ann Jones", "to": "Nancy Richey", "event": "Roland Garros", "round": "F", "score": "5-7 6-4 6-1", "date_status": "EXACT", "source": "https://wtafiles.wtatennis.com/pdf/matchnotes/2023/903_honorroll.pdf", "kind": "transfer"}, {"date": "1968-06-16", "year": 1968, "from": "Nancy Richey", "to": "Virginia Wade", "event": "Wightman Cup", "round": "RR / tie singles", "score": "6-4 2-6 6-3", "date_status": "RECONSTRUCTED - tie chronology", "source": "https://kaweah.freedombox.rocks/kiwix/content/wikipedia_en_all_maxi_2023-10/A/1968_Wightman_Cup", "kind": "transfer"}, {"date": "1968-06-24", "year": 1968, "from": "Virginia Wade", "to": "Christina Sandberg", "event": "Wimbledon", "round": "R128", "score": "6-4 6-3", "date_status": "EXACT - opening-day draw chronology", "source": "https://www.tennis-x.com/results/wimbledon/virginia-wade.php", "kind": "transfer"}, {"date": "1968-06-26", "year": 1968, "from": "Christina Sandberg", "to": "Patti Hogan", "event": "Wimbledon", "round": "R32", "score": "6-4 6-4", "date_status": "RECONSTRUCTED - draw/day chronology", "source": "https://tennis-belt.com/lineage/", "kind": "transfer"}, {"date": "1968-06-29", "year": 1968, "from": "Patti Hogan", "to": "Françoise Dürr", "event": "Wimbledon", "round": "R16", "score": "6-2 6-2", "date_status": "RECONSTRUCTED - draw/day chronology", "source": "https://tennis-belt.com/lineage/", "kind": "transfer"}, {"date": "1968-07-02", "year": 1968, "from": "Françoise Dürr", "to": "Ann Jones", "event": "Wimbledon", "round": "QF", "score": "6-2 6-2", "date_status": "RECONSTRUCTED - draw/day chronology", "source": "https://tennis-belt.com/lineage/", "kind": "transfer"}, {"date": "1968-07-04", "year": 1968, "from": "Ann Jones", "to": "Billie Jean King", "event": "Wimbledon", "round": "SF", "score": "4-6 7-5 6-2", "date_status": "RECONSTRUCTED - draw/day chronology", "source": "https://tennis-belt.com/lineage/", "kind": "transfer"}, {"date": "1968-08-17", "year": 1968, "from": "Billie Jean King", "to": "Ann Jones", "event": "Fort Worth Pros", "round": "F", "score": "6-1 6-2", "date_status": "EXACT - season chronology", "source": "https://www.tennisabstract.com/seasons/1968_Womens_Season.html", "kind": "transfer"}, {"date": "1968-09-07", "year": 1968, "from": "Ann Jones", "to": "Virginia Wade", "event": "US Open", "round": "SF", "score": "7-5 6-1", "date_status": "RECONSTRUCTED - final-week draw chronology", "source": "https://tennis-belt.com/lineage/", "kind": "transfer"}, {"date": "1968-10-13", "year": 1968, "from": "Virginia Wade", "to": "Winnie Shaw", "event": "Manchester Indoors", "round": "SF", "score": "8-10 6-3 6-3", "date_status": "RECONSTRUCTED - event chronology", "source": "https://tennis-belt.com/lineage/", "kind": "transfer"}, {"date": "1968-10-14", "year": 1968, "from": "Winnie Shaw", "to": "Margaret Court", "event": "Manchester Indoors", "round": "F", "score": "7-5 6-4", "date_status": "EXACT - season chronology", "source": "https://www.tennisabstract.com/seasons/1968_Womens_Season.html", "kind": "transfer"}, {"date": "1968-11-23", "year": 1968, "from": "Margaret Court", "to": "Virginia Wade", "event": "Dewar Cup Final / London", "round": "F", "score": "6-3 6-4", "date_status": "EXACT", "source": "https://xn--meb.pisz.pl/Virginia_Wade", "kind": "transfer"}, {"date": "1968-12-30", "year": 1968, "from": "Virginia Wade", "to": "Pat Walkden", "event": "Port Elizabeth", "round": "F", "score": "6-4 6-3", "date_status": "EXACT - season chronology", "source": "https://www.tennisabstract.com/seasons/1968_Womens_Season.html", "kind": "transfer"}]}, "1969": {"entry": "Pat Walkden", "exit": "Nancy Richey", "transfers": 14, "played_transfers": 14, "defences": 74, "title_matches": 88, "undated_defences": 74, "defence_leaders": [{"player": "Margaret Court", "count": 31}, {"player": "Julie Heldman", "count": 8}, {"player": "Kerry Reid", "count": 7}, {"player": "Ann Jones", "count": 7}, {"player": "Pat Walkden", "count": 6}], "busiest_event": {"event": "US Open", "transfers": 2}, "transfers_rows": [{"date": "1969-01-18", "year": 1969, "from": "Pat Walkden", "to": "Virginia Wade", "event": "Western Province Championships / Cape Town", "round": "F", "score": "6-4 6-1", "date_status": "EXACT - event final day", "source": "https://kiwix.drnathanhutchins.com/content/wikipedia_en_all_maxi_2026-02/1969_ILTF_Women%27s_Tennis_Circuit", "kind": "transfer"}, {"date": "1969-03-15", "year": 1969, "from": "Virginia Wade", "to": "Julie Heldman", "event": "Barranquilla International", "round": "SF", "score": "6-3 3-6 6-3", "date_status": "EXACT - contemporary daily chronology", "source": "https://coleccion.aw/show/fulltext/?AMIGOE-1969-03-15=", "kind": "transfer"}, {"date": "1969-04-02", "year": 1969, "from": "Julie Heldman", "to": "Margaret Court", "event": "Caribe Hilton International / San Juan", "round": "F", "score": "6-4 7-5", "date_status": "EXACT", "source": "https://www.tennisabstract.com/cgi-bin/wtourney.cgi?t=W_1969San_Juan", "kind": "transfer"}, {"date": "1969-05-11", "year": 1969, "from": "Margaret Court", "to": "Kerry Reid", "event": "Surrey Hard Court Championships / Guildford", "round": "F", "score": "6-3 7-5", "date_status": "EXACT - event final day", "source": "https://fr.wikipedia.org/wiki/Tournoi_de_tennis_de_Guildford_%28dames_1969%29", "kind": "transfer"}, {"date": "1969-05-25", "year": 1969, "from": "Kerry Reid", "to": "Nancy Richey", "event": "Federation Cup Final / Australia vs United States", "round": "Rubber", "score": "6-4 6-3", "date_status": "EXACT - tie final day", "source": "https://en.wikipedia.org/wiki/Margaret_Court_career_statistics", "kind": "transfer"}, {"date": "1969-06-05", "year": 1969, "from": "Nancy Richey", "to": "Margaret Court", "event": "Roland Garros", "round": "SF", "score": "6-3 4-6 7-5", "date_status": "RECONSTRUCTED - draw/day chronology", "source": "https://tennis-belt.com/lineage/", "kind": "transfer"}, {"date": "1969-07-03", "year": 1969, "from": "Margaret Court", "to": "Ann Jones", "event": "Wimbledon", "round": "SF", "score": "10-12 6-3 6-2", "date_status": "RECONSTRUCTED - draw/day chronology", "source": "https://www.tennisabstract.com/cgi-bin/wtourney.cgi?t=W_1969Wimbledon", "kind": "transfer"}, {"date": "1969-07-26", "year": 1969, "from": "Ann Jones", "to": "Françoise Dürr", "event": "Swiss Open / Gstaad", "round": "SF", "score": "6-2 6-2", "date_status": "RECONSTRUCTED - event/draw chronology", "source": "https://kiwix.drnathanhutchins.com/content/wikipedia_en_all_maxi_2023-10/A/1969_Suisse_Open_Gstaad", "kind": "transfer"}, {"date": "1969-08-05", "year": 1969, "from": "Françoise Dürr", "to": "Billie Jean King", "event": "St. Louis Pro Championships", "round": "SF", "score": "SCORE UNRESOLVED", "date_status": "RECONSTRUCTED - event/draw chronology", "source": "https://en.wikipedia.org/wiki/1969_ILTF_Women%27s_Tennis_Circuit", "kind": "transfer"}, {"date": "1969-08-21", "year": 1969, "from": "Billie Jean King", "to": "Rosie Casals", "event": "Baltimore Pros", "round": "F", "score": "6-3 6-1", "date_status": "EXACT - season chronology", "source": "https://www.tennisabstract.com/seasons/1969_Womens_Season.html", "kind": "transfer"}, {"date": "1969-09-08", "year": 1969, "from": "Rosie Casals", "to": "Nancy Richey", "event": "US Open", "round": "SF", "score": "7-5 6-3", "date_status": "RECONSTRUCTED - tournament final-week chronology", "source": "https://www.tennis-x.com/results/us-open/rosie-casals.php", "kind": "transfer"}, {"date": "1969-09-09", "year": 1969, "from": "Nancy Richey", "to": "Margaret Court", "event": "US Open", "round": "F", "score": "6-2 6-2", "date_status": "EXACT - event final day", "source": "https://en.wikipedia.org/wiki/1969_ILTF_Women%27s_Tennis_Circuit", "kind": "transfer"}, {"date": "1969-10-11", "year": 1969, "from": "Margaret Court", "to": "Billie Jean King", "event": "Las Vegas", "round": "SF", "score": "8-6 6-8 6-4", "date_status": "RECONSTRUCTED - event chronology", "source": "https://tennis-belt.com/lineage/", "kind": "transfer"}, {"date": "1969-10-12", "year": 1969, "from": "Billie Jean King", "to": "Nancy Richey", "event": "Las Vegas", "round": "F", "score": "2-6 6-4 6-1", "date_status": "RECONSTRUCTED - event chronology", "source": "https://www.tennisabstract.com/seasons/1969_Womens_Season.html", "kind": "transfer"}]}, "1970": {"entry": "Nancy Richey", "exit": "Billie Jean King", "transfers": 24, "played_transfers": 24, "defences": 83, "title_matches": 107, "undated_defences": 83, "defence_leaders": [{"player": "Margaret Court", "count": 37}, {"player": "Billie Jean King", "count": 20}, {"player": "Ann Jones", "count": 11}, {"player": "Rosie Casals", "count": 5}, {"player": "Nancy Richey", "count": 4}], "busiest_event": {"event": "Philadelphia Indoor", "transfers": 2}, "transfers_rows": [{"date": "1970-02-01", "year": 1970, "from": "Nancy Richey", "to": "Billie Jean King", "event": "Philadelphia Indoor", "round": "SF", "score": "6-4 7-5", "date_status": "RECONSTRUCTED - draw/day chronology", "source": "https://tennis-belt.com/lineage/", "kind": "transfer"}, {"date": "1970-02-02", "year": 1970, "from": "Billie Jean King", "to": "Margaret Court", "event": "Philadelphia Indoor", "round": "F", "score": "6-3 7-6(12)", "date_status": "EXACT - event final day", "source": "https://www.tennisabstract.com/seasons/1970_Womens_Season.html", "kind": "transfer"}, {"date": "1970-03-15", "year": 1970, "from": "Margaret Court", "to": "Billie Jean King", "event": "Sydney", "round": "F", "score": "6-2 4-6 6-3", "date_status": "RECONSTRUCTED - event chronology", "source": "https://tennis-belt.com/lineage/", "kind": "transfer"}, {"date": "1970-04-04", "year": 1970, "from": "Billie Jean King", "to": "Margaret Court", "event": "South African Open / Johannesburg", "round": "F", "score": "6-4 1-6 6-3", "date_status": "EXACT - event final day", "source": "https://en.wikipedia.org/wiki/1970_South_African_Open_(tennis)", "kind": "transfer"}, {"date": "1970-04-11", "year": 1970, "from": "Margaret Court", "to": "Billie Jean King", "event": "Durban", "round": "F", "score": "6-4 2-6 6-2", "date_status": "RECONSTRUCTED - event chronology", "source": "https://www.tennisabstract.com/seasons/1970_Womens_Season.html", "kind": "transfer"}, {"date": "1970-04-18", "year": 1970, "from": "Billie Jean King", "to": "Kerry Reid", "event": "Monte Carlo Open", "round": "SF", "score": "6-2 7-5", "date_status": "RECONSTRUCTED - draw/day chronology", "source": "https://en.wikipedia.org/wiki/1970_Monte_Carlo_Open", "kind": "transfer"}, {"date": "1970-04-19", "year": 1970, "from": "Kerry Reid", "to": "Helga Masthoff", "event": "Monte Carlo Open", "round": "F", "score": "6-4 6-1", "date_status": "EXACT - event final day", "source": "https://en.wikipedia.org/wiki/1970_Monte_Carlo_Open", "kind": "transfer"}, {"date": "1970-04-24", "year": 1970, "from": "Helga Masthoff", "to": "Billie Jean King", "event": "Italian Open / Rome", "round": "QF", "score": "1-6 6-2 6-4", "date_status": "RECONSTRUCTED - draw/day chronology", "source": "https://en.wikipedia.org/wiki/1970_Italian_Open_(tennis)", "kind": "transfer"}, {"date": "1970-04-30", "year": 1970, "from": "Billie Jean King", "to": "Virginia Wade", "event": "British Hard Court Championships / Bournemouth", "round": "QF", "score": "6-2 6-3", "date_status": "RECONSTRUCTED - draw/day chronology", "source": "https://en.wikipedia.org/wiki/1970_British_Hard_Court_Championships", "kind": "transfer"}, {"date": "1970-05-02", "year": 1970, "from": "Virginia Wade", "to": "Margaret Court", "event": "British Hard Court Championships / Bournemouth", "round": "F", "score": "6-2 6-3", "date_status": "EXACT - event final day", "source": "https://en.wikipedia.org/wiki/1970_British_Hard_Court_Championships", "kind": "transfer"}, {"date": "1970-05-16", "year": 1970, "from": "Margaret Court", "to": "Joyce Williams", "event": "Fulham", "round": "SF", "score": "2-6 6-3 6-4", "date_status": "RECONSTRUCTED - draw/day chronology", "source": "https://tennis-belt.com/lineage/", "kind": "transfer"}, {"date": "1970-05-17", "year": 1970, "from": "Joyce Williams", "to": "Ann Jones", "event": "Fulham", "round": "F", "score": "6-1 4-6 6-4", "date_status": "RECONSTRUCTED - event chronology", "source": "https://www.tennisabstract.com/seasons/1970_Womens_Season.html", "kind": "transfer"}, {"date": "1970-06-13", "year": 1970, "from": "Ann Jones", "to": "Billie Jean King", "event": "Wightman Cup", "round": "RR / tie singles", "score": "6-4 6-2", "date_status": "RECONSTRUCTED - tie chronology", "source": "https://tennis-belt.com/lineage/", "kind": "transfer"}, {"date": "1970-07-04", "year": 1970, "from": "Billie Jean King", "to": "Margaret Court", "event": "Wimbledon", "round": "F", "score": "14-12 11-9", "date_status": "EXACT", "source": "https://en.wikipedia.org/wiki/1970_Wimbledon_Championships_%E2%80%93_Women%27s_singles", "kind": "transfer"}, {"date": "1970-08-29", "year": 1970, "from": "Margaret Court", "to": "Patti Hogan", "event": "South Orange", "round": "SF", "score": "1-6 7-6(2) 6-4", "date_status": "RECONSTRUCTED - draw/day chronology", "source": "https://tennis-belt.com/lineage/", "kind": "transfer"}, {"date": "1970-08-30", "year": 1970, "from": "Patti Hogan", "to": "Kerry Reid", "event": "South Orange", "round": "F", "score": "7-6(2) 6-4", "date_status": "RECONSTRUCTED - event final chronology", "source": "https://www.tennisabstract.com/seasons/1970_Womens_Season.html", "kind": "transfer"}, {"date": "1970-09-09", "year": 1970, "from": "Kerry Reid", "to": "Rosie Casals", "event": "US Open", "round": "QF", "score": "6-4 4-6 6-4", "date_status": "RECONSTRUCTED - draw chronology", "source": "https://www.tennis-x.com/results/us-open/rosie-casals.php", "kind": "transfer"}, {"date": "1970-09-13", "year": 1970, "from": "Rosie Casals", "to": "Margaret Court", "event": "US Open", "round": "F", "score": "6-2 2-6 6-1", "date_status": "EXACT - event final day", "source": "https://en.wikipedia.org/wiki/1970_US_Open_(tennis)", "kind": "transfer"}, {"date": "1970-09-19", "year": 1970, "from": "Margaret Court", "to": "Chris Evert", "event": "Charlotte", "round": "SF", "score": "7-6(1) 7-6(4)", "date_status": "RECONSTRUCTED - event chronology", "source": "https://chrisevert.net/match-results-and-records/complete-singles-results-by-year-by-opponent/results-by-opponent/results-by-opponent-c/", "kind": "transfer"}, {"date": "1970-09-20", "year": 1970, "from": "Chris Evert", "to": "Nancy Richey", "event": "Charlotte", "round": "F", "score": "6-4 6-1", "date_status": "RECONSTRUCTED - event final chronology", "source": "https://en.wikipedia.org/wiki/Carolinas_International_Tennis_Tournament", "kind": "transfer"}, {"date": "1970-09-25", "year": 1970, "from": "Nancy Richey", "to": "Judy Tegart", "event": "Houston Women's Invitation", "round": "SF", "score": "4-6 7-5 6-2", "date_status": "RECONSTRUCTED - draw/day chronology", "source": "https://kiwix.thunderforge.net/content/wikipedia_en_all_maxi_2025-08/1970_Houston_Women%27s_Invitation", "kind": "transfer"}, {"date": "1970-09-26", "year": 1970, "from": "Judy Tegart", "to": "Rosie Casals", "event": "Houston Women's Invitation", "round": "F", "score": "5-7 6-1 7-5", "date_status": "EXACT - event final day", "source": "https://kiwix.thunderforge.net/content/wikipedia_en_all_maxi_2025-08/1970_Houston_Women%27s_Invitation", "kind": "transfer"}, {"date": "1970-10-04", "year": 1970, "from": "Rosie Casals", "to": "Nancy Richey", "event": "San Francisco", "round": "F", "score": "7-6(2) 6-4", "date_status": "RECONSTRUCTED - event final chronology", "source": "https://www.tennisabstract.com/seasons/1970_Womens_Season.html", "kind": "transfer"}, {"date": "1970-11-08", "year": 1970, "from": "Nancy Richey", "to": "Billie Jean King", "event": "Virginia Slims of Richmond", "round": "F", "score": "6-3 6-3", "date_status": "RECONSTRUCTED - event final chronology", "source": "https://wikipedia.cabillot.eu/content/wikipedia_fr_all_maxi_2024-05/A/Tournoi_de_tennis_de_Richmond", "kind": "transfer"}]}, "1971": {"entry": "Billie Jean King", "exit": "Kerry Reid", "transfers": 16, "played_transfers": 16, "defences": 79, "title_matches": 95, "undated_defences": 79, "defence_leaders": [{"player": "Billie Jean King", "count": 50}, {"player": "Chris Evert", "count": 20}, {"player": "Françoise Dürr", "count": 4}, {"player": "Rosie Casals", "count": 3}, {"player": "Julie Heldman", "count": 2}], "busiest_event": {"event": "Caribe Hilton Championships / San Juan", "transfers": 3}, "transfers_rows": [{"date": "1971-02-08", "year": 1971, "from": "Billie Jean King", "to": "Françoise Dürr", "event": "Virginia Slims of Philadelphia", "round": "SF", "score": "6-2 5-7 7-6(6)", "date_status": "RECONSTRUCTED - draw/day chronology", "source": "https://tennis-belt.com/lineage/", "kind": "transfer"}, {"date": "1971-02-09", "year": 1971, "from": "Françoise Dürr", "to": "Rosie Casals", "event": "Virginia Slims of Philadelphia", "round": "F", "score": "6-3 3-6 6-2", "date_status": "EXACT - event final day", "source": "https://en.wikipedia.org/wiki/Advanta_Championships_of_Philadelphia", "kind": "transfer"}, {"date": "1971-02-16", "year": 1971, "from": "Rosie Casals", "to": "Françoise Dürr", "event": "Virginia Slims of Fort Lauderdale", "round": "SF", "score": "5-7 6-4 6-3", "date_status": "RECONSTRUCTED - draw/day chronology", "source": "https://tennis-belt.com/lineage/", "kind": "transfer"}, {"date": "1971-02-25", "year": 1971, "from": "Françoise Dürr", "to": "Rosie Casals", "event": "Virginia Slims Nationals / Boston", "round": "SF", "score": "6-3 6-2", "date_status": "RECONSTRUCTED - draw/day chronology", "source": "https://tennis-belt.com/lineage/", "kind": "transfer"}, {"date": "1971-02-26", "year": 1971, "from": "Rosie Casals", "to": "Billie Jean King", "event": "Virginia Slims Nationals / Boston", "round": "F", "score": "4-6 6-2 6-3", "date_status": "EXACT - event final day", "source": "https://www.tennisabstract.com/seasons/1971_Womens_Season.html", "kind": "transfer"}, {"date": "1971-03-27", "year": 1971, "from": "Billie Jean King", "to": "Rosie Casals", "event": "Virginia Slims Invitational of New York", "round": "F", "score": "6-4 6-4", "date_status": "EXACT - event final day", "source": "https://en.wikipedia.org/wiki/1971_Virginia_Slims_Invitational_of_New_York", "kind": "transfer"}, {"date": "1971-04-01", "year": 1971, "from": "Rosie Casals", "to": "Peaches Bartkowicz", "event": "Caribe Hilton Championships / San Juan", "round": "QF", "score": "6-2 6-4", "date_status": "RECONSTRUCTED - draw chronology", "source": "https://tennis-belt.com/lineage/", "kind": "transfer"}, {"date": "1971-04-03", "year": 1971, "from": "Peaches Bartkowicz", "to": "Nancy Richey", "event": "Caribe Hilton Championships / San Juan", "round": "SF", "score": "6-2 6-2", "date_status": "RECONSTRUCTED - draw chronology", "source": "https://tennis-belt.com/lineage/", "kind": "transfer"}, {"date": "1971-04-04", "year": 1971, "from": "Nancy Richey", "to": "Ann Jones", "event": "Caribe Hilton Championships / San Juan", "round": "F", "score": "6-4 6-4", "date_status": "EXACT - event final day", "source": "https://fr.wikipedia.org/wiki/Tournoi_de_tennis_de_Porto_Rico_(dames_1971)", "kind": "transfer"}, {"date": "1971-04-07", "year": 1971, "from": "Ann Jones", "to": "Julie Heldman", "event": "Virginia Slims Masters / St. Petersburg", "round": "R16", "score": "7-5 6-2", "date_status": "RECONSTRUCTED - draw chronology", "source": "https://tennis-belt.com/lineage/", "kind": "transfer"}, {"date": "1971-04-11", "year": 1971, "from": "Julie Heldman", "to": "Chris Evert", "event": "Virginia Slims Masters / St. Petersburg", "round": "F", "score": "6-1 6-2", "date_status": "EXACT", "source": "https://en.wikipedia.org/wiki/1971_Virginia_Slims_Masters", "kind": "transfer"}, {"date": "1971-09-10", "year": 1971, "from": "Chris Evert", "to": "Billie Jean King", "event": "US Open", "round": "SF", "score": "6-3 6-2", "date_status": "EXACT - contemporary dated image/report", "source": "https://www.gettyimages.com/detail/news-photo/open-usa-chris-evert-before-match-vs-usa-billie-jean-news-photo/81343175", "kind": "transfer"}, {"date": "1971-12-05", "year": 1971, "from": "Billie Jean King", "to": "Françoise Dürr", "event": "Benson & Hedges International / Christchurch", "round": "F", "score": "6-3 6-0", "date_status": "EXACT - event final day", "source": "https://fr.wikipedia.org/wiki/Tournoi_de_tennis_de_Christchurch_(dames_1971)", "kind": "transfer"}, {"date": "1971-12-10", "year": 1971, "from": "Françoise Dürr", "to": "Valerie Ziegenfuss", "event": "Auckland Championships", "round": "QF", "score": "6-4 6-2", "date_status": "RECONSTRUCTED - USER-VERIFIED NEWSPAPER ORDERING + EVENT CHRONOLOGY", "source": "User-verified contemporary Auckland newspaper evidence; calendar day placed from event/round chronology", "kind": "transfer"}, {"date": "1971-12-11", "year": 1971, "from": "Valerie Ziegenfuss", "to": "Rosie Casals", "event": "Auckland Championships", "round": "SF", "score": "6-2 6-4", "date_status": "RECONSTRUCTED - USER-VERIFIED NEWSPAPER ORDERING + EVENT CHRONOLOGY", "source": "User-verified contemporary Auckland newspaper evidence; calendar day placed from event/round chronology", "kind": "transfer"}, {"date": "1971-12-12", "year": 1971, "from": "Rosie Casals", "to": "Kerry Reid", "event": "Auckland Championships", "round": "F", "score": "6-4 6-0", "date_status": "RECONSTRUCTED - USER-VERIFIED NEWSPAPER ORDERING + EVENT CHRONOLOGY", "source": "User-verified contemporary Auckland newspaper evidence; calendar day placed from event/round chronology", "kind": "transfer"}]}, "1972": {"entry": "Kerry Reid", "exit": "Chris Evert", "transfers": 25, "played_transfers": 25, "defences": 71, "title_matches": 96, "undated_defences": 71, "defence_leaders": [{"player": "Billie Jean King", "count": 35}, {"player": "Nancy Richey", "count": 20}, {"player": "Chris Evert", "count": 4}, {"player": "Kerry Reid", "count": 3}, {"player": "Margaret Court", "count": 3}], "busiest_event": {"event": "US Open", "transfers": 5}, "transfers_rows": [{"date": "1972-01-15", "year": 1972, "from": "Kerry Reid", "to": "Billie Jean King", "event": "British Motor Cars Invitational / San Francisco", "round": "F", "score": "7-6(0) 7-6(2)", "date_status": "EXACT", "source": "https://en.wikipedia.org/wiki/1972_British_Motor_Cars_Invitational", "kind": "transfer"}, {"date": "1972-01-22", "year": 1972, "from": "Billie Jean King", "to": "Françoise Dürr", "event": "Independent Press-Telegram Championships / Long Beach", "round": "SF", "score": "6-3 6-0", "date_status": "EXACT - draw/day chronology", "source": "https://en.wikipedia.org/wiki/1972_ILTF_Women%27s_Tennis_Circuit", "kind": "transfer"}, {"date": "1972-01-23", "year": 1972, "from": "Françoise Dürr", "to": "Rosie Casals", "event": "Independent Press-Telegram Championships / Long Beach", "round": "F", "score": "6-2 6-7(4) 6-3", "date_status": "EXACT", "source": "https://storage.googleapis.com/areq.net/lang/fr/Fran%C3%A7oise_D%C3%BCrr.html", "kind": "transfer"}, {"date": "1972-01-29", "year": 1972, "from": "Rosie Casals", "to": "Virginia Wade", "event": "Virginia Slims National Indoors / Boston", "round": "SF", "score": "7-5 6-2", "date_status": "EXACT - draw/day chronology", "source": "https://en.wikipedia.org/wiki/1972_ILTF_Women%27s_Tennis_Circuit", "kind": "transfer"}, {"date": "1972-02-05", "year": 1972, "from": "Virginia Wade", "to": "Helen Gourlay", "event": "Fort Lauderdale Pro", "round": "R16", "score": "1-6 6-4 6-3", "date_status": "EXACT", "source": "https://tennis-db.com/wta/tournaments/sackmann_wta%3A5e0a17128aec4a7eebfd64ab1c11ec11cef623f66096ca377cf0a840aa5cbaeb/fort-lauderdale-pro", "kind": "transfer"}, {"date": "1972-02-06", "year": 1972, "from": "Helen Gourlay", "to": "Wendy Overton", "event": "Fort Lauderdale Pro", "round": "QF", "score": "6-3 7-5", "date_status": "RECONSTRUCTED - event chronology", "source": "https://tennis-db.com/wta/tournaments/sackmann_wta%3A5e0a17128aec4a7eebfd64ab1c11ec11cef623f66096ca377cf0a840aa5cbaeb/fort-lauderdale-pro", "kind": "transfer"}, {"date": "1972-02-06", "year": 1972, "from": "Wendy Overton", "to": "Billie Jean King", "event": "Fort Lauderdale Pro", "round": "SF", "score": "6-2 6-1", "date_status": "RECONSTRUCTED - event chronology", "source": "https://tennis-db.com/wta/tournaments/sackmann_wta%3A5e0a17128aec4a7eebfd64ab1c11ec11cef623f66096ca377cf0a840aa5cbaeb/fort-lauderdale-pro", "kind": "transfer"}, {"date": "1972-02-07", "year": 1972, "from": "Billie Jean King", "to": "Chris Evert", "event": "Fort Lauderdale Pro", "round": "F", "score": "6-1 6-0", "date_status": "EXACT", "source": "https://tennis-db.com/wta/tournaments/sackmann_wta%3A5e0a17128aec4a7eebfd64ab1c11ec11cef623f66096ca377cf0a840aa5cbaeb/fort-lauderdale-pro", "kind": "transfer"}, {"date": "1972-02-29", "year": 1972, "from": "Chris Evert", "to": "Nancy Richey", "event": "Virginia Slims of Washington", "round": "F", "score": "7-6(1) 6-2", "date_status": "EXACT - event final day", "source": "https://en.wikipedia.org/wiki/1972_Virginia_Slims_of_Washington", "kind": "transfer"}, {"date": "1972-03-26", "year": 1972, "from": "Nancy Richey", "to": "Billie Jean King", "event": "Virginia Slims of Richmond", "round": "F", "score": "6-3 6-4", "date_status": "EXACT", "source": "https://en.wikipedia.org/wiki/1972_Virginia_Slims_of_Richmond", "kind": "transfer"}, {"date": "1972-04-01", "year": 1972, "from": "Billie Jean King", "to": "Nancy Richey", "event": "Caribe Hilton Invitational / San Juan", "round": "SF", "score": "7-6(3) 6-1", "date_status": "EXACT - draw/day chronology", "source": "https://en.wikipedia.org/wiki/1972_Caribe_Hilton_Invitational", "kind": "transfer"}, {"date": "1972-05-06", "year": 1972, "from": "Nancy Richey", "to": "Billie Jean King", "event": "Virginia Slims of Indianapolis", "round": "F", "score": "6-3 6-3", "date_status": "EXACT", "source": "https://en.wikipedia.org/wiki/1972_Virginia_Slims_of_Indianapolis", "kind": "transfer"}, {"date": "1972-08-05", "year": 1972, "from": "Billie Jean King", "to": "Françoise Dürr", "event": "Virginia Slims of Columbus", "round": "SF", "score": "2-6 6-2 6-2", "date_status": "EXACT - draw/day chronology", "source": "https://en.wikipedia.org/wiki/1972_ILTF_Women%27s_Tennis_Circuit", "kind": "transfer"}, {"date": "1972-08-06", "year": 1972, "from": "Françoise Dürr", "to": "Rosie Casals", "event": "Virginia Slims of Columbus", "round": "F", "score": "6-7(2) 7-6(0) 6-0", "date_status": "EXACT - event final day", "source": "https://en.wikipedia.org/wiki/1972_ILTF_Women%27s_Tennis_Circuit", "kind": "transfer"}, {"date": "1972-08-16", "year": 1972, "from": "Rosie Casals", "to": "Jill Cooper", "event": "Virginia Slims of Denver", "round": "R32", "score": "6-4 6-2", "date_status": "RECONSTRUCTED - draw chronology", "source": "https://en.wikipedia.org/wiki/1972_Virginia_Slims_of_Denver", "kind": "transfer"}, {"date": "1972-08-18", "year": 1972, "from": "Jill Cooper", "to": "Valerie Ziegenfuss", "event": "Virginia Slims of Denver", "round": "QF", "score": "7-5 6-2", "date_status": "EXACT - reconstructed draw chronology", "source": "https://en.wikipedia.org/wiki/1972_Virginia_Slims_of_Denver", "kind": "transfer"}, {"date": "1972-08-19", "year": 1972, "from": "Valerie Ziegenfuss", "to": "Nancy Richey", "event": "Virginia Slims of Denver", "round": "SF", "score": "6-2 6-3", "date_status": "EXACT - draw/day chronology", "source": "https://en.wikipedia.org/wiki/1972_Virginia_Slims_of_Denver", "kind": "transfer"}, {"date": "1972-08-31", "year": 1972, "from": "Nancy Richey", "to": "Kazuko Sawamatsu", "event": "US Open", "round": "R64", "score": "6-4 4-6 6-3", "date_status": "RECONSTRUCTED - draw chronology", "source": "https://www.tennis-x.com/results/us-open/kazuko-sawamatsu.php", "kind": "transfer"}, {"date": "1972-09-02", "year": 1972, "from": "Kazuko Sawamatsu", "to": "Olga Morozova", "event": "US Open", "round": "R32", "score": "6-4 6-4", "date_status": "RECONSTRUCTED - draw chronology", "source": "https://www.tennis-x.com/results/us-open/olga-morozova.php", "kind": "transfer"}, {"date": "1972-09-06", "year": 1972, "from": "Olga Morozova", "to": "Chris Evert", "event": "US Open", "round": "QF", "score": "3-6 6-3 7-6", "date_status": "EXACT - contemporary chronology", "source": "https://www.tennis-x.com/results/us-open/olga-morozova.php", "kind": "transfer"}, {"date": "1972-09-08", "year": 1972, "from": "Chris Evert", "to": "Kerry Reid", "event": "US Open", "round": "SF", "score": "6-4 6-2", "date_status": "EXACT - draw/day chronology", "source": "https://en.wikipedia.org/wiki/1972_US_Open_%E2%80%93_Women%27s_singles", "kind": "transfer"}, {"date": "1972-09-09", "year": 1972, "from": "Kerry Reid", "to": "Billie Jean King", "event": "US Open", "round": "F", "score": "6-3 7-5", "date_status": "EXACT", "source": "https://en.wikipedia.org/wiki/1972_US_Open_%E2%80%93_Women%27s_singles", "kind": "transfer"}, {"date": "1972-09-24", "year": 1972, "from": "Billie Jean King", "to": "Margaret Court", "event": "Golden Gate Classic / Albany", "round": "F", "score": "6-4 6-1", "date_status": "EXACT - event final day", "source": "https://it.wikipedia.org/wiki/Golden_Gate_Classic_1972", "kind": "transfer"}, {"date": "1972-10-01", "year": 1972, "from": "Margaret Court", "to": "Billie Jean King", "event": "Virginia Slims of Phoenix", "round": "F", "score": "7-6(1) 6-3", "date_status": "EXACT - event final-day chronology", "source": "https://en.wikipedia.org/wiki/1972_ILTF_Women%27s_Tennis_Circuit", "kind": "transfer"}, {"date": "1972-10-14", "year": 1972, "from": "Billie Jean King", "to": "Chris Evert", "event": "Virginia Slims Championships / Boca Raton", "round": "SF", "score": "6-4 6-2", "date_status": "EXACT - draw/day chronology", "source": "https://www.wtatennis.com/legends/110100/billie-jean-king/record", "kind": "transfer"}]}, "1973": {"entry": "Chris Evert", "exit": "Evonne Goolagong", "transfers": 13, "played_transfers": 13, "defences": 72, "title_matches": 85, "undated_defences": 72, "defence_leaders": [{"player": "Margaret Court", "count": 28}, {"player": "Chris Evert", "count": 26}, {"player": "Billie Jean King", "count": 9}, {"player": "Kerry Reid", "count": 4}, {"player": "Virginia Wade", "count": 4}], "busiest_event": {"event": "Akron Tennis Open", "transfers": 2}, "transfers_rows": [{"date": "1973-03-10", "year": 1973, "from": "Chris Evert", "to": "Virginia Wade", "event": "Virginia Slims of Dallas", "round": "SF", "score": "2-6 6-3 9-7", "date_status": "RECONSTRUCTED - event/round chronology", "source": "https://raw.githubusercontent.com/Aneeshers/tennis-sackmann-archive/main/wta/wta_matches_1973.csv", "kind": "transfer"}, {"date": "1973-03-18", "year": 1973, "from": "Virginia Wade", "to": "Evonne Goolagong", "event": "U.S. Women's Indoor / Boston", "round": "F", "score": "6-4 6-4", "date_status": "EXACT - event final day", "source": "https://www.tennisabstract.com/seasons/1973_Womens_Season.html", "kind": "transfer"}, {"date": "1973-03-22", "year": 1973, "from": "Evonne Goolagong", "to": "Marita Redondo", "event": "Akron Tennis Open", "round": "R16", "score": "6-3 7-5", "date_status": "EXACT - contemporary report date", "source": "https://www.tennisabstract.com/blog/2023/03/22/march-22-1973-evert-navratilova-i/", "kind": "transfer"}, {"date": "1973-03-24", "year": 1973, "from": "Marita Redondo", "to": "Chris Evert", "event": "Akron Tennis Open", "round": "SF", "score": "7-5 4-6 6-3", "date_status": "RECONSTRUCTED - event/round chronology", "source": "https://raw.githubusercontent.com/Aneeshers/tennis-sackmann-archive/main/wta/wta_matches_1973.csv", "kind": "transfer"}, {"date": "1973-06-03", "year": 1973, "from": "Chris Evert", "to": "Margaret Court", "event": "Roland Garros", "round": "F", "score": "6-7 7-6 6-4", "date_status": "EXACT", "source": "https://wtafiles.wtatennis.com/pdf/matchnotes/2023/903_honorroll.pdf", "kind": "transfer"}, {"date": "1973-07-04", "year": 1973, "from": "Margaret Court", "to": "Chris Evert", "event": "Wimbledon", "round": "SF", "score": "6-1 1-6 6-1", "date_status": "EXACT - contemporary report", "source": "https://cdn.manchesterhistory.org/News/Manchester%20Evening%20Hearld_1973-07-05.pdf", "kind": "transfer"}, {"date": "1973-07-07", "year": 1973, "from": "Chris Evert", "to": "Billie Jean King", "event": "Wimbledon", "round": "F", "score": "6-0 7-5", "date_status": "EXACT", "source": "https://www.tennisabstract.com/blog/2023/07/07/july-7-1973-the-triple/", "kind": "transfer"}, {"date": "1973-08-12", "year": 1973, "from": "Billie Jean King", "to": "Margaret Court", "event": "Commerce Union Bank Classic / Nashville", "round": "F", "score": "6-3 4-6 6-2", "date_status": "EXACT", "source": "https://www.tennisabstract.com/blog/2023/08/12/august-12-1973-no-middle-ground/", "kind": "transfer"}, {"date": "1973-12-15", "year": 1973, "from": "Margaret Court", "to": "Kerry Harris", "event": "Western Australian Championships / Perth", "round": "SF", "score": "7-5 6-4", "date_status": "EXACT", "source": "https://www.tennisabstract.com/blog/2023/12/15/december-15-1973-court-adjourned/", "kind": "transfer"}, {"date": "1973-12-16", "year": 1973, "from": "Kerry Harris", "to": "Evonne Goolagong", "event": "Western Australian Championships / Perth", "round": "F", "score": "7-5 6-1", "date_status": "EXACT - event final-day chronology", "source": "https://it.wikipedia.org/wiki/Western_Australian_Open", "kind": "transfer"}, {"date": "1973-12-21", "year": 1973, "from": "Evonne Goolagong", "to": "Julie Heldman", "event": "Bonne Bell Cup", "round": "RR", "score": "6-3 1-6 6-3", "date_status": "EXACT - database event date / match order", "source": "https://raw.githubusercontent.com/Aneeshers/tennis-sackmann-archive/main/wta/wta_matches_1973.csv", "kind": "transfer"}, {"date": "1973-12-21", "year": 1973, "from": "Julie Heldman", "to": "Kerry Reid", "event": "Bonne Bell Cup", "round": "RR", "score": "2-6 6-1 6-4", "date_status": "EXACT - database event date / match order", "source": "https://raw.githubusercontent.com/Aneeshers/tennis-sackmann-archive/main/wta/wta_matches_1973.csv", "kind": "transfer"}, {"date": "1973-12-31", "year": 1973, "from": "Kerry Reid", "to": "Evonne Goolagong", "event": "Australian Open", "round": "SF", "score": "7-6 5-7 6-1", "date_status": "RECONSTRUCTED - contemporary daily chronology", "source": "https://www.tennis-x.com/results/australian-open/evonne-goolagong-cawley.php", "kind": "transfer"}]}, "1974": {"entry": "Evonne Goolagong", "exit": "Chris Evert", "transfers": 26, "played_transfers": 26, "defences": 78, "title_matches": 104, "undated_defences": 78, "defence_leaders": [{"player": "Chris Evert", "count": 48}, {"player": "Billie Jean King", "count": 11}, {"player": "Evonne Goolagong", "count": 7}, {"player": "Virginia Wade", "count": 6}, {"player": "Olga Morozova", "count": 2}], "busiest_event": {"event": "Virginia Slims of San Francisco", "transfers": 4}, "transfers_rows": [{"date": "1974-01-06", "year": 1974, "from": "Evonne Goolagong", "to": "Karen Krantzcke", "event": "New South Wales Open / Sydney", "round": "F", "score": "6-2 6-3", "date_status": "EXACT - event final day", "source": "https://it.wikipedia.org/wiki/New_South_Wales_Open_gennaio_1974", "kind": "transfer"}, {"date": "1974-01-16", "year": 1974, "from": "Karen Krantzcke", "to": "Janet Newberry", "event": "Virginia Slims of San Francisco", "round": "R16", "score": "1-6 6-4 6-3", "date_status": "EXACT - draw/day chronology", "source": "https://en.wikipedia.org/wiki/1974_Virginia_Slims_of_San_Francisco", "kind": "transfer"}, {"date": "1974-01-17", "year": 1974, "from": "Janet Newberry", "to": "Kerry Reid", "event": "Virginia Slims of San Francisco", "round": "QF", "score": "7-6 6-2", "date_status": "EXACT - draw/day chronology", "source": "https://en.wikipedia.org/wiki/1974_Virginia_Slims_of_San_Francisco", "kind": "transfer"}, {"date": "1974-01-18", "year": 1974, "from": "Kerry Reid", "to": "Chris Evert", "event": "Virginia Slims of San Francisco", "round": "SF", "score": "7-6(0) 6-2", "date_status": "EXACT - draw/day chronology", "source": "https://en.wikipedia.org/wiki/1974_Virginia_Slims_of_San_Francisco", "kind": "transfer"}, {"date": "1974-01-19", "year": 1974, "from": "Chris Evert", "to": "Billie Jean King", "event": "Virginia Slims of San Francisco", "round": "F", "score": "7-6(2) 6-2", "date_status": "EXACT", "source": "https://en.wikipedia.org/wiki/1974_Virginia_Slims_of_San_Francisco", "kind": "transfer"}, {"date": "1974-01-27", "year": 1974, "from": "Billie Jean King", "to": "Chris Evert", "event": "Virginia Slims of Mission Viejo", "round": "F", "score": "6-3 6-1", "date_status": "EXACT", "source": "https://www.tennisabstract.com/seasons/1974_Womens_Season.html", "kind": "transfer"}, {"date": "1974-03-02", "year": 1974, "from": "Chris Evert", "to": "Rosie Casals", "event": "Virginia Slims of Chicago", "round": "SF", "score": "6-2 6-3", "date_status": "EXACT - draw/day chronology", "source": "https://en.wikipedia.org/wiki/1974_Virginia_Slims_of_Chicago", "kind": "transfer"}, {"date": "1974-03-03", "year": 1974, "from": "Rosie Casals", "to": "Virginia Wade", "event": "Virginia Slims of Chicago", "round": "F", "score": "2-6 6-4 6-4", "date_status": "EXACT", "source": "https://en.wikipedia.org/wiki/1974_Virginia_Slims_of_Chicago", "kind": "transfer"}, {"date": "1974-03-10", "year": 1974, "from": "Virginia Wade", "to": "Chris Evert", "event": "Maureen Connolly Brinker International / Dallas", "round": "F", "score": "7-5 6-2", "date_status": "EXACT", "source": "https://en.wikipedia.org/wiki/1974_WTA_Tour", "kind": "transfer"}, {"date": "1974-03-31", "year": 1974, "from": "Chris Evert", "to": "Billie Jean King", "event": "S&H National Indoor Championship / New York", "round": "F", "score": "6-3 3-6 6-2", "date_status": "EXACT - event final day", "source": "https://en.wikipedia.org/wiki/1974_WTA_Tour", "kind": "transfer"}, {"date": "1974-04-28", "year": 1974, "from": "Billie Jean King", "to": "Olga Morozova", "event": "Virginia Slims of Philadelphia", "round": "F", "score": "7-6(2) 6-1", "date_status": "EXACT", "source": "https://en.wikipedia.org/wiki/1974_WTA_Tour", "kind": "transfer"}, {"date": "1974-05-03", "year": 1974, "from": "Olga Morozova", "to": "Evonne Goolagong", "event": "Family Circle Cup / Hilton Head", "round": "QF", "score": "6-3 6-2", "date_status": "EXACT - draw/day chronology", "source": "https://en.wikipedia.org/wiki/1974_Family_Circle_Cup", "kind": "transfer"}, {"date": "1974-05-04", "year": 1974, "from": "Evonne Goolagong", "to": "Kerry Reid", "event": "Family Circle Cup / Hilton Head", "round": "SF", "score": "6-3 3-6 6-4", "date_status": "EXACT - draw/day chronology", "source": "https://en.wikipedia.org/wiki/1974_Family_Circle_Cup", "kind": "transfer"}, {"date": "1974-05-05", "year": 1974, "from": "Kerry Reid", "to": "Chris Evert", "event": "Family Circle Cup / Hilton Head", "round": "F", "score": "6-1 6-3", "date_status": "EXACT", "source": "https://en.wikipedia.org/wiki/1974_Family_Circle_Cup", "kind": "transfer"}, {"date": "1974-09-08", "year": 1974, "from": "Chris Evert", "to": "Evonne Goolagong", "event": "US Open", "round": "SF", "score": "6-0 6-7 6-3", "date_status": "EXACT - resumed/completed date", "source": "https://www.newyorker.com/magazine/1974/10/07/gold-diggers-of-1974", "kind": "transfer"}, {"date": "1974-09-09", "year": 1974, "from": "Evonne Goolagong", "to": "Billie Jean King", "event": "US Open", "round": "F", "score": "3-6 6-3 7-5", "date_status": "EXACT", "source": "https://www.usopen.org/en_US/news/articles/2017-06-30/us_open_moments_sept_9_1974.html", "kind": "transfer"}, {"date": "1974-09-25", "year": 1974, "from": "Billie Jean King", "to": "Julie Heldman", "event": "Barnett Bank Tennis Classic / Orlando", "round": "SF", "score": "2-6 6-1 6-4", "date_status": "EXACT - draw/day chronology", "source": "https://en.wikipedia.org/wiki/1974_Barnett_Bank_Tennis_Classic", "kind": "transfer"}, {"date": "1974-09-26", "year": 1974, "from": "Julie Heldman", "to": "Martina Navratilova", "event": "Barnett Bank Tennis Classic / Orlando", "round": "F", "score": "7-6(4) 6-4", "date_status": "EXACT", "source": "https://en.wikipedia.org/wiki/1974_Barnett_Bank_Tennis_Classic", "kind": "transfer"}, {"date": "1974-09-27", "year": 1974, "from": "Martina Navratilova", "to": "Pam Teeguarden", "event": "Virginia Slims of Denver", "round": "R16", "score": "4-6 6-3 6-4", "date_status": "EXACT - draw/day chronology", "source": "https://en.wikipedia.org/wiki/1974_Virginia_Slims_of_Denver", "kind": "transfer"}, {"date": "1974-09-28", "year": 1974, "from": "Pam Teeguarden", "to": "Evonne Goolagong", "event": "Virginia Slims of Denver", "round": "QF", "score": "7-5 6-3", "date_status": "EXACT - draw/day chronology", "source": "https://en.wikipedia.org/wiki/1974_Virginia_Slims_of_Denver", "kind": "transfer"}, {"date": "1974-10-08", "year": 1974, "from": "Evonne Goolagong", "to": "Wendy Overton", "event": "Virginia Slims of Phoenix", "round": "R32", "score": "6-3 4-6 6-4", "date_status": "EXACT - reconstructed event chronology", "source": "https://en.wikipedia.org/wiki/1974_WTA_Tour", "kind": "transfer"}, {"date": "1974-10-11", "year": 1974, "from": "Wendy Overton", "to": "Helen Gourlay", "event": "Virginia Slims of Phoenix", "round": "QF", "score": "6-4 6-3", "date_status": "EXACT - draw/day chronology", "source": "https://en.wikipedia.org/wiki/1974_WTA_Tour", "kind": "transfer"}, {"date": "1974-10-13", "year": 1974, "from": "Helen Gourlay", "to": "Virginia Wade", "event": "Virginia Slims of Phoenix", "round": "F", "score": "6-1 6-2", "date_status": "EXACT", "source": "https://en.wikipedia.org/wiki/1974_WTA_Tour", "kind": "transfer"}, {"date": "1974-10-18", "year": 1974, "from": "Virginia Wade", "to": "Chris Evert", "event": "Virginia Slims Championships / Los Angeles", "round": "SF", "score": "6-4 6-2", "date_status": "EXACT - draw/day chronology", "source": "https://en.wikipedia.org/wiki/1974_WTA_Tour", "kind": "transfer"}, {"date": "1974-10-19", "year": 1974, "from": "Chris Evert", "to": "Evonne Goolagong", "event": "Virginia Slims Championships / Los Angeles", "round": "F", "score": "6-3 6-4", "date_status": "EXACT", "source": "https://www.latimes.com/archives/la-xpm-2002-nov-06-sp-tennis6-story.html", "kind": "transfer"}, {"date": "1974-10-29", "year": 1974, "from": "Evonne Goolagong", "to": "Chris Evert", "event": "World Invitational Tennis Classic / Hilton Head", "round": "SF", "score": "6-2 6-1", "date_status": "EXACT - contemporary opening-day report", "source": "https://www.bibliotecadeva.ro/periodice/scanteia/1974/10/scanteia_1974_10_10013.pdf", "kind": "transfer"}]}, "1975": {"entry": "Chris Evert", "exit": "Billie Jean King", "transfers": 5, "played_transfers": 5, "defences": 38, "title_matches": 43, "undated_defences": 38, "defence_leaders": [{"player": "Chris Evert", "count": 30}, {"player": "Billie Jean King", "count": 4}, {"player": "Virginia Wade", "count": 4}], "busiest_event": {"event": "Virginia Slims Championships / Los Angeles", "transfers": 2}, "transfers_rows": [{"date": "1975-01-19", "year": 1975, "from": "Chris Evert", "to": "Billie Jean King", "event": "Virginia Slims of Sarasota", "round": "F", "score": "6-2 6-3", "date_status": "EXACT", "source": "https://en.wikipedia.org/wiki/1975_Virginia_Slims_of_Sarasota", "kind": "transfer"}, {"date": "1975-03-28", "year": 1975, "from": "Billie Jean King", "to": "Virginia Wade", "event": "Virginia Slims of Philadelphia", "round": "SF", "score": "3-6 6-2 6-2", "date_status": "EXACT - draw/day chronology", "source": "https://www.wtatennis.com/legends/110100/billie-jean-king/record", "kind": "transfer"}, {"date": "1975-04-04", "year": 1975, "from": "Virginia Wade", "to": "Martina Navratilova", "event": "Virginia Slims Championships / Los Angeles", "round": "RR", "score": "7-5 6-3", "date_status": "EXACT - contemporary round-robin chronology", "source": "https://www.fordlibrarymuseum.gov/sites/default/files/pdf_documents/library/document/0412/041200068repro.pdf", "kind": "transfer"}, {"date": "1975-04-05", "year": 1975, "from": "Martina Navratilova", "to": "Chris Evert", "event": "Virginia Slims Championships / Los Angeles", "round": "F", "score": "6-4 6-2", "date_status": "EXACT", "source": "https://tennis-db.com/wta/tournaments/balldontlie_wta%3A99/wta-finals?season=1975", "kind": "transfer"}, {"date": "1975-07-02", "year": 1975, "from": "Chris Evert", "to": "Billie Jean King", "event": "Wimbledon", "round": "SF", "score": "2-6 6-2 6-3", "date_status": "EXACT", "source": "https://www.nytimes.com/1975/07/03/archives/mrs-king-beats-miss-evert-at-wimbledon-by-26-62-63.html", "kind": "transfer"}]}, "1976": {"entry": "Billie Jean King", "exit": "Chris Evert", "transfers": 4, "played_transfers": 4, "defences": 16, "title_matches": 20, "undated_defences": 16, "defence_leaders": [{"player": "Chris Evert", "count": 8}, {"player": "Billie Jean King", "count": 7}, {"player": "Dianne Fromholtz", "count": 1}], "busiest_event": {"event": "Thunderbird Classic / Phoenix", "transfers": 2}, "transfers_rows": [{"date": "1976-10-08", "year": 1976, "from": "Billie Jean King", "to": "Dianne Fromholtz", "event": "Thunderbird Classic / Phoenix", "round": "QF", "score": "6-3 6-2", "date_status": "EXACT - draw/day chronology", "source": "https://www.wtatennis.com/tournaments/", "kind": "transfer"}, {"date": "1976-10-10", "year": 1976, "from": "Dianne Fromholtz", "to": "Chris Evert", "event": "Thunderbird Classic / Phoenix", "round": "F", "score": "6-1 7-5", "date_status": "EXACT", "source": "https://en.wikipedia.org/wiki/1976_Thunderbird_Classic", "kind": "transfer"}, {"date": "1976-11-06", "year": 1976, "from": "Chris Evert", "to": "Virginia Wade", "event": "Dewar Cup / London", "round": "F", "score": "6-2 6-2", "date_status": "EXACT", "source": "https://en.wikipedia.org/wiki/1977_WTA_Tour", "kind": "transfer"}, {"date": "1976-11-11", "year": 1976, "from": "Virginia Wade", "to": "Chris Evert", "event": "Wightman Cup", "round": "RR / tie singles", "score": "6-2 3-6 6-3", "date_status": "EXACT", "source": "https://www.newspapers.com/", "kind": "transfer"}]}, "1977": {"entry": "Chris Evert", "exit": "Billie Jean King", "transfers": 12, "played_transfers": 12, "defences": 67, "title_matches": 79, "undated_defences": 67, "defence_leaders": [{"player": "Chris Evert", "count": 50}, {"player": "Sue Barker", "count": 7}, {"player": "Virginia Wade", "count": 5}, {"player": "Martina Navratilova", "count": 4}, {"player": "Wendy Turnbull", "count": 1}], "busiest_event": {"event": "Virginia Slims of Hollywood", "transfers": 2}, "transfers_rows": [{"date": "1977-01-09", "year": 1977, "from": "Chris Evert", "to": "Martina Navratilova", "event": "Virginia Slims of Washington", "round": "F", "score": "6-2 6-3", "date_status": "EXACT", "source": "https://www.washingtonpost.com/archive/sports/1977/01/10/navratilova-devastating-in-6-2-6-3-win-over-evert/ca64f141-5fba-47e7-9455-5fcf77314a4d/", "kind": "transfer"}, {"date": "1977-01-14", "year": 1977, "from": "Martina Navratilova", "to": "Sue Barker", "event": "Virginia Slims of Hollywood", "round": "QF", "score": "7-6 6-4", "date_status": "EXACT - draw/day chronology", "source": "https://de.wikipedia.org/wiki/Virginia_Slims_of_Hollywood_1977", "kind": "transfer"}, {"date": "1977-01-15", "year": 1977, "from": "Sue Barker", "to": "Chris Evert", "event": "Virginia Slims of Hollywood", "round": "SF", "score": "6-2 6-4", "date_status": "EXACT - draw/day chronology", "source": "https://chrisevert.net/match-results-and-records/complete-singles-results-by-year-by-opponent/1977-2/", "kind": "transfer"}, {"date": "1977-03-05", "year": 1977, "from": "Chris Evert", "to": "Virginia Wade", "event": "Virginia Slims of San Francisco", "round": "SF", "score": "6-3 6-4", "date_status": "EXACT - draw/day chronology", "source": "https://en.wikipedia.org/wiki/1977_Virginia_Slims_of_San_Francisco", "kind": "transfer"}, {"date": "1977-03-06", "year": 1977, "from": "Virginia Wade", "to": "Sue Barker", "event": "Virginia Slims of San Francisco", "round": "F", "score": "6-3 6-4", "date_status": "EXACT", "source": "https://en.wikipedia.org/wiki/1977_Virginia_Slims_of_San_Francisco", "kind": "transfer"}, {"date": "1977-03-19", "year": 1977, "from": "Sue Barker", "to": "Chris Evert", "event": "Virginia Slims of Philadelphia", "round": "SF", "score": "6-2 7-5", "date_status": "EXACT - draw/day chronology", "source": "https://en.wikipedia.org/wiki/1977_Virginia_Slims_of_Philadelphia", "kind": "transfer"}, {"date": "1977-06-29", "year": 1977, "from": "Chris Evert", "to": "Virginia Wade", "event": "Wimbledon", "round": "SF", "score": "6-2 4-6 6-1", "date_status": "EXACT", "source": "https://www.washingtonpost.com/archive/sports/1977/06/30/wade-stuns-evert-in-semis/c651160c-924c-4872-8db8-10fa6a5f6eda/", "kind": "transfer"}, {"date": "1977-09-08", "year": 1977, "from": "Virginia Wade", "to": "Wendy Turnbull", "event": "US Open", "round": "QF", "score": "6-2 6-1", "date_status": "EXACT - contemporary results chronology", "source": "https://www.lemonde.fr/archives/article/1977/09/10/l-italien-barazutti-en-demi-finale-a-forest-hills_2869629_1819218.html", "kind": "transfer"}, {"date": "1977-09-10", "year": 1977, "from": "Wendy Turnbull", "to": "Chris Evert", "event": "US Open", "round": "F", "score": "7-6(3) 6-2", "date_status": "EXACT", "source": "https://newspapers.swco.ttu.edu/server/api/core/bitstreams/8599c912-f83a-4d04-ae18-bc99372fac62/content", "kind": "transfer"}, {"date": "1977-11-01", "year": 1977, "from": "Chris Evert", "to": "Dianne Fromholtz", "event": "Colgate Series Championships / Palm Springs", "round": "RR", "score": "7-6(3) 6-4", "date_status": "EXACT - round-robin day chronology", "source": "https://en.wikipedia.org/wiki/1977_Colgate_Series_Championships", "kind": "transfer"}, {"date": "1977-11-03", "year": 1977, "from": "Dianne Fromholtz", "to": "Martina Navratilova", "event": "Colgate Series Championships / Palm Springs", "round": "RR", "score": "6-4 3-6 6-3", "date_status": "EXACT - round-robin day chronology", "source": "https://it.wikipedia.org/wiki/Colgate_Series_Championships_1977_-_Singolare", "kind": "transfer"}, {"date": "1977-11-27", "year": 1977, "from": "Martina Navratilova", "to": "Billie Jean King", "event": "Gunze Invitational / Tokyo", "round": "F", "score": "7-5 5-7 6-1", "date_status": "EXACT - tournament final day", "source": "https://de.wikipedia.org/wiki/Gunze_Invitational_1977", "kind": "transfer"}]}, "1978": {"entry": "Billie Jean King", "exit": "Chris Evert", "transfers": 13, "played_transfers": 13, "defences": 85, "title_matches": 98, "undated_defences": 85, "defence_leaders": [{"player": "Martina Navratilova", "count": 45}, {"player": "Chris Evert", "count": 31}, {"player": "Evonne Goolagong", "count": 7}, {"player": "JoAnne Russell", "count": 1}, {"player": "Tracy Austin", "count": 1}], "busiest_event": {"event": "Virginia Slims of Washington", "transfers": 4}, "transfers_rows": [{"date": "1978-01-03", "year": 1978, "from": "Billie Jean King", "to": "Regina Maršíková", "event": "Virginia Slims of Washington", "round": "R32", "score": "1-6 6-3 6-3", "date_status": "EXACT", "source": "https://www.washingtonpost.com/archive/sports/1978/01/05/no-easy-matches-for-king-now/", "kind": "transfer"}, {"date": "1978-01-05", "year": 1978, "from": "Regina Maršíková", "to": "JoAnne Russell", "event": "Virginia Slims of Washington", "round": "R16", "score": "6-3 6-3", "date_status": "EXACT - draw/day chronology", "source": "https://www.wtatennis.com/tournaments/704/washington-dc/1978", "kind": "transfer"}, {"date": "1978-01-07", "year": 1978, "from": "JoAnne Russell", "to": "Betty Stöve", "event": "Virginia Slims of Washington", "round": "SF", "score": "2-6 7-6 6-2", "date_status": "EXACT - draw/day chronology", "source": "https://www.wtatennis.com/tournaments/704/washington-dc/1978", "kind": "transfer"}, {"date": "1978-01-08", "year": 1978, "from": "Betty Stöve", "to": "Martina Navratilova", "event": "Virginia Slims of Washington", "round": "F", "score": "7-5 6-4", "date_status": "EXACT", "source": "https://www.wtatennis.com/tournaments/704/washington-dc/1978", "kind": "transfer"}, {"date": "1978-03-10", "year": 1978, "from": "Martina Navratilova", "to": "Tracy Austin", "event": "Virginia Slims of Dallas", "round": "QF", "score": "6-3 2-6 7-6", "date_status": "EXACT - draw/day chronology", "source": "https://www.wtatennis.com/tournaments/801/dallas/1978", "kind": "transfer"}, {"date": "1978-03-12", "year": 1978, "from": "Tracy Austin", "to": "Evonne Goolagong", "event": "Virginia Slims of Dallas", "round": "F", "score": "4-6 6-0 6-2", "date_status": "EXACT", "source": "https://www.wtatennis.com/tournaments/801/dallas/1978", "kind": "transfer"}, {"date": "1978-04-02", "year": 1978, "from": "Evonne Goolagong", "to": "Martina Navratilova", "event": "Virginia Slims Championships", "round": "F", "score": "7-6(0) 6-4", "date_status": "EXACT", "source": "https://en.wikipedia.org/wiki/1978_Virginia_Slims_Championships", "kind": "transfer"}, {"date": "1978-04-14", "year": 1978, "from": "Martina Navratilova", "to": "JoAnne Russell", "event": "Family Circle Cup / Hilton Head", "round": "QF", "score": "6-2 6-4", "date_status": "EXACT - draw/day chronology", "source": "https://www.wtatennis.com/tournaments/804/hilton-head/1978", "kind": "transfer"}, {"date": "1978-04-15", "year": 1978, "from": "JoAnne Russell", "to": "Kerry Reid", "event": "Family Circle Cup / Hilton Head", "round": "SF", "score": "6-2 6-1", "date_status": "EXACT - draw/day chronology", "source": "https://www.wtatennis.com/tournaments/804/hilton-head/1978", "kind": "transfer"}, {"date": "1978-04-16", "year": 1978, "from": "Kerry Reid", "to": "Chris Evert", "event": "Family Circle Cup / Hilton Head", "round": "F", "score": "6-2 6-0", "date_status": "EXACT", "source": "https://www.wtatennis.com/tournaments/804/hilton-head/1978", "kind": "transfer"}, {"date": "1978-06-24", "year": 1978, "from": "Chris Evert", "to": "Martina Navratilova", "event": "Eastbourne", "round": "F", "score": "6-4 4-6 9-7", "date_status": "EXACT", "source": "https://en.wikipedia.org/wiki/1978_Eastbourne_International", "kind": "transfer"}, {"date": "1978-09-07", "year": 1978, "from": "Martina Navratilova", "to": "Pam Shriver", "event": "US Open", "round": "SF", "score": "7-6(3) 7-6(3)", "date_status": "EXACT", "source": "https://www.washingtonpost.com/archive/sports/1978/09/08/shriver-upsets-navratilova/", "kind": "transfer"}, {"date": "1978-09-09", "year": 1978, "from": "Pam Shriver", "to": "Chris Evert", "event": "US Open", "round": "F", "score": "7-5 6-4", "date_status": "EXACT", "source": "https://www.washingtonpost.com/archive/sports/1978/09/10/evert-stops-shriver-for-fourth-straight-open/", "kind": "transfer"}]}, "1979": {"entry": "Chris Evert", "exit": "Evonne Goolagong", "transfers": 18, "played_transfers": 18, "defences": 69, "title_matches": 87, "undated_defences": 69, "defence_leaders": [{"player": "Martina Navratilova", "count": 27}, {"player": "Chris Evert", "count": 22}, {"player": "Evonne Goolagong", "count": 12}, {"player": "Tracy Austin", "count": 8}], "busiest_event": {"event": "Clairol Crown / Carlsbad", "transfers": 2}, "transfers_rows": [{"date": "1979-01-14", "year": 1979, "from": "Chris Evert", "to": "Martina Navratilova", "event": "Avon Championships of California / Oakland", "round": "F", "score": "7-5 7-5", "date_status": "EXACT", "source": "https://en.wikipedia.org/wiki/1979_Avon_Championships_of_California", "kind": "transfer"}, {"date": "1979-02-18", "year": 1979, "from": "Martina Navratilova", "to": "Chris Evert", "event": "Avon Championships of Los Angeles", "round": "F", "score": "6-3 6-4", "date_status": "EXACT", "source": "https://en.wikipedia.org/wiki/1979_Avon_Championships_of_Los_Angeles", "kind": "transfer"}, {"date": "1979-03-04", "year": 1979, "from": "Chris Evert", "to": "Martina Navratilova", "event": "Avon Championships of Dallas", "round": "F", "score": "6-4 6-4", "date_status": "EXACT", "source": "https://en.wikipedia.org/wiki/1979_Avon_Championships_of_Dallas", "kind": "transfer"}, {"date": "1979-03-31", "year": 1979, "from": "Martina Navratilova", "to": "Dianne Fromholtz", "event": "Clairol Crown / Carlsbad", "round": "SF", "score": "7-5 6-1", "date_status": "EXACT - two-day 4-player draw chronology", "source": "https://de.wikipedia.org/wiki/Clairol_Crown_1979", "kind": "transfer"}, {"date": "1979-04-01", "year": 1979, "from": "Dianne Fromholtz", "to": "Chris Evert", "event": "Clairol Crown / Carlsbad", "round": "F", "score": "3-6 6-3 6-1", "date_status": "EXACT", "source": "https://en.wikipedia.org/wiki/Chris_Evert_career_statistics", "kind": "transfer"}, {"date": "1979-05-12", "year": 1979, "from": "Chris Evert", "to": "Tracy Austin", "event": "Italian Open / Rome", "round": "SF", "score": "6-4 2-6 7-6", "date_status": "EXACT", "source": "https://www.tennismajors.com/wta-tour-news/rome-internazionali-bnl-ditalia-wta-1000-wta-tour-news/may-12-1979-the-day-tracy-austin-ended-chris-everts-125-match-clay-court-winning-streak-405460.html", "kind": "transfer"}, {"date": "1979-05-20", "year": 1979, "from": "Tracy Austin", "to": "Martina Navratilova", "event": "Tokyo Gunze Classic", "round": "F", "score": "6-1 6-1", "date_status": "EXACT - formal tournament chronology", "source": "https://en.wikipedia.org/wiki/Tracy_Austin", "kind": "transfer"}, {"date": "1979-06-15", "year": 1979, "from": "Martina Navratilova", "to": "Billie Jean King", "event": "Chichester / Crossley Carpets Trophy", "round": "QF", "score": "6-1 6-2", "date_status": "EXACT - draw/day chronology", "source": "https://en.wikipedia.org/wiki/1979_Crossley_Carpets_Trophy", "kind": "transfer"}, {"date": "1979-06-16", "year": 1979, "from": "Billie Jean King", "to": "Evonne Goolagong", "event": "Chichester / Crossley Carpets Trophy", "round": "SF", "score": "1-6 6-4 10-8", "date_status": "EXACT - draw/day chronology", "source": "https://en.wikipedia.org/wiki/1979_Crossley_Carpets_Trophy", "kind": "transfer"}, {"date": "1979-07-04", "year": 1979, "from": "Evonne Goolagong", "to": "Chris Evert", "event": "Wimbledon", "round": "SF", "score": "6-3 6-2", "date_status": "EXACT", "source": "https://www.washingtonpost.com/archive/sports/1979/07/05/evert-breezes-austin-beaten-by-navratilova/3199781e-4ef3-480e-8689-0ba58c0dea3e/", "kind": "transfer"}, {"date": "1979-07-06", "year": 1979, "from": "Chris Evert", "to": "Martina Navratilova", "event": "Wimbledon", "round": "F", "score": "6-4 6-4", "date_status": "EXACT", "source": "https://en.wikipedia.org/wiki/July_1979", "kind": "transfer"}, {"date": "1979-08-05", "year": 1979, "from": "Martina Navratilova", "to": "Tracy Austin", "event": "Wells Fargo Open / San Diego", "round": "F", "score": "6-4 6-2", "date_status": "EXACT", "source": "https://en.wikipedia.org/wiki/1979_Wells_Fargo_Open", "kind": "transfer"}, {"date": "1979-08-26", "year": 1979, "from": "Tracy Austin", "to": "Chris Evert", "event": "Volvo Tennis Cup / Mahwah", "round": "F", "score": "6-7(2) 6-4 6-1", "date_status": "EXACT", "source": "https://a.osmarks.net/content/wikipedia_en_all_maxi_2020-08/A/1979_Volvo_Tennis_Cup", "kind": "transfer"}, {"date": "1979-09-09", "year": 1979, "from": "Chris Evert", "to": "Tracy Austin", "event": "US Open", "round": "F", "score": "6-4 6-3", "date_status": "EXACT", "source": "https://www.washingtonpost.com/archive/politics/1979/09/10/mcenroe-and-austin-star-in-the-big-top-of-tennis/ad12cc06-c845-45fd-9a6f-3100e9bc6eee/", "kind": "transfer"}, {"date": "1979-09-28", "year": 1979, "from": "Tracy Austin", "to": "Wendy Turnbull", "event": "Davison's Tennis Classic / Atlanta", "round": "SF", "score": "7-5 6-1", "date_status": "EXACT - event chronology", "source": "https://en.wikipedia.org/wiki/1979_Davison%27s_Tennis_Classic", "kind": "transfer"}, {"date": "1979-09-29", "year": 1979, "from": "Wendy Turnbull", "to": "Martina Navratilova", "event": "Davison's Tennis Classic / Atlanta", "round": "F", "score": "7-6(6) 6-4", "date_status": "EXACT", "source": "https://en.wikipedia.org/wiki/1979_Davison%27s_Tennis_Classic", "kind": "transfer"}, {"date": "1979-10-06", "year": 1979, "from": "Martina Navratilova", "to": "Dianne Fromholtz", "event": "US Indoor Championships / Minneapolis", "round": "SF", "score": "1-6 6-3 6-1", "date_status": "EXACT - event chronology", "source": "https://en.wikipedia.org/wiki/1979_US_Indoor_Championships", "kind": "transfer"}, {"date": "1979-10-07", "year": 1979, "from": "Dianne Fromholtz", "to": "Evonne Goolagong", "event": "US Indoor Championships / Minneapolis", "round": "F", "score": "6-3 6-4", "date_status": "EXACT", "source": "https://en.wikipedia.org/wiki/1979_US_Indoor_Championships", "kind": "transfer"}]}, "1980": {"entry": "Evonne Goolagong", "exit": "Wendy Turnbull", "transfers": 22, "played_transfers": 22, "defences": 80, "title_matches": 102, "undated_defences": 80, "defence_leaders": [{"player": "Martina Navratilova", "count": 36}, {"player": "Chris Evert", "count": 18}, {"player": "Tracy Austin", "count": 13}, {"player": "Hana Mandlíková", "count": 6}, {"player": "Evonne Goolagong", "count": 5}], "busiest_event": {"event": "Avon Championships of Dallas", "transfers": 4}, "transfers_rows": [{"date": "1980-01-03", "year": 1980, "from": "Evonne Goolagong", "to": "Martina Navratilova", "event": "Colgate Series Championships / Landover", "round": "R16", "score": "6-3 6-2", "date_status": "EXACT", "source": "https://www.washingtonpost.com/archive/sports/1980/01/04/austin-routs-lloyd-navratilova-drubs-goolagong/", "kind": "transfer"}, {"date": "1980-03-02", "year": 1980, "from": "Martina Navratilova", "to": "Billie Jean King", "event": "Avon Championships of Houston", "round": "F", "score": "6-1 6-3", "date_status": "EXACT", "source": "https://en.wikipedia.org/wiki/1980_Avon_Championships_of_Houston", "kind": "transfer"}, {"date": "1980-03-04", "year": 1980, "from": "Billie Jean King", "to": "Greer Stevens", "event": "Avon Championships of Dallas", "round": "R32", "score": "6-4 3-6 7-6(4)", "date_status": "EXACT - draw/day chronology", "source": "https://billie-jean-moffitt-king.blogspot.com/2012/02/1980-age-36.html", "kind": "transfer"}, {"date": "1980-03-05", "year": 1980, "from": "Greer Stevens", "to": "Pam Shriver", "event": "Avon Championships of Dallas", "round": "R16", "score": "1-6 6-1 6-3", "date_status": "EXACT - draw/day chronology", "source": "https://fr-academic.com/dic.nsf/frwiki/1649949/", "kind": "transfer"}, {"date": "1980-03-07", "year": 1980, "from": "Pam Shriver", "to": "Virginia Wade", "event": "Avon Championships of Dallas", "round": "QF", "score": "7-6 RET", "date_status": "EXACT - draw/day chronology", "source": "https://fr-academic.com/dic.nsf/frwiki/1649949/", "kind": "transfer"}, {"date": "1980-03-08", "year": 1980, "from": "Virginia Wade", "to": "Martina Navratilova", "event": "Avon Championships of Dallas", "round": "SF", "score": "6-1 6-4", "date_status": "EXACT - draw/day chronology", "source": "https://tennis-belt.com/lineage/", "kind": "transfer"}, {"date": "1980-03-23", "year": 1980, "from": "Martina Navratilova", "to": "Tracy Austin", "event": "Avon Championships / New York", "round": "F", "score": "6-2 2-6 6-2", "date_status": "EXACT", "source": "https://en.wikipedia.org/wiki/1980_Avon_Championships", "kind": "transfer"}, {"date": "1980-05-04", "year": 1980, "from": "Tracy Austin", "to": "Martina Navratilova", "event": "United Airlines Tournament of Champions / Orlando", "round": "F", "score": "6-2 6-4", "date_status": "EXACT", "source": "https://en.wikipedia.org/wiki/United_Airlines_Tournament_of_Champions", "kind": "transfer"}, {"date": "1980-06-18", "year": 1980, "from": "Martina Navratilova", "to": "Betty Stöve", "event": "Eastbourne", "round": "R16", "score": "6-3 3-6 7-5", "date_status": "EXACT", "source": "https://elpais.com/diario/1980/06/19/deportes/330213605_850215.html", "kind": "transfer"}, {"date": "1980-06-19", "year": 1980, "from": "Betty Stöve", "to": "Greer Stevens", "event": "Eastbourne", "round": "QF", "score": "6-3 6-3", "date_status": "EXACT", "source": "https://elpais.com/diario/1980/06/20/deportes/330300010_850215.html", "kind": "transfer"}, {"date": "1980-06-20", "year": 1980, "from": "Greer Stevens", "to": "Wendy Turnbull", "event": "Eastbourne", "round": "SF", "score": "6-3 6-4", "date_status": "EXACT - draw/day chronology", "source": "https://www.wtatennis.com/tournaments/710/eastbourne/1980", "kind": "transfer"}, {"date": "1980-06-21", "year": 1980, "from": "Wendy Turnbull", "to": "Tracy Austin", "event": "Eastbourne", "round": "F", "score": "7-6(3) 6-2", "date_status": "EXACT", "source": "https://www.wtatennis.com/tournaments/710/eastbourne/1980", "kind": "transfer"}, {"date": "1980-07-02", "year": 1980, "from": "Tracy Austin", "to": "Evonne Goolagong", "event": "Wimbledon", "round": "SF", "score": "6-3 0-6 6-4", "date_status": "EXACT", "source": "https://tennis-belt.com/lineage/", "kind": "transfer"}, {"date": "1980-08-09", "year": 1980, "from": "Evonne Goolagong", "to": "Andrea Jaeger", "event": "Indianapolis", "round": "SF", "score": "6-4 6-2", "date_status": "EXACT", "source": "https://elpais.com/diario/1980/08/10/deportes/334706810_850215.html", "kind": "transfer"}, {"date": "1980-08-10", "year": 1980, "from": "Andrea Jaeger", "to": "Chris Evert", "event": "Indianapolis", "round": "F", "score": "6-4 6-3", "date_status": "EXACT - event chronology", "source": "https://www.tennisabstract.com/seasons/1980_Womens_Season.html", "kind": "transfer"}, {"date": "1980-09-27", "year": 1980, "from": "Chris Evert", "to": "Hana Mandlíková", "event": "Atlanta", "round": "SF", "score": "6-1 6-4", "date_status": "EXACT - event chronology", "source": "https://www.tennisabstract.com/seasons/1980_Womens_Season.html", "kind": "transfer"}, {"date": "1980-10-24", "year": 1980, "from": "Hana Mandlíková", "to": "Sylvia Hanika", "event": "Brighton / Daihatsu Challenge", "round": "QF", "score": "6-3 6-4", "date_status": "EXACT - daily chronology", "source": "https://newspapers.swco.ttu.edu/bitstreams/ee7b73e0-6aaf-4d81-8f23-cf8791a3a082/download", "kind": "transfer"}, {"date": "1980-10-25", "year": 1980, "from": "Sylvia Hanika", "to": "Chris Evert", "event": "Brighton / Daihatsu Challenge", "round": "SF", "score": "6-4 6-4", "date_status": "EXACT - daily chronology", "source": "https://en.wikipedia.org/wiki/Brighton_International", "kind": "transfer"}, {"date": "1980-11-22", "year": 1980, "from": "Chris Evert", "to": "Martina Navratilova", "event": "Lion's Cup / Tokyo", "round": "SF", "score": "7-6(3) 6-2", "date_status": "EXACT - 22–23 Nov draw chronology", "source": "https://de.wikipedia.org/wiki/Lion%E2%80%99s_Cup_1980", "kind": "transfer"}, {"date": "1980-11-29", "year": 1980, "from": "Martina Navratilova", "to": "Wendy Turnbull", "event": "Australian Open", "round": "SF", "score": "6-4 7-5", "date_status": "EXACT - Melbourne local date", "source": "https://en.wikipedia.org/wiki/1980_Australian_Open", "kind": "transfer"}, {"date": "1980-11-30", "year": 1980, "from": "Wendy Turnbull", "to": "Hana Mandlíková", "event": "Australian Open", "round": "F", "score": "6-0 7-5", "date_status": "EXACT - Melbourne local date", "source": "https://tennishistory.com.au/files/wp-content/uploads/2021/08/australian-finals-women.pdf", "kind": "transfer"}, {"date": "1980-12-06", "year": 1980, "from": "Hana Mandlíková", "to": "Wendy Turnbull", "event": "New South Wales Open / Sydney", "round": "SF", "score": "2-6 6-2 7-6", "date_status": "EXACT", "source": "https://en.wikipedia.org/wiki/1980_New_South_Wales_Open", "kind": "transfer"}]}, "1981": {"entry": "Wendy Turnbull", "exit": "Tracy Austin", "transfers": 18, "played_transfers": 18, "defences": 59, "title_matches": 77, "undated_defences": 59, "defence_leaders": [{"player": "Tracy Austin", "count": 23}, {"player": "Martina Navratilova", "count": 17}, {"player": "Chris Evert", "count": 11}, {"player": "Andrea Jaeger", "count": 5}, {"player": "Wendy Turnbull", "count": 1}], "busiest_event": {"event": "Colgate Series Championships / Landover", "transfers": 3}, "transfers_rows": [{"date": "1981-01-07", "year": 1981, "from": "Wendy Turnbull", "to": "Martina Navratilova", "event": "Colgate Series Championships / Landover", "round": "RR", "score": "6-2 6-4", "date_status": "EXACT", "source": "https://elpais.com/diario/1981/01/07/deportes/347670010_850215.html", "kind": "transfer"}, {"date": "1981-01-10", "year": 1981, "from": "Martina Navratilova", "to": "Andrea Jaeger", "event": "Colgate Series Championships / Landover", "round": "SF", "score": "6-4 4-6 6-1", "date_status": "EXACT - event chronology", "source": "https://www.washingtonpost.com/archive/sports/1981/01/13/jaegers-new-wave-beached-by-austins-determination/71cc26ae-2594-4ea1-9076-446f7bb29faf/", "kind": "transfer"}, {"date": "1981-01-12", "year": 1981, "from": "Andrea Jaeger", "to": "Tracy Austin", "event": "Colgate Series Championships / Landover", "round": "F", "score": "6-2 6-2", "date_status": "EXACT", "source": "https://www.washingtonpost.com/archive/sports/1981/01/13/jaegers-new-wave-beached-by-austins-determination/71cc26ae-2594-4ea1-9076-446f7bb29faf/", "kind": "transfer"}, {"date": "1981-05-17", "year": 1981, "from": "Tracy Austin", "to": "Andrea Jaeger", "event": "Tokyo Gunze Classic", "round": "F", "score": "3-6 6-3 7-6(7)", "date_status": "EXACT - formal tournament chronology", "source": "https://www.tennisabstract.com/seasons/1981_Womens_Season.html", "kind": "transfer"}, {"date": "1981-06-04", "year": 1981, "from": "Andrea Jaeger", "to": "Sylvia Hanika", "event": "Roland Garros", "round": "SF", "score": "4-6 6-1 6-4", "date_status": "EXACT - draw chronology", "source": "https://www.tennis-x.com/results/french-open/andrea-jaeger.php", "kind": "transfer"}, {"date": "1981-06-06", "year": 1981, "from": "Sylvia Hanika", "to": "Hana Mandlíková", "event": "Roland Garros", "round": "F", "score": "6-2 6-4", "date_status": "EXACT", "source": "https://en.wikipedia.org/wiki/1981_French_Open", "kind": "transfer"}, {"date": "1981-06-16", "year": 1981, "from": "Hana Mandlíková", "to": "Kim Sands", "event": "Eastbourne / BMW Championships", "round": "R32", "score": "0-6 6-0 6-3", "date_status": "EXACT", "source": "https://elpais.com/diario/1981/06/17/deportes/361576810_850215.html", "kind": "transfer"}, {"date": "1981-06-18", "year": 1981, "from": "Kim Sands", "to": "Barbara Potter", "event": "Eastbourne / BMW Championships", "round": "R16", "score": "6-3 6-3", "date_status": "EXACT - draw/day chronology", "source": "https://www.itftennis.com/en/tournament/eastbourne/gbr/1981/w-wt-gbr-02a-1981/", "kind": "transfer"}, {"date": "1981-06-20", "year": 1981, "from": "Barbara Potter", "to": "Tracy Austin", "event": "Eastbourne / BMW Championships", "round": "SF", "score": "6-0 6-1", "date_status": "EXACT - draw/day chronology", "source": "https://www.itftennis.com/en/tournament/eastbourne/gbr/1981/w-wt-gbr-02a-1981/", "kind": "transfer"}, {"date": "1981-06-30", "year": 1981, "from": "Tracy Austin", "to": "Pam Shriver", "event": "Wimbledon", "round": "QF", "score": "7-5 6-4", "date_status": "EXACT", "source": "https://www.tennis-x.com/results/wimbledon/pam-shriver.php", "kind": "transfer"}, {"date": "1981-07-01", "year": 1981, "from": "Pam Shriver", "to": "Chris Evert", "event": "Wimbledon", "round": "SF", "score": "6-3 6-1", "date_status": "EXACT", "source": "https://www.washingtonpost.com/archive/sports/1981/07/02/evert-eases-past-shriver-mandlikova-outlast-navratilova/65664521-f4cd-4482-a348-dfd2152fe51f/", "kind": "transfer"}, {"date": "1981-08-23", "year": 1981, "from": "Chris Evert", "to": "Tracy Austin", "event": "Canadian Open / Toronto", "round": "F", "score": "6-1 6-4", "date_status": "EXACT", "source": "https://www.landoftennis.com/finals_women/full_list/chris_evert.htm", "kind": "transfer"}, {"date": "1981-10-04", "year": 1981, "from": "Tracy Austin", "to": "Martina Navratilova", "event": "U.S. Women's Indoor / Bloomington", "round": "F", "score": "6-0 6-2", "date_status": "EXACT", "source": "https://www.washingtonpost.com/archive/sports/1981/10/05/36-to-1-shot-wins-1arc/3775470e-3da0-4316-8d97-d8bcbe90c8c8/", "kind": "transfer"}, {"date": "1981-11-01", "year": 1981, "from": "Martina Navratilova", "to": "Tracy Austin", "event": "Porsche Tennis Grand Prix / Filderstadt", "round": "F", "score": "4-6 6-3 6-4", "date_status": "EXACT - tournament chronology", "source": "https://en.wikipedia.org/wiki/1981_WTA_Tour", "kind": "transfer"}, {"date": "1981-11-21", "year": 1981, "from": "Tracy Austin", "to": "Martina Navratilova", "event": "Tokyo Lion Cup", "round": "SF", "score": "6-3 6-4", "date_status": "EXACT - draw/day chronology", "source": "https://www.tennisabstract.com/seasons/1981_Womens_Season.html", "kind": "transfer"}, {"date": "1981-11-29", "year": 1981, "from": "Martina Navratilova", "to": "Chris Evert", "event": "NSW Building Society Open / Sydney", "round": "F", "score": "6-4 2-6 6-1", "date_status": "EXACT - tournament chronology", "source": "https://en.wikipedia.org/wiki/1981_WTA_Tour", "kind": "transfer"}, {"date": "1981-12-06", "year": 1981, "from": "Chris Evert", "to": "Martina Navratilova", "event": "Australian Open", "round": "F", "score": "6-7(4) 6-4 7-5", "date_status": "EXACT - Melbourne local date", "source": "https://en.wikipedia.org/wiki/1981_Australian_Open", "kind": "transfer"}, {"date": "1981-12-20", "year": 1981, "from": "Martina Navratilova", "to": "Tracy Austin", "event": "Toyota Series Championships / East Rutherford", "round": "F", "score": "2-6 6-4 6-2", "date_status": "EXACT", "source": "https://www.wtatennis.com/tournaments/611/toyota-championships/1981", "kind": "transfer"}]}, "1982": {"entry": "Tracy Austin", "exit": "Martina Navratilova", "transfers": 13, "played_transfers": 13, "defences": 94, "title_matches": 107, "undated_defences": 94, "defence_leaders": [{"player": "Martina Navratilova", "count": 50}, {"player": "Chris Evert", "count": 37}, {"player": "Anne Smith", "count": 2}, {"player": "Sylvia Hanika", "count": 2}, {"player": "Andrea Jaeger", "count": 2}], "busiest_event": {"event": "Italian Open / Perugia", "transfers": 3}, "transfers_rows": [{"date": "1982-01-06", "year": 1982, "from": "Tracy Austin", "to": "Anne Smith", "event": "Avon Championships of Washington", "round": "R16", "score": "6-3 6-1", "date_status": "EXACT - daily chronology", "source": "https://www.washingtonpost.com/archive/sports/1982/01/11/navratilova-smith-await-a-friendly-final/22bb7dfb-0b08-40fc-8716-ae0202e7c1d4/", "kind": "transfer"}, {"date": "1982-01-11", "year": 1982, "from": "Anne Smith", "to": "Martina Navratilova", "event": "Avon Championships of Washington", "round": "F", "score": "6-2 6-3", "date_status": "EXACT", "source": "https://www.washingtonpost.com/archive/sports/1982/01/11/navratilova-smith-await-a-friendly-final/22bb7dfb-0b08-40fc-8716-ae0202e7c1d4/", "kind": "transfer"}, {"date": "1982-03-28", "year": 1982, "from": "Martina Navratilova", "to": "Sylvia Hanika", "event": "Avon Championships / New York", "round": "F", "score": "1-6 6-3 6-4", "date_status": "EXACT", "source": "https://en.wikipedia.org/wiki/1982_Avon_Championships", "kind": "transfer"}, {"date": "1982-05-07", "year": 1982, "from": "Sylvia Hanika", "to": "Billie Jean King", "event": "Italian Open / Perugia", "round": "QF", "score": "6-0 0-6 6-3", "date_status": "RECONSTRUCTED - round chronology", "source": "https://tennisabstract.com/seasons/1982_Womens_Season.html", "kind": "transfer"}, {"date": "1982-05-08", "year": 1982, "from": "Billie Jean King", "to": "Hana Mandlíková", "event": "Italian Open / Perugia", "round": "SF", "score": "3-6 6-1 6-3", "date_status": "RECONSTRUCTED - round chronology", "source": "https://tennisabstract.com/seasons/1982_Womens_Season.html", "kind": "transfer"}, {"date": "1982-05-09", "year": 1982, "from": "Hana Mandlíková", "to": "Chris Evert", "event": "Italian Open / Perugia", "round": "F", "score": "6-0 6-2", "date_status": "RECONSTRUCTED - event final", "source": "https://tennisabstract.com/seasons/1982_Womens_Season.html", "kind": "transfer"}, {"date": "1982-06-03", "year": 1982, "from": "Chris Evert", "to": "Andrea Jaeger", "event": "Roland Garros", "round": "SF", "score": "6-3 6-1", "date_status": "EXACT", "source": "https://www.upi.com/Archives/1982/06/03/Andrea-Jaeger-defeated-Chris-Evert-Lloyd-6-3-6-1/", "kind": "transfer"}, {"date": "1982-06-05", "year": 1982, "from": "Andrea Jaeger", "to": "Martina Navratilova", "event": "Roland Garros", "round": "F", "score": "7-6(6) 6-1", "date_status": "EXACT", "source": "https://www.tennis.com/news/articles/", "kind": "transfer"}, {"date": "1982-07-29", "year": 1982, "from": "Martina Navratilova", "to": "Andrea Jaeger", "event": "Sydney Indoors 2", "round": "RR", "score": "1-6 6-3 6-2", "date_status": "EXACT / database date", "source": "https://matchstat.com/tennis/tournaments/w/Sydney%20Indoors%202/1982/", "kind": "transfer"}, {"date": "1982-08-08", "year": 1982, "from": "Andrea Jaeger", "to": "Chris Evert", "event": "Perth", "round": "F", "score": "6-1 3-6 6-0", "date_status": "RECONSTRUCTED - event week final", "source": "https://tennisabstract.com/seasons/1982_Womens_Season.html", "kind": "transfer"}, {"date": "1982-10-31", "year": 1982, "from": "Chris Evert", "to": "Martina Navratilova", "event": "Brighton / Daihatsu Challenge", "round": "F", "score": "6-1 6-4", "date_status": "EXACT", "source": "https://tennisabstract.com/seasons/1982_Womens_Season.html", "kind": "transfer"}, {"date": "1982-12-05", "year": 1982, "from": "Martina Navratilova", "to": "Chris Evert", "event": "Australian Open", "round": "F", "score": "6-3 2-6 6-3", "date_status": "EXACT", "source": "https://www.tennis.com/news/articles/on-this-day-1982-chris-evert-completes-her-career-slam-at-the-australian-open", "kind": "transfer"}, {"date": "1982-12-19", "year": 1982, "from": "Chris Evert", "to": "Martina Navratilova", "event": "Toyota Series Championships / East Rutherford", "round": "F", "score": "4-6 6-1 6-2", "date_status": "EXACT", "source": "https://www.wtatennis.com/tournaments/611/toyota-championships/1982", "kind": "transfer"}]}, "1983": {"entry": "Martina Navratilova", "exit": "Martina Navratilova", "transfers": 7, "played_transfers": 7, "defences": 77, "title_matches": 84, "undated_defences": 77, "defence_leaders": [{"player": "Martina Navratilova", "count": 73}, {"player": "Chris Evert", "count": 2}, {"player": "Mima Jaušovec", "count": 1}, {"player": "Kathy Jordan", "count": 1}], "busiest_event": {"event": "Wimbledon", "transfers": 4}, "transfers_rows": [{"date": "1983-05-28", "year": 1983, "from": "Martina Navratilova", "to": "Kathleen Horvath", "event": "Roland Garros", "round": "R16", "score": "6-4 0-6 6-3", "date_status": "EXACT", "source": "https://www.upi.com/Archives/1983/05/28/Kathy-Horvath-sent-defending-champion-and-top-seed-Martina/6000422942400/", "kind": "transfer"}, {"date": "1983-05-30", "year": 1983, "from": "Kathleen Horvath", "to": "Mima Jaušovec", "event": "Roland Garros", "round": "QF", "score": "6-1 6-1", "date_status": "EXACT", "source": "https://www.upi.com/Archives/1983/05/29/Top-seeded-Jimmy-Connors-chasing-the-only-Grand-Slam-title/8218423028800/", "kind": "transfer"}, {"date": "1983-06-04", "year": 1983, "from": "Mima Jaušovec", "to": "Chris Evert", "event": "Roland Garros", "round": "F", "score": "6-1 6-2", "date_status": "EXACT", "source": "https://www.upi.com/Archives/1983/06/04/Chris-Evert-Lloyd-reclaimed-her-crown-as-the-clay/2533423547200/", "kind": "transfer"}, {"date": "1983-06-24", "year": 1983, "from": "Chris Evert", "to": "Kathy Jordan", "event": "Wimbledon", "round": "R32", "score": "6-1 7-6(2)", "date_status": "EXACT", "source": "https://www.washingtonpost.com/archive/sports/1983/06/25/jordan-upsets-evert-ends-hopes-of-grand-slam/ed0e2957-3a03-45e2-b45d-08b369438abc/", "kind": "transfer"}, {"date": "1983-06-28", "year": 1983, "from": "Kathy Jordan", "to": "Billie Jean King", "event": "Wimbledon", "round": "QF", "score": "7-5 6-4", "date_status": "EXACT", "source": "https://www.upi.com/Archives/1983/06/28/Martina-Navratilova-displayed-her-awesome-power-and-veteran-Billie/2469425620800/", "kind": "transfer"}, {"date": "1983-06-30", "year": 1983, "from": "Billie Jean King", "to": "Andrea Jaeger", "event": "Wimbledon", "round": "SF", "score": "6-1 6-1", "date_status": "EXACT", "source": "https://www.washingtonpost.com/archive/sports/1983/07/01/kings-sentimental-journey-ends/e9a5ba42-f591-4e61-bc94-c78668dddce6/", "kind": "transfer"}, {"date": "1983-07-02", "year": 1983, "from": "Andrea Jaeger", "to": "Martina Navratilova", "event": "Wimbledon", "round": "F", "score": "6-0 6-3", "date_status": "EXACT", "source": "https://www.washingtonpost.com/archive/sports/1983/07/03/navratilova-wins-fourth-wimbledon-title/1c513182-b589-4647-9067-2839dd1c2c8b/", "kind": "transfer"}]}, "1984": {"entry": "Martina Navratilova", "exit": "Chris Evert", "transfers": 7, "played_transfers": 7, "defences": 79, "title_matches": 86, "undated_defences": 79, "defence_leaders": [{"player": "Martina Navratilova", "count": 70}, {"player": "Bonnie Gadusek", "count": 4}, {"player": "Pam Shriver", "count": 4}, {"player": "Hana Mandlíková", "count": 1}], "busiest_event": {"event": "Avon Cup / Marco Island", "transfers": 2}, "transfers_rows": [{"date": "1984-01-15", "year": 1984, "from": "Martina Navratilova", "to": "Hana Mandlíková", "event": "Virginia Slims of California / Oakland", "round": "F", "score": "7-6(6) 3-6 6-4", "date_status": "EXACT", "source": "https://www.upi.com/Archives/1984/01/15/Top-seeded-Martina-Navratilova-easily-overpowered-Helena-Sukova-for-a/4453442990800/", "kind": "transfer"}, {"date": "1984-01-26", "year": 1984, "from": "Hana Mandlíková", "to": "Pam Casale", "event": "Avon Cup / Marco Island", "round": "R16", "score": "7-6 7-6", "date_status": "EXACT - draw/news chronology", "source": "https://www.bibliotecadeva.ro/periodice/sportul/1984/01/sportul_1984_01_10614.pdf", "kind": "transfer"}, {"date": "1984-01-27", "year": 1984, "from": "Pam Casale", "to": "Bonnie Gadusek", "event": "Avon Cup / Marco Island", "round": "QF", "score": "6-2 6-3", "date_status": "EXACT - draw chronology", "source": "https://www.itftennis.com/en/tournament/marco-island/usa/1984/w-wt-usa-06a-1984/draws-and-results/", "kind": "transfer"}, {"date": "1984-02-10", "year": 1984, "from": "Bonnie Gadusek", "to": "Pam Shriver", "event": "Virginia Slims of Chicago", "round": "QF", "score": "6-3 7-5", "date_status": "EXACT - draw chronology", "source": "https://www.wtatennis.com/tournaments/716/chicago/1984", "kind": "transfer"}, {"date": "1984-03-03", "year": 1984, "from": "Pam Shriver", "to": "Martina Navratilova", "event": "Virginia Slims Championships / New York", "round": "SF", "score": "7-6(2) 6-4", "date_status": "EXACT", "source": "https://www.washingtonpost.com/archive/sports/1984/03/04/navratilova-vs-evert-its-a-best-of-five-final/05cde54a-a2c0-4325-a095-123d06f32759/", "kind": "transfer"}, {"date": "1984-12-06", "year": 1984, "from": "Martina Navratilova", "to": "Helena Suková", "event": "Australian Open", "round": "SF", "score": "1-6 6-3 7-5", "date_status": "EXACT", "source": "https://www.upi.com/Archives/1984/12/06/Tennis-ResultsNEWLN15-Million-Australian-Open-at-Melbourne-Australian-Dec-6/5685471157200/", "kind": "transfer"}, {"date": "1984-12-08", "year": 1984, "from": "Helena Suková", "to": "Chris Evert", "event": "Australian Open", "round": "F", "score": "6-7(4) 6-1 6-3", "date_status": "EXACT", "source": "https://elpais.com/diario/1984/12/09/deportes/471394815_850215.html", "kind": "transfer"}]}, "1985": {"entry": "Chris Evert", "exit": "Martina Navratilova", "transfers": 13, "played_transfers": 13, "defences": 57, "title_matches": 70, "undated_defences": 57, "defence_leaders": [{"player": "Martina Navratilova", "count": 20}, {"player": "Chris Evert", "count": 18}, {"player": "Hana Mandlíková", "count": 13}, {"player": "Katerina Maleeva", "count": 3}, {"player": "Zina Garrison", "count": 2}], "busiest_event": {"event": "Australian Open", "transfers": 3}, "transfers_rows": [{"date": "1985-02-16", "year": 1985, "from": "Chris Evert", "to": "Martina Navratilova", "event": "Lipton International Players Championships / Delray Beach", "round": "F", "score": "6-2 6-4", "date_status": "EXACT", "source": "https://www.latimes.com/archives/la-xpm-1985-02-17-sp-3756-story.html", "kind": "transfer"}, {"date": "1985-03-08", "year": 1985, "from": "Martina Navratilova", "to": "Hana Mandlíková", "event": "U.S. National Women’s Indoor / Princeton", "round": "SF", "score": "7-6 6-0", "date_status": "EXACT", "source": "https://www.latimes.com/archives/la-xpm-1985-03-09-sp-23531-story.html", "kind": "transfer"}, {"date": "1985-03-23", "year": 1985, "from": "Hana Mandlíková", "to": "Martina Navratilova", "event": "Virginia Slims Championships / New York", "round": "SF", "score": "7-5 7-6(7)", "date_status": "EXACT", "source": "https://www.washingtonpost.com/archive/sports/1985/03/24/navratilova-and-sukova-win-will-meet-in-slims-final-today/c8f169cf-f01b-4fe3-b8a8-fdbe7fc65dfd/", "kind": "transfer"}, {"date": "1985-06-08", "year": 1985, "from": "Martina Navratilova", "to": "Chris Evert", "event": "Roland Garros", "round": "F", "score": "6-3 6-7(4) 7-5", "date_status": "EXACT", "source": "https://www.upi.com/Archives/1985/06/08/Tennis-ResultsNEWLNFrench-Open-At-Paris-June-8/5195487051200/", "kind": "transfer"}, {"date": "1985-07-06", "year": 1985, "from": "Chris Evert", "to": "Martina Navratilova", "event": "Wimbledon", "round": "F", "score": "4-6 6-3 6-2", "date_status": "EXACT", "source": "https://www.washingtonpost.com/archive/politics/1985/07/07/navratilova-wins-at-wimbledon/408637cb-06a9-401d-84f7-0c21486bea62/", "kind": "transfer"}, {"date": "1985-08-09", "year": 1985, "from": "Martina Navratilova", "to": "Claudia Kohde-Kilsch", "event": "Canadian Open / Toronto", "round": "QF", "score": "3-6 6-4 6-3", "date_status": "EXACT", "source": "https://www.latimes.com/archives/la-xpm-1985-08-10-sp-3831-story.html", "kind": "transfer"}, {"date": "1985-08-11", "year": 1985, "from": "Claudia Kohde-Kilsch", "to": "Chris Evert", "event": "Canadian Open / Toronto", "round": "F", "score": "6-2 6-4", "date_status": "EXACT", "source": "https://www.upi.com/Archives/1985/08/11/Evert-Lloyd-wins-second-consecutive-Canadian-Open/9266492580800/", "kind": "transfer"}, {"date": "1985-09-06", "year": 1985, "from": "Chris Evert", "to": "Hana Mandlíková", "event": "US Open", "round": "SF", "score": "4-6 6-2 6-3", "date_status": "EXACT", "source": "https://www.washingtonpost.com/archive/sports/1985/09/07/mandlikova-stuns-evert-in-us-open/8db89148-f44b-484e-970a-06400f035f7a/", "kind": "transfer"}, {"date": "1985-11-03", "year": 1985, "from": "Hana Mandlíková", "to": "Zina Garrison", "event": "European Indoors / Zürich", "round": "F", "score": "6-1 6-3", "date_status": "EXACT", "source": "https://www.wtatennis.com/tournaments/608/zurich/1985", "kind": "transfer"}, {"date": "1985-11-09", "year": 1985, "from": "Zina Garrison", "to": "Katerina Maleeva", "event": "Hilversum", "round": "SF", "score": "6-3 6-2", "date_status": "EXACT*", "source": "https://tennis-db.com/wta/tournaments/sackmann_wta%3Aa50750d13536a4fe33ef62113bfbdd8abf148e9eaace0816af6676cabe615977/hilversum", "kind": "transfer"}, {"date": "1985-12-01", "year": 1985, "from": "Katerina Maleeva", "to": "Manuela Maleeva-Fragnière", "event": "Australian Open", "round": "R16", "score": "6-2 6-1", "date_status": "EXACT", "source": "https://www.latimes.com/archives/la-xpm-1985-12-01-sp-5660-story.html", "kind": "transfer"}, {"date": "1985-12-03", "year": 1985, "from": "Manuela Maleeva-Fragnière", "to": "Chris Evert", "event": "Australian Open", "round": "QF", "score": "6-3 6-3", "date_status": "RECONSTRUCTED - draw/day chronology", "source": "https://www.db4tennis.com/australian-open/women-singles/1985", "kind": "transfer"}, {"date": "1985-12-07", "year": 1985, "from": "Chris Evert", "to": "Martina Navratilova", "event": "Australian Open", "round": "F", "score": "6-2 4-6 6-2", "date_status": "EXACT", "source": "https://www.upi.com/Archives/1985/12/07/Martina-Navratilova-beat-top-seeded-Chris-Evert-Lloyd-to-win/6214502779600/", "kind": "transfer"}]}, "1986": {"entry": "Martina Navratilova", "exit": "Martina Navratilova", "transfers": 8, "played_transfers": 8, "defences": 74, "title_matches": 82, "undated_defences": 74, "defence_leaders": [{"player": "Martina Navratilova", "count": 60}, {"player": "Chris Evert", "count": 10}, {"player": "Steffi Graf", "count": 4}], "busiest_event": {"event": "Oakland / Virginia Slims of California", "transfers": 2}, "transfers_rows": [{"date": "1986-03-01", "year": 1986, "from": "Martina Navratilova", "to": "Kathy Jordan", "event": "Oakland / Virginia Slims of California", "round": "SF", "score": "5-7 6-3 7-6", "date_status": "EXACT", "source": "https://www.latimes.com/archives/la-xpm-1986-03-02-sp-1518-story.html", "kind": "transfer"}, {"date": "1986-03-02", "year": 1986, "from": "Kathy Jordan", "to": "Chris Evert", "event": "Oakland / Virginia Slims of California", "round": "F", "score": "6-2 6-4", "date_status": "EXACT", "source": "https://www.latimes.com/archives/la-xpm-1986-03-03-sp-14877-story.html", "kind": "transfer"}, {"date": "1986-03-16", "year": 1986, "from": "Chris Evert", "to": "Martina Navratilova", "event": "Dallas", "round": "F", "score": "6-2 6-1", "date_status": "EXACT", "source": "https://www.latimes.com/archives/la-xpm-1986-03-17-sp-22399-story.html", "kind": "transfer"}, {"date": "1986-05-19", "year": 1986, "from": "Martina Navratilova", "to": "Steffi Graf", "event": "German Open / West Berlin", "round": "F", "score": "6-2 6-3", "date_status": "EXACT", "source": "https://www.latimes.com/archives/la-xpm-1986-05-19-mn-6117-story.html", "kind": "transfer"}, {"date": "1986-06-02", "year": 1986, "from": "Steffi Graf", "to": "Hana Mandlíková", "event": "Roland Garros", "round": "QF", "score": "2-6 7-6(3) 6-1", "date_status": "EXACT", "source": "https://www.washingtonpost.com/archive/sports/1986/06/03/graf-loses-french-match/58c2c78b-3c68-441e-b72f-66f35ff744c4/", "kind": "transfer"}, {"date": "1986-06-05", "year": 1986, "from": "Hana Mandlíková", "to": "Chris Evert", "event": "Roland Garros", "round": "SF", "score": "6-1 6-1", "date_status": "EXACT", "source": "https://www.washingtonpost.com/archive/sports/1986/06/06/its-navratilova-evert-again/d0d990cf-e8d1-468f-9cf0-5b07f62b6e2f/", "kind": "transfer"}, {"date": "1986-07-03", "year": 1986, "from": "Chris Evert", "to": "Hana Mandlíková", "event": "Wimbledon", "round": "SF", "score": "7-6(5) 7-5", "date_status": "EXACT", "source": "https://www.washingtonpost.com/archive/sports/1986/07/04/mandlikova-ends-everts-wimbledon/6d4f3ae7-3629-431c-861c-4e7dedcd8159/", "kind": "transfer"}, {"date": "1986-07-05", "year": 1986, "from": "Hana Mandlíková", "to": "Martina Navratilova", "event": "Wimbledon", "round": "F", "score": "7-6(1) 6-3", "date_status": "EXACT", "source": "https://www.latimes.com/archives/la-xpm-1986-07-06-sp-23391-story.html", "kind": "transfer"}]}, "1987": {"entry": "Martina Navratilova", "exit": "Steffi Graf", "transfers": 11, "played_transfers": 11, "defences": 66, "title_matches": 77, "undated_defences": 66, "defence_leaders": [{"player": "Steffi Graf", "count": 39}, {"player": "Martina Navratilova", "count": 18}, {"player": "Zina Garrison", "count": 4}, {"player": "Hana Mandlíková", "count": 3}, {"player": "Chris Evert", "count": 1}], "busiest_event": {"event": "Key Biscayne / International Players Championships", "transfers": 3}, "transfers_rows": [{"date": "1987-01-24", "year": 1987, "from": "Martina Navratilova", "to": "Hana Mandlíková", "event": "Australian Open", "round": "F", "score": "7-5 7-6(1)", "date_status": "EXACT", "source": "https://www.lemonde.fr/archives/article/1987/01/25/tennis-les-internationaux-d-australie-mandlikova-ravit-le-titre-a-navratilova_4075224_1819218.html", "kind": "transfer"}, {"date": "1987-02-14", "year": 1987, "from": "Hana Mandlíková", "to": "Zina Garrison", "event": "Virginia Slims of California / San Francisco", "round": "SF", "score": "7-5 4-6 6-2", "date_status": "EXACT", "source": "https://www.latimes.com/archives/la-xpm-1987-02-15-sp-3621-story.html", "kind": "transfer"}, {"date": "1987-03-02", "year": 1987, "from": "Zina Garrison", "to": "Claudia Kohde-Kilsch", "event": "Key Biscayne / International Players Championships", "round": "R16", "score": "6-4 4-6 6-1", "date_status": "EXACT", "source": "https://www.latimes.com/archives/la-xpm-1987-03-03-sp-7366-story.html", "kind": "transfer"}, {"date": "1987-03-04", "year": 1987, "from": "Claudia Kohde-Kilsch", "to": "Chris Evert", "event": "Key Biscayne / International Players Championships", "round": "QF", "score": "6-2 7-5", "date_status": "EXACT", "source": "https://www.latimes.com/archives/la-xpm-1987-03-05-sp-7750-story.html", "kind": "transfer"}, {"date": "1987-03-07", "year": 1987, "from": "Chris Evert", "to": "Steffi Graf", "event": "Key Biscayne / International Players Championships", "round": "F", "score": "6-1 6-2", "date_status": "EXACT", "source": "https://www.upi.com/Archives/1987/03/07/Tennis-ResultsNEWLN18-million-Lipton-International-Players-Championships-At-Key-Biscayre-Fla-March-7/7969542091600/", "kind": "transfer"}, {"date": "1987-07-04", "year": 1987, "from": "Steffi Graf", "to": "Martina Navratilova", "event": "Wimbledon", "round": "F", "score": "7-5 6-3", "date_status": "EXACT", "source": "https://www.washingtonpost.com/archive/sports/1987/07/05/navratilova-wins-8th-wimbledon-6th-in-row-stems-grafs-challenge-7-5-6-3/421103f3-35c0-4e27-a14d-64dbb4181c92/", "kind": "transfer"}, {"date": "1987-08-15", "year": 1987, "from": "Martina Navratilova", "to": "Chris Evert", "event": "Virginia Slims of Los Angeles / Manhattan Beach", "round": "SF", "score": "6-2 6-1", "date_status": "EXACT", "source": "https://www.upi.com/Archives/1987/08/15/Chris-Evert-exploited-one-of-Martina-Navratilovas-poorest-efforts/6501555998400/", "kind": "transfer"}, {"date": "1987-08-16", "year": 1987, "from": "Chris Evert", "to": "Steffi Graf", "event": "Virginia Slims of Los Angeles / Manhattan Beach", "round": "F", "score": "6-3 6-4", "date_status": "EXACT", "source": "https://www.washingtonpost.com/archive/sports/1987/08/17/graf-moves-up-to-no-1/6415bf7e-e955-4aa9-8fff-7a0c594b5bec/", "kind": "transfer"}, {"date": "1987-09-12", "year": 1987, "from": "Steffi Graf", "to": "Martina Navratilova", "event": "US Open", "round": "F", "score": "7-6(4) 6-1", "date_status": "EXACT", "source": "https://www.latimes.com/archives/la-xpm-1987-09-13-sp-7478-story.html", "kind": "transfer"}, {"date": "1987-11-20", "year": 1987, "from": "Martina Navratilova", "to": "Gabriela Sabatini", "event": "Virginia Slims Championships", "round": "QF", "score": "6-4 7-5", "date_status": "EXACT", "source": "https://www.washingtonpost.com/archive/sports/1987/11/21/sabatini-upsets-navratilova/3f9497ea-74ed-4044-a97c-0fa82ec62b76/", "kind": "transfer"}, {"date": "1987-11-22", "year": 1987, "from": "Gabriela Sabatini", "to": "Steffi Graf", "event": "Virginia Slims Championships", "round": "F", "score": "4-6 6-4 6-0 6-4", "date_status": "EXACT", "source": "https://www.washingtonpost.com/archive/sports/1987/11/23/graf-ends-year-at-no-1-after-winning-slims/d0abb90f-783f-4fad-bf22-5e25234d8d42/", "kind": "transfer"}]}, "1988": {"entry": "Steffi Graf", "exit": "Gabriela Sabatini", "transfers": 13, "played_transfers": 13, "defences": 64, "title_matches": 77, "undated_defences": 64, "defence_leaders": [{"player": "Steffi Graf", "count": 53}, {"player": "Martina Navratilova", "count": 4}, {"player": "Gabriela Sabatini", "count": 3}, {"player": "Chris Evert", "count": 2}, {"player": "Mary Joe Fernández", "count": 1}], "busiest_event": {"event": "Roland Garros", "transfers": 4}, "transfers_rows": [{"date": "1988-03-13", "year": 1988, "from": "Steffi Graf", "to": "Gabriela Sabatini", "event": "Virginia Slims of Florida / Boca Raton", "round": "F", "score": "2-6 6-3 6-1", "date_status": "EXACT", "source": "https://www.washingtonpost.com/archive/sports/1988/03/14/sabatini-upsets-graf/80454511-e075-44ee-962a-1f6275520464/", "kind": "transfer"}, {"date": "1988-03-20", "year": 1988, "from": "Gabriela Sabatini", "to": "Mary Joe Fernández", "event": "Key Biscayne / Lipton International Players Championships", "round": "R16", "score": "6-4 6-7 6-3", "date_status": "EXACT", "source": "https://www.latimes.com/archives/la-xpm-1988-03-21-sp-822-story.html", "kind": "transfer"}, {"date": "1988-03-24", "year": 1988, "from": "Mary Joe Fernández", "to": "Chris Evert", "event": "Key Biscayne / Lipton International Players Championships", "round": "SF", "score": "6-2 6-1", "date_status": "EXACT", "source": "https://www.latimes.com/archives/la-xpm-1988-03-25-sp-348-story.html", "kind": "transfer"}, {"date": "1988-03-26", "year": 1988, "from": "Chris Evert", "to": "Steffi Graf", "event": "Key Biscayne / Lipton International Players Championships", "round": "F", "score": "6-4 6-4", "date_status": "EXACT", "source": "https://www.washingtonpost.com/archive/sports/1988/03/27/graf-wins-pressure-points-to-beat-evert/16c0973b-e5f4-423a-a642-ed3eec6da3d6/", "kind": "transfer"}, {"date": "1988-04-16", "year": 1988, "from": "Steffi Graf", "to": "Gabriela Sabatini", "event": "Amelia Island / Bausch & Lomb Championships", "round": "SF", "score": "6-3 4-6 7-5", "date_status": "EXACT", "source": "https://www.latimes.com/archives/la-xpm-1988-04-17-sp-2120-story.html", "kind": "transfer"}, {"date": "1988-04-17", "year": 1988, "from": "Gabriela Sabatini", "to": "Martina Navratilova", "event": "Amelia Island / Bausch & Lomb Championships", "round": "F", "score": "6-0 6-2", "date_status": "EXACT", "source": "https://archives.nd.edu/Observer/1988-04-18_v21_124.pdf", "kind": "transfer"}, {"date": "1988-04-24", "year": 1988, "from": "Martina Navratilova", "to": "Chris Evert", "event": "Virginia Slims of Houston", "round": "F", "score": "6-0 6-4", "date_status": "EXACT", "source": "https://www.latimes.com/archives/la-xpm-1988-04-25-sp-1144-story.html", "kind": "transfer"}, {"date": "1988-05-28", "year": 1988, "from": "Chris Evert", "to": "Arantxa Sánchez Vicario", "event": "Roland Garros", "round": "R32", "score": "6-3 7-6(4)", "date_status": "EXACT", "source": "https://www.washingtonpost.com/archive/sports/1988/05/29/evert-exits-french-open-painfully/cf0f8da3-b97d-471e-9cc3-f3b455948ef1/", "kind": "transfer"}, {"date": "1988-05-31", "year": 1988, "from": "Arantxa Sánchez Vicario", "to": "Nicole Bradtke", "event": "Roland Garros", "round": "QF", "score": "7-5 3-6 6-4", "date_status": "EXACT", "source": "https://www.latimes.com/archives/la-xpm-1988-06-01-sp-3656-story.html", "kind": "transfer"}, {"date": "1988-06-02", "year": 1988, "from": "Nicole Bradtke", "to": "Natalia Zvereva", "event": "Roland Garros", "round": "SF", "score": "6-3 6-7(3) 7-5", "date_status": "EXACT", "source": "https://www.washingtonpost.com/archive/sports/1988/06/03/lendl-is-down-and-out-in-paris/12458496-142a-49bb-8f66-799b3b3b16f0/", "kind": "transfer"}, {"date": "1988-06-04", "year": 1988, "from": "Natalia Zvereva", "to": "Steffi Graf", "event": "Roland Garros", "round": "F", "score": "6-0 6-0", "date_status": "EXACT", "source": "https://www.washingtonpost.com/archive/sports/1988/06/05/graf-routs-zvereva-in-final-6-0-6-0/181d7f50-7de0-4f03-a3e9-2555fde34b3c/", "kind": "transfer"}, {"date": "1988-11-19", "year": 1988, "from": "Steffi Graf", "to": "Pam Shriver", "event": "Virginia Slims Championships", "round": "SF", "score": "6-3 7-6(5)", "date_status": "EXACT", "source": "https://www.upi.com/Archives/1988/11/19/Even-after-achieving-one-of-the-more-memorable-victories/4644595918800/", "kind": "transfer"}, {"date": "1988-11-20", "year": 1988, "from": "Pam Shriver", "to": "Gabriela Sabatini", "event": "Virginia Slims Championships", "round": "F", "score": "7-5 6-2 6-2", "date_status": "EXACT", "source": "https://www.latimes.com/archives/la-xpm-1988-11-21-sp-386-story.html", "kind": "transfer"}]}, "1989": {"entry": "Gabriela Sabatini", "exit": "Steffi Graf", "transfers": 8, "played_transfers": 8, "defences": 81, "title_matches": 89, "undated_defences": 81, "defence_leaders": [{"player": "Steffi Graf", "count": 61}, {"player": "Gabriela Sabatini", "count": 9}, {"player": "Manuela Maleeva-Fragnière", "count": 4}, {"player": "Arantxa Sánchez Vicario", "count": 4}, {"player": "Conchita Martínez", "count": 3}], "busiest_event": {"event": "Roland Garros", "transfers": 3}, "transfers_rows": [{"date": "1989-01-26", "year": 1989, "from": "Gabriela Sabatini", "to": "Steffi Graf", "event": "Australian Open", "round": "SF", "score": "6-3 6-0", "date_status": "EXACT", "source": "https://www.washingtonpost.com/archive/sports/1989/01/27/graf-dominates-sabatini-gains-australian-final/f9ef1af2-ee15-4c1e-aeee-3d6c9c598439/", "kind": "transfer"}, {"date": "1989-04-16", "year": 1989, "from": "Steffi Graf", "to": "Gabriela Sabatini", "event": "Amelia Island / Bausch & Lomb Championships", "round": "F", "score": "3-6 6-3 7-5", "date_status": "EXACT", "source": "https://www.upi.com/Archives/1989/04/16/Sabatini-upsets-Graf-at-Amelia-Island/5735608702400/", "kind": "transfer"}, {"date": "1989-04-23", "year": 1989, "from": "Gabriela Sabatini", "to": "Conchita Martínez", "event": "Tampa / Eckerd Open", "round": "F", "score": "6-3 6-2", "date_status": "EXACT", "source": "https://www.wtatennis.com/tournaments/707/tampa/1989", "kind": "transfer"}, {"date": "1989-05-28", "year": 1989, "from": "Conchita Martínez", "to": "Manuela Maleeva-Fragnière", "event": "Geneva / European Open", "round": "F", "score": "6-4 6-0", "date_status": "EXACT", "source": "https://en.wikipedia.org/wiki/1989_European_Open", "kind": "transfer"}, {"date": "1989-06-06", "year": 1989, "from": "Manuela Maleeva-Fragnière", "to": "Monica Seles", "event": "Roland Garros", "round": "QF", "score": "6-3 7-5", "date_status": "EXACT", "source": "https://www.washingtonpost.com/archive/sports/1989/06/07/becker-edberg-graf-make-semifinals-maleeva-is-upset-by-15-year-old-seles/a5b41cc9-4637-40ab-b14a-c9bd80b858e0/", "kind": "transfer"}, {"date": "1989-06-08", "year": 1989, "from": "Monica Seles", "to": "Steffi Graf", "event": "Roland Garros", "round": "SF", "score": "6-3 3-6 6-3", "date_status": "EXACT", "source": "https://www.washingtonpost.com/archive/sports/1989/06/09/teenager-seles-bursts-giggles-onto-scene/99c03b8d-f50e-499a-986d-540bb77e3aae/", "kind": "transfer"}, {"date": "1989-06-10", "year": 1989, "from": "Steffi Graf", "to": "Arantxa Sánchez Vicario", "event": "Roland Garros", "round": "F", "score": "7-6(6) 3-6 7-5", "date_status": "EXACT", "source": "https://www.washingtonpost.com/archive/sports/1989/06/11/a-grand-finale-sanchez-stuns-graf/0df367f6-8d2d-43f2-9121-617bdfa98d05/", "kind": "transfer"}, {"date": "1989-07-04", "year": 1989, "from": "Arantxa Sánchez Vicario", "to": "Steffi Graf", "event": "Wimbledon", "round": "QF", "score": "7-5 6-1", "date_status": "EXACT", "source": "https://www.latimes.com/archives/la-xpm-1989-07-05-sp-3142-story.html", "kind": "transfer"}]}, "1990": {"entry": "Steffi Graf", "exit": "Monica Seles", "transfers": 10, "played_transfers": 10, "defences": 60, "title_matches": 70, "undated_defences": 60, "defence_leaders": [{"player": "Steffi Graf", "count": 36}, {"player": "Monica Seles", "count": 13}, {"player": "Gabriela Sabatini", "count": 6}, {"player": "Martina Navratilova", "count": 4}, {"player": "Zina Garrison", "count": 1}], "busiest_event": {"event": "US Open", "transfers": 3}, "transfers_rows": [{"date": "1990-05-20", "year": 1990, "from": "Steffi Graf", "to": "Monica Seles", "event": "Berlin / German Open", "round": "F", "score": "6-4 6-3", "date_status": "EXACT", "source": "https://www.washingtonpost.com/archive/sports/1990/05/21/seles-shatters-grafs-streak-at-66-wins-5th-title-in-row/3bc6f60a-6a1d-4dfc-97ec-c1d8a8e4558d/", "kind": "transfer"}, {"date": "1990-07-03", "year": 1990, "from": "Monica Seles", "to": "Zina Garrison", "event": "Wimbledon", "round": "QF", "score": "3-6 6-3 9-7", "date_status": "EXACT", "source": "https://www.washingtonpost.com/archive/sports/1990/07/04/garrison-quiets-no-3-seles/a7b09afb-ae69-43c2-9bb2-95fa78c85624/", "kind": "transfer"}, {"date": "1990-07-07", "year": 1990, "from": "Zina Garrison", "to": "Martina Navratilova", "event": "Wimbledon", "round": "F", "score": "6-4 6-1", "date_status": "EXACT", "source": "https://www.washingtonpost.com/archive/sports/1990/07/08/navratilova-stands-alone-over-all-england/904cdd78-0de6-4eed-bff5-6a8aa5778075/", "kind": "transfer"}, {"date": "1990-08-19", "year": 1990, "from": "Martina Navratilova", "to": "Monica Seles", "event": "Manhattan Beach / Virginia Slims of Los Angeles", "round": "F", "score": "6-4 3-6 7-6(6)", "date_status": "EXACT", "source": "https://www.washingtonpost.com/archive/sports/1990/08/20/in-a-fight-to-the-finish-seles-outduels-navratilova/1aabbb93-ab4a-4701-9e1d-9de84deffa6e/", "kind": "transfer"}, {"date": "1990-08-31", "year": 1990, "from": "Monica Seles", "to": "Linda Ferrando", "event": "US Open", "round": "R32", "score": "1-6 6-1 7-6(3)", "date_status": "EXACT", "source": "https://www.upi.com/Archives/1990/08/31/Seles-upset-in-US-Open/8950652075200/", "kind": "transfer"}, {"date": "1990-09-02", "year": 1990, "from": "Linda Ferrando", "to": "Leila Meskhi", "event": "US Open", "round": "R16", "score": "7-6(4) 6-1", "date_status": "EXACT", "source": "https://newspapers.swco.ttu.edu/bitstream/handle/20.500.12255/295032/Big_Spring_Herald_1990_09_03.pdf?isAllowed=y&sequence=1", "kind": "transfer"}, {"date": "1990-09-04", "year": 1990, "from": "Leila Meskhi", "to": "Gabriela Sabatini", "event": "US Open", "round": "QF", "score": "7-6(5) 6-4", "date_status": "EXACT", "source": "https://newspapers.swco.ttu.edu/bitstreams/5ef7aa33-ce08-45b6-ac36-b468a688c3e3/download", "kind": "transfer"}, {"date": "1990-10-14", "year": 1990, "from": "Gabriela Sabatini", "to": "Steffi Graf", "event": "Zurich / European Indoors", "round": "F", "score": "6-3 6-2", "date_status": "EXACT", "source": "https://www.latimes.com/archives/la-xpm-1990-10-15-sp-1882-story.html", "kind": "transfer"}, {"date": "1990-11-17", "year": 1990, "from": "Steffi Graf", "to": "Gabriela Sabatini", "event": "Virginia Slims Championships", "round": "SF", "score": "6-4 6-4", "date_status": "EXACT", "source": "https://www.upi.com/Archives/1990/11/17/Sabatini-and-Seles-gain-final-of-Virginia-Slims/6097658818000/", "kind": "transfer"}, {"date": "1990-11-18", "year": 1990, "from": "Gabriela Sabatini", "to": "Monica Seles", "event": "Virginia Slims Championships", "round": "F", "score": "6-4 5-7 3-6 6-4 6-2", "date_status": "EXACT", "source": "https://en.wikipedia.org/wiki/1990_Virginia_Slims_Championships", "kind": "transfer"}]}, "1991": {"entry": "Monica Seles", "exit": "Monica Seles", "transfers": 12, "played_transfers": 12, "defences": 55, "title_matches": 67, "undated_defences": 0, "defence_leaders": [{"player": "Monica Seles", "count": 22}, {"player": "Gabriela Sabatini", "count": 11}, {"player": "Jennifer Capriati", "count": 10}, {"player": "Martina Navratilova", "count": 5}, {"player": "Steffi Graf", "count": 5}], "busiest_event": {"event": "Berlin", "transfers": 3}, "transfers_rows": [{"date": "1991-03-04", "year": 1991, "from": "Monica Seles", "to": "Martina Navratilova", "event": "Palm Springs / Virginia Slims of Palm Springs", "round": "F", "score": "6-2 7-6(6)", "date_status": "EXACT", "source": "https://www.upi.com/Archives/1991/03/04/Navratilova-wins-Slims-final-over-Seles/9931668062800/", "kind": "transfer"}, {"date": "1991-04-06", "year": 1991, "from": "Martina Navratilova", "to": "Leila Meskhi", "event": "Hilton Head / Family Circle Cup", "round": "QF", "score": "6-4 2-6 6-4", "date_status": "EXACT - completion after rain suspension", "source": "https://www.latimes.com/archives/la-xpm-1991-04-07-sp-30-story.html", "kind": "transfer"}, {"date": "1991-04-07", "year": 1991, "from": "Leila Meskhi", "to": "Gabriela Sabatini", "event": "Hilton Head / Family Circle Cup", "round": "F", "score": "6-1 6-1", "date_status": "EXACT", "source": "https://www.washingtonpost.com/archive/sports/1991/04/08/sabatini-wins-family-circle-title/c074119c-f0d5-48cc-9db1-a423f8f3d6f0/", "kind": "transfer"}, {"date": "1991-05-17", "year": 1991, "from": "Gabriela Sabatini", "to": "Anke Huber", "event": "Berlin", "round": "R16", "score": "7-5 6-3", "date_status": "EXACT", "source": "https://www.latimes.com/archives/la-xpm-1991-05-18-sp-1625-story.html", "kind": "transfer"}, {"date": "1991-05-18", "year": 1991, "from": "Anke Huber", "to": "Arantxa Sánchez Vicario", "event": "Berlin", "round": "QF", "score": "6-0 6-2", "date_status": "EXACT", "source": "https://www.upi.com/Archives/1991/05/18/Sanchez-stops-Huber/5114674539200/", "kind": "transfer"}, {"date": "1991-05-20", "year": 1991, "from": "Arantxa Sánchez Vicario", "to": "Steffi Graf", "event": "Berlin", "round": "F", "score": "6-3 4-6 7-6(6)", "date_status": "EXACT", "source": "https://www.deseret.com/1991/5/21/18921851/graf-wins-german-open/", "kind": "transfer"}, {"date": "1991-06-06", "year": 1991, "from": "Steffi Graf", "to": "Arantxa Sánchez Vicario", "event": "Roland Garros", "round": "SF", "score": "6-0 6-2", "date_status": "EXACT", "source": "https://www.upi.com/Archives/1991/06/06/Sanchez-Vicario-upsets-Graf/3884676180800/", "kind": "transfer"}, {"date": "1991-06-08", "year": 1991, "from": "Arantxa Sánchez Vicario", "to": "Monica Seles", "event": "Roland Garros", "round": "F", "score": "6-3 6-4", "date_status": "EXACT", "source": "https://www.upi.com/Archives/1991/06/08/Seles-wins-French-Open/3649676353600/", "kind": "transfer"}, {"date": "1991-08-04", "year": 1991, "from": "Monica Seles", "to": "Jennifer Capriati", "event": "San Diego / Mazda Tennis Classic", "round": "F", "score": "4-6 6-1 7-6(2)", "date_status": "EXACT", "source": "https://www.latimes.com/archives/la-xpm-1991-08-05-sp-167-story.html", "kind": "transfer"}, {"date": "1991-09-06", "year": 1991, "from": "Jennifer Capriati", "to": "Monica Seles", "event": "US Open", "round": "SF", "score": "6-3 3-6 7-6(3)", "date_status": "EXACT", "source": "https://www.tennis.com/news/articles/september-6-1991-seles-saves-match-points-beats-capriati-at-us-open", "kind": "transfer"}, {"date": "1991-11-10", "year": 1991, "from": "Monica Seles", "to": "Martina Navratilova", "event": "Oakland / Virginia Slims of California", "round": "F", "score": "6-3 3-6 6-3", "date_status": "EXACT", "source": "https://www.flashscore.com/tennis/wta-singles/oakland-1991/", "kind": "transfer"}, {"date": "1991-11-24", "year": 1991, "from": "Martina Navratilova", "to": "Monica Seles", "event": "Virginia Slims Championships", "round": "F", "score": "6-4 3-6 7-5 6-0", "date_status": "EXACT", "source": "https://www.washingtonpost.com/archive/sports/1991/11/25/seles-beats-navratilova-wins-slims-championship/a0ffac38-ec40-4a0b-be39-fef095f81a63/", "kind": "transfer"}]}, "1992": {"entry": "Monica Seles", "exit": "Monica Seles", "transfers": 11, "played_transfers": 11, "defences": 73, "title_matches": 84, "undated_defences": 0, "defence_leaders": [{"player": "Monica Seles", "count": 39}, {"player": "Steffi Graf", "count": 20}, {"player": "Gabriela Sabatini", "count": 7}, {"player": "Arantxa Sánchez Vicario", "count": 4}, {"player": "Jennifer Capriati", "count": 2}], "busiest_event": {"event": "Key Biscayne / Lipton Championships", "transfers": 2}, "transfers_rows": [{"date": "1992-03-18", "year": 1992, "from": "Monica Seles", "to": "Jennifer Capriati", "event": "Key Biscayne / Lipton Championships", "round": "QF", "score": "6-2 7-6(5)", "date_status": "EXACT", "source": "https://monicaselessite.com/results/head-to-head-results/", "kind": "transfer"}, {"date": "1992-03-19", "year": 1992, "from": "Jennifer Capriati", "to": "Arantxa Sánchez Vicario", "event": "Key Biscayne / Lipton Championships", "round": "SF", "score": "6-2 6-4", "date_status": "EXACT", "source": "https://elpais.com/diario/1992/03/20/deportes/701046007_850215.html", "kind": "transfer"}, {"date": "1992-04-04", "year": 1992, "from": "Arantxa Sánchez Vicario", "to": "Conchita Martínez", "event": "Hilton Head / Family Circle Cup", "round": "SF", "score": "6-4 7-5", "date_status": "EXACT", "source": "https://www.washingtonpost.com/archive/sports/1992/04/05/sabatini-martinez-head-for-final/a97fde23-d489-40a6-975b-7ae675933339/", "kind": "transfer"}, {"date": "1992-04-05", "year": 1992, "from": "Conchita Martínez", "to": "Gabriela Sabatini", "event": "Hilton Head / Family Circle Cup", "round": "F", "score": "6-1 6-4", "date_status": "EXACT", "source": "https://en.wikipedia.org/wiki/1992_Family_Circle_Cup_%E2%80%93_Singles", "kind": "transfer"}, {"date": "1992-05-02", "year": 1992, "from": "Gabriela Sabatini", "to": "Arantxa Sánchez Vicario", "event": "Hamburg / Citizen Cup", "round": "SF", "score": "3-6 6-4 6-4", "date_status": "EXACT", "source": "https://www.latimes.com/archives/la-xpm-1992-05-03-sp-1857-story.html", "kind": "transfer"}, {"date": "1992-05-03", "year": 1992, "from": "Arantxa Sánchez Vicario", "to": "Steffi Graf", "event": "Hamburg / Citizen Cup", "round": "F", "score": "7-6(5) 6-2", "date_status": "EXACT", "source": "https://www.washingtonpost.com/archive/sports/1992/05/04/tennis/83f27ccc-37e6-415e-af01-25ae908b8c28/", "kind": "transfer"}, {"date": "1992-06-06", "year": 1992, "from": "Steffi Graf", "to": "Monica Seles", "event": "Roland Garros", "round": "F", "score": "6-2 3-6 10-8", "date_status": "EXACT", "source": "https://www.washingtonpost.com/archive/sports/1992/06/07/seles-tops-graf-in-epic-10-8-set-nails-3rd-french/d2f81780-a0c5-4c09-8317-b38de608c3c3/", "kind": "transfer"}, {"date": "1992-07-04", "year": 1992, "from": "Monica Seles", "to": "Steffi Graf", "event": "Wimbledon", "round": "F", "score": "6-2 6-1", "date_status": "EXACT", "source": "https://www.upi.com/Archives/1992/07/04/Graf-overpowers-Seles-Agassi-and-Ivanisevic-to-mens-final/8345710222400/", "kind": "transfer"}, {"date": "1992-08-07", "year": 1992, "from": "Steffi Graf", "to": "Jennifer Capriati", "event": "Barcelona Olympics", "round": "F", "score": "3-6 6-3 6-4", "date_status": "EXACT", "source": "https://www.olympedia.org/results/45335", "kind": "transfer"}, {"date": "1992-09-04", "year": 1992, "from": "Jennifer Capriati", "to": "Patricia Hy-Boulais", "event": "US Open", "round": "R32", "score": "7-5 6-4", "date_status": "EXACT", "source": "https://www.latimes.com/archives/la-xpm-1992-09-05-sp-5856-story.html", "kind": "transfer"}, {"date": "1992-09-08", "year": 1992, "from": "Patricia Hy-Boulais", "to": "Monica Seles", "event": "US Open", "round": "QF", "score": "6-1 6-2", "date_status": "EXACT", "source": "https://www.latimes.com/archives/la-xpm-1992-09-09-sp-277-story.html", "kind": "transfer"}]}, "1993": {"entry": "Monica Seles", "exit": "Steffi Graf", "transfers": 10, "played_transfers": 10, "defences": 65, "title_matches": 75, "undated_defences": 0, "defence_leaders": [{"player": "Steffi Graf", "count": 35}, {"player": "Monica Seles", "count": 15}, {"player": "Conchita Martínez", "count": 6}, {"player": "Arantxa Sánchez Vicario", "count": 4}, {"player": "Nicole Bradtke", "count": 3}], "busiest_event": {"event": "Berlin / German Open", "transfers": 2}, "transfers_rows": [{"date": "1993-02-21", "year": 1993, "from": "Monica Seles", "to": "Martina Navratilova", "event": "Paris / Open Gaz de France", "round": "F", "score": "6-3 4-6 7-6(3)", "date_status": "EXACT", "source": "https://www.tennis24.com/wta-singles/paris-1993/results/", "kind": "transfer"}, {"date": "1993-05-08", "year": 1993, "from": "Martina Navratilova", "to": "Conchita Martínez", "event": "Rome / Italian Open", "round": "QF", "score": "6-1 6-4", "date_status": "EXACT", "source": "https://www.wtatennis.com/players/140007/martina-navratilova/record", "kind": "transfer"}, {"date": "1993-05-15", "year": 1993, "from": "Conchita Martínez", "to": "Gabriela Sabatini", "event": "Berlin / German Open", "round": "SF", "score": "6-3 4-6 7-5", "date_status": "EXACT", "source": "https://www.upi.com/Archives/1993/05/15/Graf-oulasts-Fernandez-meets-Sabatini/3791737438400/", "kind": "transfer"}, {"date": "1993-05-16", "year": 1993, "from": "Gabriela Sabatini", "to": "Steffi Graf", "event": "Berlin / German Open", "round": "F", "score": "7-6(3) 2-6 6-4", "date_status": "EXACT", "source": "https://www.washingtonpost.com/archive/sports/1993/05/17/courier-tops-ivanisevic-defends-italian-crown/adce8bd6-5a1e-4f7b-9d1e-f51ab3c96284/", "kind": "transfer"}, {"date": "1993-07-20", "year": 1993, "from": "Steffi Graf", "to": "Nicole Bradtke", "event": "Fed Cup WG R1: Germany vs Australia", "round": "RR", "score": "6-4 1-6 6-1", "date_status": "EXACT", "source": "https://www.independent.co.uk/sport/tennis-graf-beaten-as-germany-make-exit-1486256.html", "kind": "transfer"}, {"date": "1993-07-25", "year": 1993, "from": "Nicole Bradtke", "to": "Arantxa Sánchez Vicario", "event": "Fed Cup WG F: Spain vs Australia", "round": "RR", "score": "6-2 6-3", "date_status": "EXACT", "source": "https://www.washingtonpost.com/archive/sports/1993/07/26/spain-wins-federation-in-sweep/542c0260-0e29-480e-8f6a-cd969e1e7ca7/", "kind": "transfer"}, {"date": "1993-08-08", "year": 1993, "from": "Arantxa Sánchez Vicario", "to": "Steffi Graf", "event": "San Diego", "round": "F", "score": "6-4 4-6 6-1", "date_status": "EXACT", "source": "https://www.tennisabstract.com/charting/19930808-W-San_Diego-F-Steffi_Graf-Arantxa_Sanchez_Vicario.html", "kind": "transfer"}, {"date": "1993-11-14", "year": 1993, "from": "Steffi Graf", "to": "Conchita Martínez", "event": "Philadelphia", "round": "F", "score": "6-3 6-3", "date_status": "EXACT", "source": "https://www.the-independent.com/sport/sporting-digest-tennis-5444681.html", "kind": "transfer"}, {"date": "1993-11-19", "year": 1993, "from": "Conchita Martínez", "to": "Anke Huber", "event": "Virginia Slims Championships", "round": "QF", "score": "6-3 6-3", "date_status": "EXACT - schedule chronology", "source": "https://wtafiles.wtatennis.com/pdf/publications/WTA24MG_WTAFinals.pdf", "kind": "transfer"}, {"date": "1993-11-20", "year": 1993, "from": "Anke Huber", "to": "Steffi Graf", "event": "Virginia Slims Championships", "round": "SF", "score": "6-2 3-6 6-3", "date_status": "EXACT - schedule chronology", "source": "https://www.independent.co.uk/sport/sporting-digest-tennis-5444889.html", "kind": "transfer"}]}, "1994": {"entry": "Steffi Graf", "exit": "Gabriela Sabatini", "transfers": 20, "played_transfers": 20, "defences": 61, "title_matches": 81, "undated_defences": 0, "defence_leaders": [{"player": "Steffi Graf", "count": 37}, {"player": "Arantxa Sánchez Vicario", "count": 12}, {"player": "Judith Wiesner", "count": 4}, {"player": "Conchita Martínez", "count": 3}, {"player": "Gabriela Sabatini", "count": 2}], "busiest_event": {"event": "Berlin / German Open", "transfers": 4}, "transfers_rows": [{"date": "1994-05-01", "year": 1994, "from": "Steffi Graf", "to": "Arantxa Sánchez Vicario", "event": "Hamburg / Citizen Cup", "round": "F", "score": "4-6 7-6(3) 7-6(6)", "date_status": "EXACT", "source": "https://www.wtatennis.com/tournaments/601/hamburg/1994", "kind": "transfer"}, {"date": "1994-05-10", "year": 1994, "from": "Arantxa Sánchez Vicario", "to": "Elena Makarova", "event": "Berlin / German Open", "round": "R32", "score": "6-4 5-7 7-6(5)", "date_status": "EXACT", "source": "https://www.latimes.com/archives/la-xpm-1994-05-11-sp-56198-story.html", "kind": "transfer"}, {"date": "1994-05-13", "year": 1994, "from": "Elena Makarova", "to": "Anke Huber", "event": "Berlin / German Open", "round": "QF", "score": "6-0 6-1", "date_status": "EXACT", "source": "https://www.independent.co.uk/sport/sporting-digest-tennis-5433438.html", "kind": "transfer"}, {"date": "1994-05-14", "year": 1994, "from": "Anke Huber", "to": "Brenda Schultz-McCarthy", "event": "Berlin / German Open", "round": "SF", "score": "7-6(6) 6-3", "date_status": "EXACT", "source": "https://www.independent.co.uk/sport/sporting-digest-tennis-5433458.html", "kind": "transfer"}, {"date": "1994-05-15", "year": 1994, "from": "Brenda Schultz-McCarthy", "to": "Steffi Graf", "event": "Berlin / German Open", "round": "F", "score": "7-6(6) 6-4", "date_status": "EXACT", "source": "https://www.wtatennis.com/tournaments/708/berlin/1994", "kind": "transfer"}, {"date": "1994-06-02", "year": 1994, "from": "Steffi Graf", "to": "Mary Pierce", "event": "Roland Garros", "round": "SF", "score": "6-2 6-2", "date_status": "EXACT", "source": "https://www.upi.com/Archives/1994/06/02/Pierce-beats-Graf-at-French-Open/9895770529600/", "kind": "transfer"}, {"date": "1994-06-05", "year": 1994, "from": "Mary Pierce", "to": "Arantxa Sánchez Vicario", "event": "Roland Garros", "round": "F", "score": "6-4 6-4", "date_status": "EXACT - completed after suspension", "sour
