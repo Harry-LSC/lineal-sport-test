@@ -33,5 +33,6 @@ jobs:
             echo "Tennis pages are already current."
             exit 0
           fi
-          git commit -m "Assemble tennis preview pages"
+          git commit -m "Assemble tennis pages"
+          git pull --rebase origin "$GITHUB_REF_NAME"
           git push
