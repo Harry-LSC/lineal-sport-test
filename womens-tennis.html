@@ -1813,6 +1813,10 @@ const HOLDER_COUNTRY_AUDIT = {"Agnieszka Radwańska":{"ioc":"POL","iso2":"pl","s
 const CHAMPION_COUNTRY_MAP = Object.fromEntries(Object.entries(HOLDER_COUNTRY_AUDIT).filter(([_,v])=>v.iso2).map(([k,v])=>[k,v.iso2]));
 
 function champFlagHTML(name){
+  const live = (window.LSC_LIVE_PLAYER_MAP || {})[name];
+  if(live?.flag){
+    return `<span class="champ-selected-flag" aria-label="${esc(live.country || name)} representation"><span>${esc(live.flag)}</span></span>`;
+  }
   const meta = HOLDER_COUNTRY_AUDIT[name];
   if(!meta) return '';
   if(meta.ioc === 'URS'){
