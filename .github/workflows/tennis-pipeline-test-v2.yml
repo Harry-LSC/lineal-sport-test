@@ -1,0 +1,49 @@
+name: Tennis pipeline regression test v2
+
+on:
+  push:
+    branches:
+      - tennis-pipeline-test-v2
+    paths:
+      - "seed_tennis_test_v2.py"
+      - ".github/workflows/tennis-pipeline-test-v2.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  regression:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --upgrade openpyxl pycountry
+      - run: python seed_tennis_test_v2.py
+      - run: python build_tennis_data.py
+      - name: Assert state and flag
+        run: |
+          python - <<'PY'
+          import json
+          data=json.load(open("data/tennis-data.json",encoding="utf-8"))
+          men=next(x for x in data["lineages"] if x["lineage"]=="Men's Singles")
+          assert men["current_holder"]=="Test Challenger", men
+          assert men["current_defences"]==1, men
+          assert men["transfers"]==1611, men
+          assert men["total_defences"]==4074, men
+          assert men["played_title_matches"]==5685, men
+          p=next(x for x in data["players"] if x["player"]=="Test Challenger")
+          assert p["country"]=="France", p
+          assert p["country_code"]=="FRA", p
+          assert p["flag"]=="🇫🇷", p
+          print("State + player flag assertions passed.")
+          PY
+      - name: Commit inspectable test outputs
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add LSC_Tennis_Update_System.xlsx data/tennis-data.json
+          git commit -m "Seed tennis pipeline test v2"
+          git push
