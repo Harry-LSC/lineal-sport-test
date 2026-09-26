@@ -200,6 +200,21 @@ const SURFACE_LEADER_DATA = {"transfers":{"All":[{"player":"Novak Djokovic","val
   const updates = PIPELINE.lineage_updates.filter(x => x.lineage === LINEAGE);
   if (!state) return;
 
+  // Make workbook-driven player representation available to all live UI components.
+  window.LSC_LIVE_PLAYER_MAP = Object.fromEntries((PIPELINE.players || []).map(p => [p.player, p]));
+  const liveTransferFlagHTML = name => {
+    const live = window.LSC_LIVE_PLAYER_MAP[name];
+    if (live?.flag) {
+      return `<div class="tc-flag is-fallback" aria-label="${esc(live.country || name)} representation"><span>${esc(live.flag)}</span></div>`;
+    }
+    const meta = typeof HOLDER_COUNTRY_AUDIT !== 'undefined' ? HOLDER_COUNTRY_AUDIT[name] : null;
+    const emoji = meta?.iso2 ? iso2FlagEmoji(meta.iso2) : '';
+    if (emoji) {
+      return `<div class="tc-flag is-fallback" aria-label="${esc(meta.country || name)} representation"><span>${emoji}</span></div>`;
+    }
+    return '';
+  };
+
   // Populate Full Archive immediately, before any other test-only UI updates.
   // This is deliberately early so a later rendering error cannot suppress archive rows.
   try {
@@ -302,7 +317,7 @@ const SURFACE_LEADER_DATA = {"transfers":{"All":[{"player":"Novak Djokovic","val
     const card = document.createElement('article');
     card.className='tc-card';
     card.innerHTML = `<div class="tc-top"><div class="tc-date">${longDate(u.match_date)}</div><div class="tc-stage">${esc(u.tournament)} · ${esc(u.round || '—')}</div></div>
-      <div class="tc-match"><div class="tc-player"><div class="tc-name">${esc(u.holder_before)}</div></div><div class="tc-arrow">→</div><div class="tc-player new"><div class="tc-name">${esc(u.holder_after)}</div></div></div>
+      <div class="tc-match"><div class="tc-player">${liveTransferFlagHTML(u.holder_before)}<div class="tc-name">${esc(u.holder_before)}</div></div><div class="tc-arrow">→</div><div class="tc-player new">${liveTransferFlagHTML(u.holder_after)}<div class="tc-name">${esc(u.holder_after)}</div></div></div>
       <div class="tc-result"><b>${esc(u.holder_after)} def. ${esc(u.holder_before)}</b><span>${esc(u.result_score || '')}</span></div>`;
     grid.prepend(card);
   });
