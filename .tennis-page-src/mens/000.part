@@ -1,0 +1,1661 @@
+<!doctype html>
+<html lang="en" data-tennis-lineage="Men's Singles">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LSC — Men's Lineal Tennis Championship — Hero v2</title>
+<style>
+:root{
+  --bg:#050d14;
+  --panel:#091923;
+  --panel2:#07131d;
+  --cream:#f2ecdf;
+  --text:#d6d8d3;
+  --muted:#8f9da0;
+  --line:#23343b;
+  --line2:#345148;
+  --gold:#c49a47;
+  --gold2:#d5ab55;
+  --green:#1f5f46;
+  --green2:#3e8b68;
+  --green-bright:#7fbea1;
+  --max:1180px;
+}
+*{box-sizing:border-box}
+html{background:var(--bg)}
+body{
+  margin:0;
+  color:var(--text);
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  background:
+    radial-gradient(circle at 50% -10%,#10272a 0,#07131d 35%,#050d14 76%);
+  line-height:1.45;
+}
+.wrap{width:min(var(--max),calc(100% - 44px));margin:auto}
+a{color:inherit;text-decoration:none}
+
+/* shared LSC header, Tennis typography */
+header{
+  position:sticky;top:0;z-index:20;
+  background:rgba(4,12,19,.94);
+  backdrop-filter:blur(13px);
+  border-bottom:1px solid #20303a;
+}
+.nav{height:62px;display:flex;align-items:center;gap:16px}
+.logo{
+  width:38px;height:38px;border:1px solid var(--gold);border-radius:50%;
+  display:grid;place-items:center;color:var(--gold2);
+  font:600 12px Georgia,serif;
+}
+.brand b{
+  display:block;color:var(--cream);
+  font:600 16px Georgia,serif;
+  letter-spacing:.035em;
+}
+.brand span{
+  font-size:9px;color:var(--green-bright);
+  text-transform:uppercase;letter-spacing:.12em;
+}
+.navlinks{margin-left:auto;display:flex;gap:22px}
+.navlinks a{
+  color:#bfc6c3;text-decoration:none;font-size:10px;
+  text-transform:uppercase;letter-spacing:.08em;
+}
+
+/* breadcrumb requested: stop at Tennis */
+.crumb{
+  padding-top:20px;
+  font-size:9px;
+  text-transform:uppercase;
+  letter-spacing:.16em;
+  color:var(--green-bright);
+}
+
+/* Bannerman hierarchy, Tennis visual identity */
+.hero{padding:48px 0 34px}
+.kicker{
+  font-size:9px;text-transform:uppercase;letter-spacing:.16em;
+  color:var(--green-bright);font-weight:700;
+}
+.hero h1{
+  font-family:"Cormorant Garamond",Georgia,serif;
+  font-size:clamp(44px,6vw,76px);
+  line-height:.9;
+  font-weight:600;
+  margin:8px 0 14px;
+  color:var(--cream);
+  letter-spacing:-.035em;
+}
+.hero h1 span{color:var(--gold2)}
+.hero p{
+  max-width:680px;margin:0;color:#b7c1bf;font-size:14px;
+}
+
+/* current holder banner */
+.holder-row{
+  display:flex;align-items:stretch;margin-top:28px;
+  border:1px solid var(--line2);border-radius:14px;overflow:hidden;
+  background:linear-gradient(180deg,rgba(10,28,35,.96),rgba(7,20,28,.96));
+}
+.holder-main{
+  display:flex;align-items:center;gap:22px;
+  padding:24px 28px;
+  border-right:1px solid var(--line);
+  flex:1 1 410px;min-width:0;
+}
+
+/*
+  UNIVERSAL FLAG COMPONENT
+  ------------------------
+  No flag-specific CSS.
+  The outer box is always the same size.
+  The image is never stretched or cropped.
+  Flags with unusual proportions are centred inside the same box.
+*/
+.flag-shell{
+  width:58px;
+  aspect-ratio:5 / 3;
+  flex:0 0 58px;
+  border-radius:0;
+  overflow:visible;
+  border:0;
+  background:transparent;
+  box-shadow:none;
+  display:grid;
+  place-items:center;
+  position:relative;
+}
+.flag-shell img{
+  width:100%;
+  height:100%;
+  display:block;
+  object-fit:contain;
+  object-position:center;
+  background:#061119;
+}
+.flag-shell .flag-fallback{
+  display:none;
+  font:600 17px/1 Inter,sans-serif;
+  letter-spacing:.08em;
+  color:var(--cream);
+}
+.flag-shell.is-fallback img{display:none}
+.flag-shell.is-fallback .flag-fallback{display:block}
+
+.holder-copy{min-width:0}
+.labelrow{display:flex;align-items:center;gap:2px}
+.holder-label{
+  font-size:9px;text-transform:uppercase;letter-spacing:.16em;
+  color:var(--green-bright);font-weight:700;
+}
+.share{
+  width:22px;height:22px;padding:0;border:0;
+  background:transparent;color:var(--gold);
+  display:grid;place-items:center;cursor:pointer;border-radius:50%;
+}
+.share:hover{background:rgba(196,154,71,.08);color:var(--gold2)}
+.holder-name{
+  font:600 clamp(31px,3.2vw,42px)/1 Georgia,serif;
+  color:var(--cream);margin-top:4px;
+}
+.holder-since{font-size:11px;color:#a5b0af;margin-top:7px}
+.holder-result{
+  font-size:10.5px;color:#9eaaaa;margin-top:4px;
+  white-space:normal;
+}
+
+/* Bannerman-style stat cells, Tennis fonts */
+.holder-stat{
+  padding:18px 20px;border-right:1px solid var(--line);
+  text-align:center;min-width:128px;
+  display:flex;flex-direction:column;justify-content:center;
+}
+.holder-stat:last-child{
+  border-right:0;
+  background:rgba(31,95,70,.10);
+  min-width:170px;
+}
+.holder-stat .n{
+  font:600 27px/1 "Cormorant Garamond",Georgia,serif;
+  color:var(--gold2);
+}
+.holder-stat .l{
+  font-size:8px;text-transform:uppercase;letter-spacing:.10em;
+  color:#819296;margin-top:7px;
+}
+.holder-stat .sub{
+  font-size:9px;line-height:1.5;color:#8f9da0;margin-top:7px;
+}
+.holder-stat:last-child .n{color:var(--green-bright);font-size:22px}
+
+.qa-note{
+  margin-top:16px;font-size:9px;color:#65777a;
+}
+
+@media(max-width:900px){
+  .holder-row{display:grid;grid-template-columns:1fr 1fr}
+  .holder-main{
+    grid-column:1/-1;border-right:0;border-bottom:1px solid var(--line)
+  }
+  .holder-stat:nth-of-type(2){border-bottom:1px solid var(--line)}
+  .holder-stat:last-child{grid-column:1/-1}
+}
+@media(max-width:600px){
+  .wrap{width:calc(100% - 26px)}
+  .navlinks{display:none}
+  .hero{padding-top:40px}
+  .holder-row{display:block}
+  .holder-main,.holder-stat{
+    border-right:0;border-bottom:1px solid var(--line)
+  }
+  .holder-stat:last-child{border-bottom:0}
+  .flag-shell{width:92px;flex-basis:92px}
+}
+
+/* Tennis at-a-glance, using Bannerman skeleton only */
+.glance-wrap{padding:8px 0 34px}
+.glance-panel{
+  border:1px solid var(--line2);
+  border-radius:14px;
+  background:linear-gradient(180deg,rgba(10,28,35,.96),rgba(7,20,28,.96));
+  overflow:hidden;
+}
+.glance-title{
+  padding:15px 18px 11px;
+  font-size:9px;
+  text-transform:uppercase;
+  letter-spacing:.16em;
+  color:var(--green-bright);
+  font-weight:700;
+  border-bottom:1px solid var(--line);
+}
+.glance-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+}
+.glance-cell{
+  padding:18px 18px 20px;
+  border-right:1px solid var(--line);
+  text-align:center;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+.glance-cell:last-child{border-right:0}
+.glance-number{
+  font:600 27px/1 "Cormorant Garamond",Georgia,serif;
+  color:var(--gold2);
+}
+.glance-label{
+  margin-top:8px;
+  font-size:10px;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  color:var(--cream);
+}
+.glance-sub{
+  margin-top:7px;
+  font-size:9px;
+  color:#8f9da0;
+  line-height:1.5;
+}
+@media(max-width:800px){
+  .glance-grid{grid-template-columns:1fr 1fr}
+  .glance-cell:nth-child(2){border-right:0}
+  .glance-cell:nth-child(-n+2){border-bottom:1px solid var(--line)}
+}
+@media(max-width:520px){
+  .glance-grid{grid-template-columns:1fr}
+  .glance-cell{
+    border-right:0!important;
+    border-bottom:1px solid var(--line);
+  }
+  .glance-cell:last-child{border-bottom:0}
+}
+
+
+/* Last 6 title changes — John Edrich skeleton, Tennis design language */
+.last6-wrap{padding:10px 0 42px}
+.last6-head{margin-bottom:16px}
+.last6-head h2{
+  margin:0;
+  font:600 32px/1 "Cormorant Garamond",Georgia,serif;
+  color:var(--cream);
+  letter-spacing:-.02em;
+}
+.tc-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+}
+.tc-card{
+  background:linear-gradient(180deg,rgba(10,28,35,.96),rgba(7,20,28,.96));
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:17px;
+}
+.tc-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-bottom:15px;
+}
+.tc-date{
+  font-size:9px;
+  color:#8fa09e;
+  letter-spacing:.04em;
+}
+.tc-stage{
+  font-size:8px;
+  font-weight:600;
+  color:var(--gold2);
+  background:rgba(196,154,71,.09);
+  border:1px solid rgba(196,154,71,.18);
+  padding:4px 8px;
+  border-radius:999px;
+  white-space:nowrap;
+}
+.tc-match{
+  display:grid;
+  grid-template-columns:1fr 26px 1fr;
+  gap:10px;
+  align-items:center;
+}
+.tc-player{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  min-width:0;
+}
+.tc-flag{
+  width:18px;
+  height:13px;
+  flex:0 0 auto;
+  border-radius:2px;
+  overflow:hidden;
+  border:1px solid rgba(196,154,71,.24);
+  background:#061119;
+  display:grid;
+  place-items:center;
+}
+.tc-flag.square{
+  width:14px;
+  height:14px;
+}
+.tc-flag img{
+  width:100%;
+  height:100%;
+  display:block;
+  object-fit:contain;
+  object-position:center;
+  background:#061119;
+}
+.tc-flag span{
+  display:none;
+  font-size:7px;
+  font-weight:700;
+  color:var(--cream);
+  letter-spacing:.04em;
+}
+.tc-flag.is-fallback img{display:none}
+.tc-flag.is-fallback span{display:block}
+.tc-name{
+  font:600 17px/1.08 Georgia,serif;
+  color:var(--cream);
+}
+.tc-player.new .tc-name{color:var(--gold2)}
+.tc-arrow{
+  text-align:center;
+  color:var(--green-bright);
+  font-size:15px;
+}
+.tc-result{
+  margin-top:14px;
+  padding-top:12px;
+  border-top:1px solid var(--line);
+  text-align:center;
+}
+.tc-result b{
+  display:block;
+  font:600 13px/1.25 Georgia,serif;
+  color:var(--cream);
+}
+.tc-result span{
+  display:block;
+  margin-top:4px;
+  font-size:9px;
+  color:#899a9b;
+}
+@media(max-width:900px){
+  .tc-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:600px){
+  .tc-grid{grid-template-columns:1fr}
+}
+
+
+/* Historical timeline explorer */
+.history-wrap{padding:8px 0 44px}
+.history-head h2{margin:0 0 14px;font:600 32px/1 "Cormorant Garamond",Georgia,serif;color:var(--cream);letter-spacing:-.02em;}
+.history-panel{border:1px solid var(--line2);border-radius:14px;background:linear-gradient(180deg,rgba(10,28,35,.96),rgba(7,20,28,.96));overflow:hidden;}
+.history-top{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:18px 20px;border-bottom:1px solid var(--line);flex-wrap:wrap;}
+.history-title{font:600 28px/1 "Cormorant Garamond",Georgia,serif;color:var(--cream);}
+.history-title span{color:var(--gold2)}
+.history-control{display:flex;align-items:center;gap:10px;}
+.history-control label{font-size:9px;text-transform:uppercase;letter-spacing:.12em;color:var(--green-bright);font-weight:700;}
+.history-select{min-width:126px;padding:10px 12px;border-radius:8px;border:1px solid var(--line2);background:#08141c;color:var(--cream);font:500 13px Inter,sans-serif;}
+.history-select:focus{outline:none;border-color:var(--gold)}
+.history-summary{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--line);}
+.hy-cell{padding:18px 18px 16px;border-right:1px solid var(--line);text-align:center;}
+.hy-cell:last-child{border-right:0}
+.hy-big{font:600 26px/1 "Cormorant Garamond",Georgia,serif;color:var(--gold2);}
+.hy-label{margin-top:8px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.10em;color:var(--cream);}
+.hy-sub{margin-top:6px;font-size:10px;line-height:1.5;color:#8f9da0;}
+.history-overview-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  border-bottom:1px solid var(--line);
+}
+.history-overview-cell{
+  padding:16px 20px;
+  border-right:1px solid var(--line);
+}
+.history-overview-cell:last-child{border-right:0}
+.history-overview-label{
+  font-size:9px;
+  text-transform:uppercase;
+  letter-spacing:.11em;
+  color:var(--green-bright);
+  font-weight:700;
+  margin-bottom:6px;
+}
+.history-overview-value{
+  font:600 18px/1.15 Georgia,serif;
+  color:var(--cream);
+}
+.history-body{display:grid;grid-template-columns:1.1fr .9fr;gap:0;}
+.history-left{padding:18px 20px 22px;border-right:1px solid var(--line);}
+.history-right{padding:18px 20px 22px;}
+.section-mini{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--green-bright);font-weight:700;margin-bottom:12px;}
+.transfer-list{display:flex;flex-direction:column;gap:11px;max-height:620px;overflow:auto;padding-right:4px}
+.transfer-item{border:1px solid var(--line);border-radius:10px;padding:12px 13px;background:rgba(255,255,255,.015);}
+.transfer-date{font-size:10px;color:var(--gold2);margin-bottom:6px;}
+.transfer-line{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px;}
+.pair{display:inline-flex;align-items:center;gap:6px;min-width:0;}
+.tflag{width:16px;height:12px;flex:0 0 auto;border-radius:2px;overflow:hidden;border:1px solid rgba(196,154,71,.24);background:#061119;display:grid;place-items:center;}
+.tflag.square{width:12px;height:12px}
+.tflag img{width:100%;height:100%;display:block;object-fit:contain;object-position:center;background:#061119}
+.tflag span{display:none;font-size:6px;font-weight:700;color:var(--cream)}
+.tflag.is-fallback img{display:none}.tflag.is-fallback span{display:block}
+.pname{font:600 16px/1.05 Georgia,serif;color:var(--cream);}
+.arrow{color:var(--green-bright);font-size:15px}
+.transfer-meta{font-size:10px;color:#8f9da0;}
+.insight-card{border:1px solid var(--line);border-radius:10px;padding:14px 14px 12px;background:rgba(255,255,255,.015);margin-bottom:12px;}
+.insight-card b{display:block;font:600 18px/1.1 Georgia,serif;color:var(--cream);}
+.insight-card span{display:block;margin-top:5px;font-size:10px;line-height:1.5;color:#8f9da0;}
+.defence-list{display:flex;flex-direction:column;gap:8px;margin-top:2px}
+.defence-row{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-top:1px solid var(--line)}
+.defence-row:first-child{border-top:0}
+.defence-name{display:inline-flex;align-items:center;gap:6px;min-width:0;}
+.defence-count{font:600 17px/1 "Cormorant Garamond",Georgia,serif;color:var(--gold2);}
+.history-empty{color:#8f9da0;font-size:11px;}
+@media(max-width:920px){
+  .history-summary{grid-template-columns:repeat(2,1fr)}
+  .hy-cell:nth-child(2){border-right:0}
+  .hy-cell:nth-child(-n+2){border-bottom:1px solid var(--line)}
+  .history-overview-row{grid-template-columns:1fr}
+  .history-overview-cell{border-right:0;border-bottom:1px solid var(--line)}
+  .history-overview-cell:last-child{border-bottom:0}
+  .history-body{grid-template-columns:1fr}
+  .history-left{border-right:0;border-bottom:1px solid var(--line)}
+}
+@media(max-width:600px){
+  .history-top{align-items:flex-start}
+  .history-title{font-size:24px}
+  .history-summary{grid-template-columns:1fr}
+  .hy-cell{border-right:0!important;border-bottom:1px solid var(--line)}
+  .hy-cell:last-child{border-bottom:0}
+}
+
+
+/* Complete year rail: 1968–latest, fill height driven by yearly transfer count */
+.year-rail-wrap{
+  padding:14px 16px 16px;
+  border-bottom:1px solid var(--line);
+  background:#061119;
+}
+.year-rail{
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  gap:5px;
+}
+.year-box{
+  position:relative;
+  min-height:46px;
+  border:1px solid #2f4444;
+  background:#0a1a20;
+  color:#c3ceca;
+  border-radius:5px;
+  cursor:pointer;
+  overflow:hidden;
+  font:600 9px/1 Inter,sans-serif;
+  transition:border-color .15s,color .15s,transform .15s;
+}
+.year-box::before{
+  content:"";
+  position:absolute;
+  left:0;right:0;bottom:0;
+  height:var(--fill,5%);
+  background:linear-gradient(180deg,rgba(62,139,104,.20),rgba(62,139,104,.52));
+}
+.year-box span{
+  position:relative;
+  z-index:1;
+  display:grid;
+  place-items:center;
+  height:100%;
+  min-height:44px;
+}
+.year-box:hover{
+  border-color:var(--gold);
+  color:var(--cream);
+  transform:translateY(-1px);
+}
+.year-box.active{
+  border-color:var(--gold2);
+  color:var(--cream);
+  box-shadow:0 0 0 1px rgba(213,171,85,.22);
+}
+.year-box.active::before{
+  background:linear-gradient(180deg,rgba(196,154,71,.18),rgba(196,154,71,.48));
+}
+@media(max-width:1050px){.year-rail{grid-template-columns:repeat(10,1fr)}}
+@media(max-width:850px){.year-rail{grid-template-columns:repeat(8,1fr)}}
+@media(max-width:650px){.year-rail{grid-template-columns:repeat(5,1fr)}}
+
+
+/* Leaderboard */
+.leaderboard-wrap{padding:8px 0 48px}
+.leaderboard-head h2{
+  margin:0 0 16px;
+  font:600 32px/1 "Cormorant Garamond",Georgia,serif;
+  color:var(--cream);
+  letter-spacing:-.02em;
+}
+.leader-tabs{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+  margin-bottom:14px;
+}
+.leader-tab{
+  appearance:none;
+  border:1px solid var(--line2);
+  border-radius:9px;
+  background:#081921;
+  color:#aeb9b6;
+  padding:12px 14px;
+  cursor:pointer;
+  text-align:center;
+  font:600 13px/1.2 Inter,sans-serif;
+  transition:.15s;
+}
+.leader-tab:hover{
+  border-color:var(--gold);
+  color:var(--cream);
+}
+.leader-tab.active{
+  border-color:var(--gold2);
+  background:rgba(196,154,71,.09);
+  color:var(--cream);
+  box-shadow:0 0 0 1px rgba(196,154,71,.12);
+}
+.leader-panel{
+  border:1px solid var(--line2);
+  border-radius:14px;
+  background:linear-gradient(180deg,rgba(10,28,35,.96),rgba(7,20,28,.96));
+  overflow:hidden;
+}
+.leader-table-head,
+.leader-row{
+  display:grid;
+  grid-template-columns:52px 1fr 160px;
+  gap:12px;
+  align-items:center;
+}
+.leader-table-head{
+  padding:12px 18px;
+  border-bottom:1px solid var(--line);
+  font-size:9px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.10em;
+  color:var(--green-bright);
+}
+.leader-row{
+  padding:12px 18px;
+  border-top:1px solid var(--line);
+}
+.leader-row:first-child{border-top:0}
+.leader-rank{
+  font:600 18px/1 "Cormorant Garamond",Georgia,serif;
+  color:#71858a;
+}
+.leader-name{
+  font:600 17px/1.1 Georgia,serif;
+  color:var(--cream);
+}
+.leader-value{
+  text-align:right;
+  font:600 22px/1 "Cormorant Garamond",Georgia,serif;
+  color:var(--gold2);
+}
+.leader-value small{
+  display:block;
+  margin-top:4px;
+  font:500 9px/1.3 Inter,sans-serif;
+  color:#859698;
+}
+@media(max-width:760px){
+  .leader-tabs{grid-template-columns:1fr 1fr}
+}
+@media(max-width:520px){
+  .leader-tabs{grid-template-columns:1fr}
+  .leader-table-head,.leader-row{grid-template-columns:38px 1fr 105px}
+  .leader-name{font-size:15px}
+}
+
+
+/* Champion explorer */
+.champ-wrap{padding:8px 0 52px}
+.champ-head{display:flex;justify-content:space-between;gap:24px;align-items:end;margin-bottom:16px}
+.champ-kicker{font-size:9px;text-transform:uppercase;letter-spacing:.16em;color:var(--green-bright);font-weight:700}
+.champ-head h2{margin:4px 0 0;font:600 32px/1 "Cormorant Garamond",Georgia,serif;color:var(--cream);letter-spacing:-.02em}
+.champ-head p{margin:0;max-width:440px;text-align:right;font-size:11px;color:#8f9da0}
+.champ-grid{display:grid;grid-template-columns:300px 1fr;gap:14px}
+.champ-panel{border:1px solid var(--line2);border-radius:14px;background:linear-gradient(180deg,rgba(10,28,35,.96),rgba(7,20,28,.96));padding:16px}
+.champ-search{padding-bottom:10px}
+.champ-search input{width:100%;background:#071820;color:var(--cream);border:1px solid var(--line2);border-radius:7px;padding:10px 11px;font:500 12px Inter,sans-serif}
+.champ-list{border-top:1px solid var(--line);max-height:500px;overflow-y:auto;scrollbar-gutter:stable}
+.champ-item{display:flex;justify-content:space-between;gap:10px;padding:10px 4px;border-bottom:1px solid #142129;cursor:pointer}
+.champ-item:hover,.champ-item.active{background:rgba(196,154,71,.06)}
+.champ-item b{font:600 14px/1.15 Georgia,serif;color:var(--cream)}
+.champ-item span{font-size:9px;color:#7f9294}
+.champ-selected-top{display:flex;align-items:center;gap:9px}
+.champ-selected-flag{width:22px;height:16px;border-radius:2px;overflow:hidden;border:1px solid rgba(196,154,71,.28);background:#061119;display:grid;place-items:center;flex:0 0 auto}
+.champ-selected-flag.square{width:16px;height:16px}
+.champ-selected-flag img{width:100%;height:100%;display:block;object-fit:contain;object-position:center;background:#061119}
+.champ-selected-flag span{display:none;font-size:7px;font-weight:700;color:var(--cream)}
+.champ-selected-flag.is-fallback img{display:none}.champ-selected-flag.is-fallback span{display:block}
+.champ-name{font:600 31px/1 Georgia,serif;color:var(--cream)}
+.champ-four{display:grid;grid-template-columns:repeat(4,1fr);margin:16px 0;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.champ-four div{padding:12px;border-left:1px solid var(--line);text-align:center}
+.champ-four div:first-child{border-left:0}
+.champ-four b{display:block;font:600 21px/1 "Cormorant Garamond",Georgia,serif;color:var(--gold2)}
+.champ-four span{font-size:8px;color:#7f9294;text-transform:uppercase;letter-spacing:.08em}
+.champ-detail-lower{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.champ-detail-col{border:1px solid var(--line);border-radius:9px;padding:12px 13px;background:rgba(255,255,255,.012)}
+.champ-mini-title{font-size:9px;text-transform:uppercase;letter-spacing:.12em;color:var(--green-bright);font-weight:700;margin:0 0 8px}
+.champ-mini{border-top:1px solid var(--line)}
+.champ-mini-row{padding:9px 0;border-bottom:1px solid #142129}
+.champ-mini-row b{font:600 13px/1.15 Georgia,serif;color:var(--cream)}
+.champ-mini-row span{display:block;font-size:9px;color:#849698;margin-top:3px;line-height:1.45}
+.champ-empty{font-size:10px;color:#849698;padding:10px 0}
+@media(max-width:700px){.champ-detail-lower{grid-template-columns:1fr}}
+@media(max-width:850px){
+  .champ-grid{grid-template-columns:1fr}
+  .champ-head{display:block}
+  .champ-head p{text-align:left;margin-top:7px}
+}
+@media(max-width:600px){
+  .champ-four{grid-template-columns:1fr 1fr}
+}
+
+
+#champion,#last6,#timeline,#leaderboard,#champions,#archive{
+  scroll-margin-top:82px;
+}
+
+
+/* Full archive */
+.archive-wrap{padding:8px 0 54px}
+.archive-head{margin-bottom:16px}
+.archive-kicker{
+  font-size:9px;
+  text-transform:uppercase;
+  letter-spacing:.16em;
+  color:var(--green-bright);
+  font-weight:700;
+}
+.archive-head h2{
+  margin:4px 0 0;
+  font:600 32px/1 "Cormorant Garamond",Georgia,serif;
+  color:var(--cream);
+  letter-spacing:-.02em;
+}
+.archive-panel{
+  border:1px solid var(--line2);
+  border-radius:14px;
+  background:linear-gradient(180deg,rgba(10,28,35,.96),rgba(7,20,28,.96));
+  padding:16px;
+}
+.archive-controls{
+  display:grid;
+  grid-template-columns:1fr 165px 130px;
+  gap:8px;
+  margin-bottom:12px;
+}
+.archive-controls input,
+.archive-controls select{
+  width:100%;
+  background:#071820;
+  color:var(--cream);
+  border:1px solid var(--line2);
+  border-radius:7px;
+  padding:10px 11px;
+  font:500 11px Inter,sans-serif;
+}
+.archive-controls input:focus,
+.archive-controls select:focus{outline:none;border-color:var(--gold)}
+.archive-table-head,
+.archive-row{
+  display:grid;
+  grid-template-columns:100px 82px 1fr 1.7fr;
+  gap:12px;
+  align-items:center;
+}
+.archive-table-head{
+  padding:10px 6px;
+  border-bottom:1px solid var(--line);
+  font-size:8.5px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.09em;
+  color:var(--green-bright);
+}
+.archive-row{
+  padding:10px 6px;
+  border-top:1px solid var(--line);
+  font-size:10px;
+  color:#9aa8a8;
+}
+.archive-row:first-child{border-top:0}
+.archive-date{color:#8da09d}
+.archive-type{
+  font-size:8px;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  color:var(--gold2);
+}
+.archive-main{
+  font:600 14px/1.1 Georgia,serif;
+  color:var(--cream);
+}
+.archive-context{line-height:1.45}
+.archive-footer{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  margin-top:12px;
+  padding-top:12px;
+  border-top:1px solid var(--line);
+  font-size:9px;
+  color:#7f9294;
+}
+.archive-footer button{
+  border:1px solid var(--line2);
+  background:#081921;
+  color:#b9c2c0;
+  border-radius:6px;
+  padding:7px 10px;
+  cursor:pointer;
+}
+.archive-footer button:disabled{opacity:.35;cursor:default}
+.archive-footer button:not(:disabled):hover{border-color:var(--gold);color:var(--cream)}
+@media(max-width:800px){
+  .archive-controls{grid-template-columns:1fr}
+  .archive-table-head,.archive-row{grid-template-columns:82px 66px 1fr}
+  .archive-table-head>*:nth-child(4),.archive-row>*:nth-child(4){display:none}
+}
+
+
+.navlinks .nav-current{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  line-height:1.02;
+  gap:1px;
+}
+#methodology{scroll-margin-top:82px}
+
+/* Methodology */
+.method-wrap{padding:10px 0 54px}
+.method-head{margin-bottom:16px}
+.method-kicker{
+  font-size:9px;
+  text-transform:uppercase;
+  letter-spacing:.16em;
+  color:var(--green-bright);
+  font-weight:700;
+}
+.method-head h2{
+  margin:4px 0 0;
+  font:600 32px/1 "Cormorant Garamond",Georgia,serif;
+  color:var(--cream);
+  letter-spacing:-.02em;
+}
+.method-intro{
+  max-width:850px;
+  margin:10px 0 0;
+  color:#98a7a5;
+  font-size:11.5px;
+  line-height:1.7;
+}
+.method-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+}
+.method-card{
+  border:1px solid var(--line2);
+  border-radius:12px;
+  background:linear-gradient(180deg,rgba(10,28,35,.96),rgba(7,20,28,.96));
+  padding:18px;
+}
+.method-card h3{
+  margin:0 0 10px;
+  font:600 20px/1.05 "Cormorant Garamond",Georgia,serif;
+  color:var(--cream);
+}
+.method-card p{
+  margin:0;
+  color:#96a4a4;
+  font-size:10.5px;
+  line-height:1.7;
+}
+.method-card p + p{margin-top:9px}
+.method-rule-list{
+  display:grid;
+  gap:0;
+  border-top:1px solid var(--line);
+  margin-top:12px;
+}
+.method-rule{
+  display:grid;
+  grid-template-columns:150px 1fr;
+  gap:14px;
+  padding:11px 0;
+  border-bottom:1px solid var(--line);
+}
+.method-rule b{
+  font:600 13px/1.25 Georgia,serif;
+  color:var(--cream);
+}
+.method-rule span{
+  font-size:10px;
+  color:#8f9da0;
+  line-height:1.6;
+}
+.method-source-note{
+  margin-top:14px;
+  border-left:3px solid var(--green2);
+  padding:10px 0 10px 13px;
+  color:#aeb9b6;
+  font-size:10.5px;
+  line-height:1.7;
+}
+@media(max-width:800px){
+  .method-grid{grid-template-columns:1fr}
+  .method-rule{grid-template-columns:1fr}
+}
+
+/* Footer — cricket skeleton, Tennis language */
+footer{
+  border-top:1px solid var(--line);
+  margin-top:22px;
+  padding:34px 0 44px;
+}
+.footer-grid{
+  display:grid;
+  grid-template-columns:2fr 1fr;
+  gap:40px;
+}
+.footer-title{
+  font-size:9px;
+  letter-spacing:.13em;
+  color:var(--green-bright);
+  text-transform:uppercase;
+  font-weight:700;
+  margin-bottom:10px;
+}
+.footer-text{
+  font-size:11px;
+  color:#839395;
+  line-height:1.75;
+}
+.footer-brand-title{
+  font:600 18px/1.05 "Cormorant Garamond",Georgia,serif;
+  color:var(--cream);
+  margin-bottom:10px;
+}
+.footer-meta{
+  font-size:10px;
+  color:#718186;
+  line-height:1.8;
+}
+.footer-meta .lineage-verified{
+  color:#91a19e;
+  margin-bottom:5px;
+}
+.footer-error-link{
+  color:var(--green-bright);
+  text-decoration:none;
+  border-bottom:1px solid rgba(127,190,161,.35);
+}
+.footer-error-link:hover{
+  color:var(--cream);
+  border-bottom-color:var(--cream);
+}
+@media(max-width:850px){
+  .footer-grid{grid-template-columns:1fr}
+}
+
+
+/* Context banner */
+.data-banner-wrap{padding:0 0 40px}
+.data-banner{
+  border:1px solid var(--line2);
+  border-left:3px solid var(--gold2);
+  border-radius:10px;
+  background:linear-gradient(180deg,rgba(196,154,71,.06),rgba(7,20,28,.96));
+  padding:16px 18px;
+}
+.data-banner-kicker{
+  font-size:8.5px;
+  text-transform:uppercase;
+  letter-spacing:.13em;
+  color:var(--green-bright);
+  font-weight:700;
+  margin-bottom:6px;
+}
+.data-banner-title{
+  font:600 20px/1.1 "Cormorant Garamond",Georgia,serif;
+  color:var(--cream);
+  margin-bottom:6px;
+}
+.data-banner-text{
+  font-size:11.5px;
+  line-height:1.72;
+  color:#94a3a2;
+  max-width:none;
+  width:100%;
+}
+.data-banner-text b{color:var(--gold2);font-weight:600}
+
+
+.hero-distinction{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  margin-top:10px;
+  padding:7px 10px;
+  border:1px solid var(--line2);
+  border-radius:999px;
+  background:rgba(31,95,70,.10);
+  color:#a9b8b4;
+  font-size:9.5px;
+  line-height:1.35;
+}
+.hero-distinction b{
+  color:var(--green-bright);
+  font-weight:700;
+}
+
+
+/* Self-contained flag rendering: no external image requests. */
+.flag-shell img,
+.tc-flag img,
+.tflag img,
+.champ-selected-flag img{display:none !important;}
+
+.flag-shell .flag-fallback,
+.tc-flag span,
+.tflag span,
+.champ-selected-flag span{
+  display:block !important;
+  overflow:visible;
+  white-space:nowrap;
+  text-align:center;
+  line-height:1;
+}
+.flag-shell .flag-fallback{font-size:40px;}
+.tc-flag span{font-size:13px;}
+.tflag span{font-size:11px;}
+.champ-selected-flag span{font-size:17px;}
+.champ-selected-flag.historic-code{
+  width:auto;
+  min-width:25px;
+  height:16px;
+  padding:0 4px;
+  border:1px solid var(--line2);
+  border-radius:3px;
+  background:#081921;
+}
+.champ-selected-flag.historic-code span{
+  font:700 8px/16px Inter,Arial,sans-serif;
+  letter-spacing:.04em;
+  color:var(--cream);
+}
+
+.tc-flag,.tflag,.champ-selected-flag{
+  overflow:visible;
+  border:0;
+  background:transparent;
+}
+.tc-flag.square,.tflag.square,.champ-selected-flag.square{width:auto;height:auto;}
+
+
+.country-note-wrap{padding:0 0 42px}
+.country-note{
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:14px 16px;
+  background:rgba(255,255,255,.012);
+}
+.country-note-title{
+  font-size:8.5px;
+  text-transform:uppercase;
+  letter-spacing:.13em;
+  color:var(--green-bright);
+  font-weight:700;
+  margin-bottom:7px;
+}
+.country-note p{
+  margin:0;
+  color:#89999a;
+  font-size:10px;
+  line-height:1.7;
+}
+.country-note a{
+  color:#b6c1be;
+  border-bottom:1px solid rgba(182,193,190,.25);
+}
+
+
+
+
+
+.champ-selected-flag.yug-flag{
+  position:relative;
+  display:inline-block;
+  width:1.55em;
+  height:1.02em;
+  border-radius:2px;
+  overflow:hidden;
+  border:1px solid rgba(0,0,0,.14);
+  background:linear-gradient(to bottom,#1f4aa8 0 33.333%,#fff 33.333% 66.666%,#d62828 66.666% 100%);
+  vertical-align:-.08em;
+}
+.champ-selected-flag.yug-flag .yug-star{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#d71920;
+  font-size:.62em;
+  line-height:1;
+  text-shadow:0 0 1px #fff;
+}
+
+\n/* Surface performance extension */
+.surface-wrap{padding:8px 0 48px}
+.surface-head{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:16px}
+.surface-kicker{font-size:9px;text-transform:uppercase;letter-spacing:.16em;color:var(--green-bright);font-weight:700}
+.surface-head h2{margin:4px 0 0;font:600 32px/1 "Cormorant Garamond",Georgia,serif;color:var(--cream);letter-spacing:-.02em}
+.surface-head p{margin:0;max-width:510px;text-align:right;font-size:11px;color:#8f9da0}
+.surface-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
+.surface-summary-card{border:1px solid var(--line2);border-radius:10px;background:#081921;padding:13px 14px}
+.surface-summary-name{font:600 17px/1.1 Georgia,serif;color:var(--cream);margin-bottom:8px}
+.surface-summary-meta{font-size:10px;color:var(--muted);line-height:1.5}
+.surface-summary-meta b{color:var(--gold2);font-weight:700}
+.surface-panel{border:1px solid var(--line2);border-radius:14px;background:linear-gradient(180deg,rgba(10,28,35,.96),rgba(7,20,28,.96));overflow:hidden}
+.surface-controls{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.55fr);gap:16px;padding:16px 18px;border-bottom:1px solid var(--line)}
+.surface-control-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.10em;color:var(--green-bright);margin-bottom:8px}
+.surface-buttons{display:flex;gap:7px;flex-wrap:wrap}
+.surface-btn{appearance:none;border:1px solid var(--line2);border-radius:8px;background:#071820;color:#aeb9b6;padding:9px 11px;cursor:pointer;font:600 11px/1.15 Inter,sans-serif;transition:.15s}
+.surface-btn:hover{border-color:var(--gold);color:var(--cream)}
+.surface-btn.active{border-color:var(--gold2);background:rgba(196,154,71,.09);color:var(--cream);box-shadow:0 0 0 1px rgba(196,154,71,.12)}
+.surface-table-head,.surface-row{display:grid;grid-template-columns:52px 1fr 160px;gap:12px;align-items:center}
+.surface-table-head{padding:12px 18px;border-bottom:1px solid var(--line);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.10em;color:var(--green-bright)}
+.surface-row{padding:11px 18px;border-top:1px solid var(--line)}
+.surface-row:first-child{border-top:0}
+.surface-rank{font:600 18px/1 "Cormorant Garamond",Georgia,serif;color:#71858a}
+.surface-player{font:600 17px/1.1 Georgia,serif;color:var(--cream)}
+.surface-value{text-align:right;font:600 22px/1 "Cormorant Garamond",Georgia,serif;color:var(--gold2)}
+.surface-value small{display:block;margin-top:4px;font:500 9px/1.3 Inter,sans-serif;color:#859698}
+.surface-note{padding:10px 18px 14px;border-top:1px solid var(--line);font-size:10px;color:#7f9094}
+@media(max-width:850px){.surface-head{display:block}.surface-head p{margin-top:8px;text-align:left}.surface-summary{grid-template-columns:1fr 1fr}.surface-controls{grid-template-columns:1fr}}
+@media(max-width:520px){.surface-summary{grid-template-columns:1fr}.surface-table-head,.surface-row{grid-template-columns:38px 1fr 105px}.surface-player{font-size:15px}.surface-btn{flex:1 1 auto}}\n
+/* Holder surface profile — intentionally scoped to Explore a Holder */
+.champ-surface-profile{
+  margin:18px 0 20px;
+  padding:16px 0 2px;
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+}
+.champ-surface-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:12px;
+  margin-bottom:12px;
+}
+.champ-surface-title{
+  font-size:11px;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+  font-weight:900;
+  color:var(--muted);
+}
+.champ-surface-note{
+  font-size:11px;
+  color:var(--muted);
+}
+.champ-surface-rows{
+  display:grid;
+  gap:9px;
+  padding-bottom:14px;
+}
+.champ-surface-row{
+  display:grid;
+  grid-template-columns:62px minmax(0,1fr) 126px;
+  align-items:center;
+  gap:10px;
+}
+.champ-surface-label{
+  font-size:12px;
+  font-weight:850;
+}
+.champ-surface-track{
+  height:14px;
+  border-radius:999px;
+  overflow:hidden;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.025);
+}
+.champ-surface-fill{
+  height:100%;
+  border-radius:999px;
+  min-width:0;
+}
+.champ-surface-fill.hard{background:#7686a1}
+.champ-surface-fill.clay{background:#a86f4b}
+.champ-surface-fill.grass{background:#718d68}
+.champ-surface-fill.carpet{background:#8c6d95}
+.champ-surface-value{
+  text-align:right;
+  font-size:11px;
+  color:var(--muted);
+  white-space:nowrap;
+}
+.champ-surface-value b{color:var(--text);font-size:12px}
+.champ-surface-empty{
+  color:var(--muted);
+  font-size:12px;
+  padding:2px 0 14px;
+}
+@media(max-width:640px){
+  .champ-surface-head{align-items:flex-start;flex-direction:column}
+  .champ-surface-row{grid-template-columns:52px minmax(0,1fr) 104px;gap:8px}
+  .champ-surface-value{font-size:10px}
+}
+
+
+/* 2026-09-25 refinement pass */
+.tc-stage{
+  color:var(--green-bright);
+  background:rgba(62,139,104,.10);
+  border-color:rgba(62,139,104,.26);
+}
+.year-box{
+  border-color:#355250;
+  color:#dfe7e4;
+  font:700 11px/1 Inter,sans-serif;
+  letter-spacing:.01em;
+}
+.year-box span{
+  color:#eef3f1;
+  text-shadow:0 1px 0 rgba(0,0,0,.28);
+}
+.year-box::before{
+  background:linear-gradient(180deg,rgba(176,132,60,.16),rgba(176,132,60,.42));
+}
+.year-box:hover{
+  border-color:var(--green-bright);
+  color:var(--cream);
+  box-shadow:0 0 0 1px rgba(62,139,104,.16);
+}
+.year-box.active{
+  border-color:var(--green-bright);
+  color:var(--cream);
+  box-shadow:0 0 0 1px rgba(62,139,104,.24), 0 10px 18px rgba(0,0,0,.18);
+}
+.year-box.active::before{
+  background:linear-gradient(180deg,rgba(196,154,71,.24),rgba(196,154,71,.58));
+}
+@media(max-width:650px){
+  .year-box{font-size:10px}
+}
+
+
+/* breadcrumb navigation */
+.crumb a{
+  color:inherit;
+  text-decoration:none;
+}
+.crumb a:hover,
+.crumb a:focus-visible{
+  color:var(--green-bright);
+  text-decoration:underline;
+  text-underline-offset:3px;
+}
+
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <div class="logo">LSC</div>
+    <div class="brand">
+      <b>Lineal Sport Championship</b>
+      <span>Tennis</span>
+    </div>
+    <div class="navlinks">
+      <a class="nav-current" href="#champion"><span>Current</span><span>Holder</span></a>
+      <a href="#timeline">Timeline</a>
+      <a href="#leaderboard">Leaderboard</a>
+      <a href="#champions">Past Holders</a>
+      <a href="#archive">Archive</a>
+      <a href="#methodology">Methodology</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap crumb"><a href="index.html">Lineal Sport Championship</a> / <a href="tennis.html">Tennis</a></div>
+
+<main class="wrap hero" id="champion">
+  <div class="kicker">Since 1968 · Open Era lineage</div>
+  <h1><span>Men's</span> Lineal Tennis Championship</h1>
+  <p>An unofficial match-by-match lineal championship history.</p>
+<div class="holder-row">
+    <div class="holder-main">
+      <div class="flag-shell" id="holderFlag" aria-label="Italy flag">
+        <img alt="Italy" id="holderFlagImg">
+        <span class="flag-fallback" id="holderFlagFallback">🇮🇹</span>
+      </div>
+
+      <div class="holder-copy">
+        <div class="labelrow">
+          <div class="holder-label">Current Holder</div>
+</div>
+
+        <div class="holder-name">Jannik Sinner</div>
+        <div class="holder-since">Won on 12 July 2026</div>
+        <div class="holder-result">def. Alexander Zverev · Wimbledon F · 6–7(7), 7–6(2), 6–3, 6–4</div>
+      </div>
+    </div>
+
+    <div class="holder-stat">
+      <div class="n" id="daysHeld">—</div>
+      <div class="l">Days held</div>
+      <div class="sub">Since 12 Jul 2026</div>
+    </div>
+
+    <div class="holder-stat">
+      <div class="n">0</div>
+      <div class="l">Defences</div>
+      <div class="sub">No successful defence yet<br>at the 18 Sep 2026 checkpoint</div>
+    </div>
+
+    <div class="holder-stat">
+      <div class="n">TBD</div>
+      <div class="l">Next match</div>
+      <div class="sub">No verified next defence yet</div>
+    </div>
+  </div>
+</main>
+
+<section class="wrap glance-wrap">
+  <div class="glance-panel">
+    <div class="glance-title">At a glance</div>
+    <div class="glance-grid">
+      <div class="glance-cell">
+        <div class="glance-number">1,610</div>
+        <div class="glance-label">Title changes</div>
+      </div>
+      <div class="glance-cell">
+        <div class="glance-number">425</div>
+        <div class="glance-label">Holders</div>
+      </div>
+      <div class="glance-cell">
+        <div class="glance-number">4,072</div>
+        <div class="glance-label">Successful defences</div>
+      </div>
+      <div class="glance-cell">
+        <div class="glance-number">5,682</div>
+        <div class="glance-label">Played title matches</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="wrap last6-wrap" id="last6">
+  <div class="last6-head"><h2>Last 6 title changes</h2></div>
+
+  <div class="tc-grid">
+<article class="tc-card">
+      <div class="tc-top"><div class="tc-date">12 July 2026</div><div class="tc-stage">Wimbledon · F</div></div>
+      <div class="tc-match">
+        <div class="tc-player"><div class="tc-flag" data-flag="de" data-code="GER"><img alt="Germany"><span>🇩🇪</span></div><div class="tc-name">Alexander Zverev</div></div>
+        <div class="tc-arrow">→</div>
+        <div class="tc-player new"><div class="tc-flag" data-flag="it" data-code="ITA"><img alt="Italy"><span>🇮🇹</span></div><div class="tc-name">Jannik Sinner</div></div>
+      </div>
+      <div class="tc-result"><b>Sinner def. Zverev</b><span>6–7(7) 7–6(2) 6–3 6–4</span></div>
+    </article>
+<article class="tc-card">
+      <div class="tc-top"><div class="tc-date">10 July 2026</div><div class="tc-stage">Wimbledon · SF</div></div>
+      <div class="tc-match">
+        <div class="tc-player"><div class="tc-flag" data-flag="gb" data-code="GBR"><img alt="United Kingdom"><span>🇬🇧</span></div><div class="tc-name">Arthur Fery</div></div>
+        <div class="tc-arrow">→</div>
+        <div class="tc-player new"><div class="tc-flag" data-flag="de" data-code="GER"><img alt="Germany"><span>🇩🇪</span></div><div class="tc-name">Alexander Zverev</div></div>
+      </div>
+      <div class="tc-result"><b>Zverev def. Fery</b><span>7–6(0) 6–2 6–4</span></div>
+    </article>
+<article class="tc-card">
+      <div class="tc-top"><div class="tc-date">4 July 2026</div><div class="tc-stage">Wimbledon · R32</div></div>
+      <div class="tc-match">
+        <div class="tc-player"><div class="tc-flag" data-flag="be" data-code="BEL"><img alt="Belgium"><span>🇧🇪</span></div><div class="tc-name">Zizou Bergs</div></div>
+        <div class="tc-arrow">→</div>
+        <div class="tc-player new"><div class="tc-flag" data-flag="gb" data-code="GBR"><img alt="United Kingdom"><span>🇬🇧</span></div><div class="tc-name">Arthur Fery</div></div>
+      </div>
+      <div class="tc-result"><b>Fery def. Bergs</b><span>2–6 7–5 2–6 7–6(3) 7–6(5)</span></div>
+    </article>
+<article class="tc-card">
+      <div class="tc-top"><div class="tc-date">28 June 2026</div><div class="tc-stage">Eastbourne · F</div></div>
+      <div class="tc-match">
+        <div class="tc-player"><div class="tc-flag" data-flag="fr" data-code="FRA"><img alt="France"><span>🇫🇷</span></div><div class="tc-name">Ugo Humbert</div></div>
+        <div class="tc-arrow">→</div>
+        <div class="tc-player new"><div class="tc-flag" data-flag="be" data-code="BEL"><img alt="Belgium"><span>🇧🇪</span></div><div class="tc-name">Zizou Bergs</div></div>
+      </div>
+      <div class="tc-result"><b>Bergs def. Humbert</b><span>3–6 6–1 6–4</span></div>
+    </article>
+<article class="tc-card">
+      <div class="tc-top"><div class="tc-date">25 June 2026</div><div class="tc-stage">Eastbourne · QF</div></div>
+      <div class="tc-match">
+        <div class="tc-player"><div class="tc-flag" data-flag="fr" data-code="FRA"><img alt="France"><span>🇫🇷</span></div><div class="tc-name">Quentin Halys</div></div>
+        <div class="tc-arrow">→</div>
+        <div class="tc-player new"><div class="tc-flag" data-flag="fr" data-code="FRA"><img alt="France"><span>🇫🇷</span></div><div class="tc-name">Ugo Humbert</div></div>
+      </div>
+      <div class="tc-result"><b>Humbert def. Halys</b><span>6–3 6–4</span></div>
+    </article>
+<article class="tc-card">
+      <div class="tc-top"><div class="tc-date">24 June 2026</div><div class="tc-stage">Eastbourne · R16</div></div>
+      <div class="tc-match">
+        <div class="tc-player"><div class="tc-flag" data-flag="gb" data-code="GBR"><img alt="United Kingdom"><span>🇬🇧</span></div><div class="tc-name">Giles Hussey</div></div>
+        <div class="tc-arrow">→</div>
+        <div class="tc-player new"><div class="tc-flag" data-flag="fr" data-code="FRA"><img alt="France"><span>🇫🇷</span></div><div class="tc-name">Quentin Halys</div></div>
+      </div>
+      <div class="tc-result"><b>Halys def. Hussey</b><span>6–1 7–5</span></div>
+    </article>
+  </div>
+</section>
+
+
+<section class="wrap history-wrap" id="timeline">
+  <div class="history-head"><h2>The Historical timeline</h2></div>
+  <div class="history-panel">
+    <div class="history-top">
+      <div class="history-title">Explore the lineage <span id="historyRangeLabel"></span></div>
+      <div class="history-control">
+        <label for="historyYearSelect">Year</label>
+        <select id="historyYearSelect" class="history-select"></select>
+      </div>
+    </div>
+
+    <div class="year-rail-wrap">
+      <div class="year-rail" id="historyYearRail"></div>
+    </div>
+
+    <div class="history-summary">
+      <div class="hy-cell">
+        <div class="hy-big" id="hyYear">—</div>
+        <div class="hy-label">Selected year</div>
+      </div>
+      <div class="hy-cell">
+        <div class="hy-big" id="hyTransfers">—</div>
+        <div class="hy-label">Title changes</div>
+      </div>
+      <div class="hy-cell">
+        <div class="hy-big" id="hyDefences">—</div>
+        <div class="hy-label">Successful defences</div>
+      </div>
+      <div class="hy-cell">
+        <div class="hy-big" id="hyMatches">—</div>
+        <div class="hy-label">Title matches</div>
+      </div>
+    </div>
+
+    <div class="history-overview-row">
+      <div class="history-overview-cell">
+        <div class="history-overview-label">Entering holder</div>
+        <div class="history-overview-value" id="hyEntryChampion">—</div>
+      </div>
+      <div class="history-overview-cell">
+        <div class="history-overview-label">Leaving holder</div>
+        <div class="history-overview-value" id="hyExitChampion">—</div>
+      </div>
+    </div>
+
+    <div class="history-body">
+      <div class="history-left">
+        <div class="section-mini" id="historyListTitle">Transfers in year</div>
+        <div class="transfer-list" id="historyTransfers"></div>
+      </div>
+      <div class="history-right">
+        <div class="section-mini">Defence leaders</div>
+        <div class="defence-list" id="historyLeaders"></div>
+
+        <div class="section-mini" style="margin-top:20px">Busiest transfer event</div>
+        <div class="insight-card">
+          <b id="hyBusyEvent">—</b>
+          <span id="hyBusyEventSub">—</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="wrap leaderboard-wrap" id="leaderboard">
+  <div class="leaderboard-head"><h2>Leaderboard</h2></div>
+
+  <div class="leader-tabs" id="leaderTabs">
+    <button class="leader-tab active" type="button" data-metric="days">Days in reign</button>
+    <button class="leader-tab" type="button" data-metric="defences">Most defences</button>
+    <button class="leader-tab" type="button" data-metric="reigns">Most reigns</button>
+    <button class="leader-tab" type="button" data-metric="longest">Longest single reign</button>
+  </div>
+
+  <div class="leader-panel">
+    <div class="leader-table-head">
+      <div>#</div>
+      <div>Holder</div>
+      <div style="text-align:right" id="leaderMetricHead">Days</div>
+    </div>
+    <div id="leaderRows"></div>
+  </div>
+</section>
+
+
+
+<section class="wrap surface-wrap" id="surface-performance">
+  <div class="surface-head">
+    <div><div class="surface-kicker">By court surface</div><h2>Surface performance</h2></div>
+  </div>
+  <div class="surface-summary"><div class="surface-summary-card"><div class="surface-summary-name">Hard</div><div class="surface-summary-meta"><b>751</b> title changes · <b>1,853</b> defences</div></div><div class="surface-summary-card"><div class="surface-summary-name">Clay</div><div class="surface-summary-meta"><b>400</b> title changes · <b>1,138</b> defences</div></div><div class="surface-summary-card"><div class="surface-summary-name">Grass</div><div class="surface-summary-meta"><b>168</b> title changes · <b>426</b> defences</div></div><div class="surface-summary-card"><div class="surface-summary-name">Carpet</div><div class="surface-summary-meta"><b>290</b> title changes · <b>655</b> defences</div></div></div>
+  <div class="surface-panel">
+    <div class="surface-controls">
+      <div><div class="surface-control-label">Metric</div><div class="surface-buttons" id="surfaceMetricButtons">
+        <button class="surface-btn" type="button" data-surface-metric="transfers">Title changes</button>
+        <button class="surface-btn active" type="button" data-surface-metric="defences">Successful defences</button>
+      </div></div>
+      <div><div class="surface-control-label">Surface</div><div class="surface-buttons" id="surfaceCourtButtons">
+        <button class="surface-btn active" type="button" data-surface-court="All">All</button>
+        <button class="surface-btn" type="button" data-surface-court="Hard">Hard</button>
+        <button class="surface-btn" type="button" data-surface-court="Clay">Clay</button>
+        <button class="surface-btn" type="button" data-surface-court="Grass">Grass</button>
+        <button class="surface-btn" type="button" data-surface-court="Carpet">Carpet</button>
+      </div></div>
+    </div>
+    <div class="surface-table-head"><div>#</div><div>Holder</div><div style="text-align:right" id="surfaceValueHead">Successful defences</div></div>
+    <div id="surfaceRows"></div>
+  </div>
+</section>
+
+<section class="wrap champ-wrap" id="champions">
+  <div class="champ-head">
+    <div>
+      <div class="champ-kicker">425 holders</div>
+      <h2>Explore a Holder</h2>
+    </div>
+    <p>Search your favourite player and see the data.</p>
+  </div>
+
+  <div class="champ-grid">
+    <div class="champ-panel">
+      <div class="champ-search">
+        <input id="champSearch" placeholder="Find a holder…">
+      </div>
+      <div class="champ-list" id="champList"></div>
+    </div>
+
+    <div class="champ-panel" id="champDetail"></div>
+  </div>
+</section>
+
+
+<section class="wrap archive-wrap" id="archive">
+  <div class="archive-head">
+    <div class="archive-kicker">Defences and transfers</div>
+    <h2>Full archive</h2>
+  </div>
+
+  <div class="archive-panel">
+    <div class="archive-controls">
+      <input id="archiveSearch" placeholder="Player, tournament, round or score…">
+      <select id="archiveType">
+        <option value="all">All records</option>
+        <option value="transfer">Transfers</option>
+        <option value="defence">Defences</option>
+      </select>
+      <select id="archiveYear">
+        <option value="all">All years</option>
+      </select>
+    </div>
+
+    <div class="archive-table-head">
+      <div>Date</div>
+      <div>Type</div>
+      <div>Holder</div>
+      <div>Match</div>
+    </div>
+    <div id="archiveRows"></div>
+
+    <div class="archive-footer">
+      <span id="archiveCount"></span>
+      <div>
+        <button id="archivePrev" type="button">Previous</button>
+        <button id="archiveNext" type="button">Next</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="wrap method-wrap" id="methodology">
+  <div class="method-head">
+    <div class="method-kicker">How the lineage is built</div>
+    <h2>Methodology</h2>
+    <p class="method-intro">
+      This page reconstructs an unofficial match-by-match men’s lineal tennis championship from the start of the Open Era. The championship does not follow tournament winners: it follows the holder. Every eligible official singles match played by the reigning holder can either extend the reign or transfer the title.
+    </p>
+  </div>
+
+  <div class="method-grid">
+    <div class="method-card">
+      <h3>Scope</h3>
+      <div class="method-rule-list">
+        <div class="method-rule"><b>Starting point</b><span>Ken Rosewall, 27 April 1968, at Bournemouth. The lineage proceeds chronologically from there, match by match.</span></div>
+        <div class="method-rule"><b>Eligible competition</b><span>Grand Slams; ATP main-tour events and historical equivalents; Olympics; Davis Cup; ATP Finals; recognised official top-level singles competition; and historical premier professional circuits or events.</span></div>
+        <div class="method-rule"><b>Excluded</b><span>Qualifying; lower ITF / Challenger / Futures-level competition; doubles, mixed doubles and juniors; unofficial exhibitions; standalone touring or one-night professional matches unless part of a formal recognised competition or league; World Team Tennis; and Laver Cup.</span></div>
+      </div>
+    </div>
+
+    <div class="method-card">
+      <h3>What counts</h3>
+      <div class="method-rule-list">
+        <div class="method-rule"><b>Title transfer</b><span>The title changes whenever the reigning holder loses an eligible completed singles match. It does not wait for the tournament final.</span></div>
+        <div class="method-rule"><b>Successful defence</b><span>An eligible match actually played and officially won by the holder counts as one successful defence.</span></div>
+        <div class="method-rule"><b>Walkover</b><span>A walkover before play begins is not a title match. There is no transfer and no defence.</span></div>
+        <div class="method-rule"><b>Retirement after play starts</b><span>The official winner decides the title. If the holder loses by retirement after play has begun, the championship transfers.</span></div>
+      </div>
+    </div>
+
+    <div class="method-card">
+      <h3>Chronology and dates</h3>
+      <div class="method-rule-list">
+        <div class="method-rule"><b>Match date</b><span>The actual match or completion date governs chronology. A tournament start date is never substituted for the match date.</span></div>
+        <div class="method-rule"><b>Date precision</b><span>Where an exact individual match day cannot be established, the record is labelled as reconstructed or tournament-order-only rather than assigning an invented exact date.</span></div>
+        <div class="method-rule"><b>Same-day transfers</b><span>Because the lineage is match by match, more than one transfer can occur on the same calendar day. Zero-day reigns are therefore possible and are retained in the record.</span></div>
+        <div class="method-rule"><b>Ordering</b><span>When multiple title matches occur within an event, draw order, round chronology and dated match evidence are used to preserve the sequence of the lineage.</span></div>
+      </div>
+    </div>
+
+    <div class="method-card">
+      <h3>Special cases and audit</h3>
+      <div class="method-rule-list">
+        <div class="method-rule"><b>Retirement succession</b><span>If a reigning holder officially retires and never plays another eligible official singles match, the title passes the day after the retirement announcement to the most recent player who had beaten him in eligible official singles.</span></div>
+        <div class="method-rule"><b>Dormancy</b><span>Injury, suspension, hiatus or simple inactivity does not strip the title.</span></div>
+        <div class="method-rule"><b>Sources</b><span>Match-level source references and date-status notes are retained in the research dataset. Exact dates are preferred; reconstructed chronology is explicitly labelled rather than presented as exact.</span></div>
+        <div class="method-rule"><b>Counting</b><span>Transfers and successful defences together make up played title matches. A succession caused by retirement is a lineage transfer but not a played match.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+
+function iso2FlagEmoji(iso2){
+  const s = String(iso2 || '').trim().toUpperCase();
+  if(!/^[A-Z]{2}$/.test(s)) return '';
+  return String.fromCodePoint(...[...s].map(ch => 127397 + ch.charCodeAt(0)));
+}
+
+/*
+  One self-contained flag renderer for every mapped holder.
+  Supply ISO 3166-1 alpha-2 + display country + optional 3-letter fallback.
+  No CSS changes per country.
+*/
+function setChampionFlag({iso2, country, fallback}) {
+  const shell = document.getElementById('holderFlag');
+  const fb = document.getElementById('holderFlagFallback');
+  shell.setAttribute('aria-label', country + ' flag');
+  const emoji = iso2FlagEmoji(iso2);
+  fb.textContent = emoji || fallback || country || '';
+  shell.classList.add('is-fallback');
+}
+
+setChampionFlag({
+  iso2: 'it',
+  country: 'Italy',
+  fallback: 'ITA'
+});
+
+// Dynamic days held: presentation value only.
+(function(){
+  const acquired = Date.UTC(2026,6,12);
+  const now = new Date();
+  const todayUTC = Date.UTC(now.getUTCFullYear(),now.getUTCMonth(),now.getUTCDate());
+  document.getElementById('daysHeld').textContent =
+    Math.max(0, Math.floor((todayUTC-acquired)/86400000)).toLocaleString();
+})();
+
+
+
+const esc = value => String(value ?? '')
+  .replaceAll('&','&amp;')
+  .replaceAll('<','&lt;')
+  .replaceAll('>','&gt;')
+  .replaceAll('"','&quot;')
+  .replaceAll("'","&#039;");
+
+const fmt = dateString => {
+  if(!dateString) return 'Date unresolved';
+  const parts = String(dateString).split('-').map(Number);
+  if(parts.length !== 3 || parts.some(Number.isNaN)) return String(dateString);
+  const d = new Date(Date.UTC(parts[0], parts[1]-1, parts[2]));
+  return new Intl.DateTimeFormat('en-GB',{
+    day:'numeric',
+    month:'short',
+    year:'numeric',
+    timeZone:'UTC'
+  }).format(d);
+};
+
+const HISTORY_YEAR_DATA = {"1968":{"entry":"Ken Rosewall","exit":"Tony Roche","transfers":30,"played_transfers":30,"defences":46,"title_matches":76,"undated_defences":38,"defence_leaders":[{"player":"Rod Laver","count":21},{"player":"Ken Rosewall","count":7},{"player":"Arthur Ashe","count":5},{"player":"Fred Stolle","count":5},{"player":"John Newcombe","count":3}],"busiest_event":{"event":"Corpus Christi NTL","transfers":3},"transfers_rows":[{"date":"1968-05-06","year":1968,"from":"Ken Rosewall","to":"Rod Laver","event":"Wembley NTL","round":"F","score":"6-0 6-1 6-0","date_status":"RECONSTRUCTED - ATP event-end chronology","source":"https://www.atptour.com/en/scores/results-archive?tournamentId=3940&year=1968","kind":"transfer"},{"date":"1968-06-09","year":1968,"from":"Rod Laver","to":"Ken Rosewall","event":"Roland Garros","round":"F","score":"6-3 6-1 2-6 6-2","date_status":"EXACT - Roland Garros final","source":"https://en.wikipedia.org/wiki/Ken_Rosewall_career_statistics","kind":"transfer"},{"date":"1968-06-14","year":1968,"from":"Ken Rosewall","to":"Tony Roche","event":"U.S. Pro (Longwood)","round":"QF","score":"4-6 10-8 6-3 7-5","date_status":"RECONSTRUCTED - scheduled U.S. Pro draw chronology","source":"https://en.wikipedia.org/wiki/1968_U.S._Pro_Tennis_Championships","kind":"transfer"},{"date":"1968-06-15","year":1968,"from":"Tony Roche","to":"John Newcombe","event":"U.S. Pro (Longwood)","round":"SF","score":"6-2 6-3 8-10 11-13 6-4","date_status":"RECONSTRUCTED - scheduled U.S. Pro draw chronology","source":"https://en.wikipedia.org/wiki/1968_U.S._Pro_Tennis_Championships","kind":"transfer"},{"date":"1968-07-01","year":1968,"from":"John Newcombe","to":"Arthur Ashe","event":"Wimbledon","round":"R16","score":"6-4 6-4 4-6 1-6 6-3","date_status":"RECONSTRUCTED - Wimbledon draw/day chronology","source":"https://en.wikipedia.org/wiki/1968_Wimbledon_Championships","kind":"transfer"},{"date":"1968-07-05","year":1968,"from":"Arthur Ashe","to":"Rod Laver","event":"Wimbledon","round":"SF","score":"7-5 6-2 6-4","date_status":"RECONSTRUCTED - Wimbledon draw/day chronology","source":"https://en.wikipedia.org/wiki/1968_Wimbledon_Championships","kind":"transfer"},{"date":"1968-07-19","year":1968,"from":"Rod Laver","to":"Pancho Gonzales","event":"Los Angeles NTL","round":"F","score":"1-6 6-3 6-4","date_status":"EXACT - rivalry match chronology","source":"https://en.wikipedia.org/wiki/Gonzales%E2%80%93Laver_rivalry","kind":"transfer"},{"date":"1968-08-02","year":1968,"from":"Pancho Gonzales","to":"Fred Stolle","event":"Oakland NTL","round":"F","score":"7-5 6-3","date_status":"EXACT - NTL calendar","source":"https://en.wikipedia.org/wiki/1968_Men%27s_National_Tennis_League","kind":"transfer"},{"date":"1968-08-11","year":1968,"from":"Fred Stolle","to":"Andres Gimeno","event":"Binghamton NTL Masters","round":"F","score":"6-4 6-1","date_status":"EXACT - NTL calendar","source":"https://en.wikipedia.org/wiki/1968_Men%27s_National_Tennis_League","kind":"transfer"},{"date":"1968-08-18","year":1968,"from":"Andres Gimeno","to":"Ken Rosewall","event":"Fort Worth NTL","round":"F","score":"6-4 6-3","date_status":"EXACT - NTL calendar / Rosewall career chronology","source":"https://en.wikipedia.org/wiki/Ken_Rosewall_career_statistics","kind":"transfer"},{"date":"1968-09-07","year":1968,"from":"Ken Rosewall","to":"Tom Okker","event":"US Open","round":"SF","score":"8-6 6-4 6-8 6-1","date_status":"RECONSTRUCTED - US Open final-week draw chronology","source":"https://en.wikipedia.org/wiki/1968_US_Open_%E2%80%93_Men%27s_singles","kind":"transfer"},{"date":"1968-09-09","year":1968,"from":"Tom Okker","to":"Arthur Ashe","event":"US Open","round":"F","score":"14-12 5-7 6-3 3-6 6-3","date_status":"EXACT - US Open final","source":"https://www.usopen.org/en_US/news/articles/2017-05-02/us_open_by_the_numbers_162.html","kind":"transfer"},{"date":"1968-09-21","year":1968,"from":"Arthur Ashe","to":"Ken Rosewall","event":"Los Angeles-2","round":"SF","score":"6-3 6-2","date_status":"RECONSTRUCTED - Pacific Southwest draw chronology","source":"https://en.wikipedia.org/wiki/1968_Pacific_Southwest_Open","kind":"transfer"},{"date":"1968-09-22","year":1968,"from":"Ken Rosewall","to":"Rod Laver","event":"Los Angeles-2","round":"F","score":"4-6 6-0 6-0","date_status":"EXACT - Pacific Southwest final","source":"https://en.wikipedia.org/wiki/1968_Pacific_Southwest_Open","kind":"transfer"},{"date":"1968-09-30","year":1968,"from":"Rod Laver","to":"Roy Emerson","event":"Midland NTL","round":"SF","score":"6-4 6-4","date_status":"EXACT - Emerson/Laver match chronology","source":"https://en.wikipedia.org/wiki/Emerson%E2%80%93Laver_rivalry","kind":"transfer"},{"date":"1968-10-01","year":1968,"from":"Roy Emerson","to":"Pancho Gonzales","event":"Midland NTL","round":"F","score":"7-5 6-3","date_status":"RECONSTRUCTED - NTL event final day","source":"https://en.wikipedia.org/wiki/1968_Men%27s_National_Tennis_League","kind":"transfer"},{"date":"1968-10-04","year":1968,"from":"Pancho Gonzales","to":"Roy Emerson","event":"Corpus Christi NTL","round":"QF","score":"7-5 6-0","date_status":"RECONSTRUCTED - ATP event/draw chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1968","kind":"transfer"},{"date":"1968-10-05","year":1968,"from":"Roy Emerson","to":"Andres Gimeno","event":"Corpus Christi NTL","round":"SF","score":"6-2 6-4","date_status":"RECONSTRUCTED - ATP event/draw chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1968","kind":"transfer"},{"date":"1968-10-06","year":1968,"from":"Andres Gimeno","to":"Rod Laver","event":"Corpus Christi NTL","round":"F","score":"6-2 6-4","date_status":"RECONSTRUCTED - ATP event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1968","kind":"transfer"},{"date":"1968-10-31","year":1968,"from":"Roy Emerson","to":"Andres Gimeno","event":"Lima NTL","round":"RR","score":"6-4 6-2","date_status":"EXACT - project-owner supplied contemporary newspaper evidence: Emerson d. Gimeno 6-4 6-2 on 31 Oct 1968 in Lima.","source":"https://raw.githubusercontent.com/Aneeshers/tennis-sackmann-archive/main/atp/atp_matches_1968.csv","kind":"transfer"},{"date":"1968-11-01","year":1968,"from":"Rod Laver","to":"Roy Emerson","event":"Lima NTL","round":"RR","score":"8-6 6-4","date_status":"EXACT - Emerson/Laver rivalry chronology","source":"https://en.wikipedia.org/wiki/Emerson%E2%80%93Laver_rivalry","kind":"transfer"},{"date":"1968-11-02","year":1968,"from":"Andres Gimeno","to":"Fred Stolle","event":"Lima NTL","round":"RR","score":"2-6 6-2 6-3","date_status":"RECONSTRUCTED - Lima title-deciding RR chronology places Stolle-Gimeno on the event's closing stage; individual day not independently reported.","source":"https://en.wikipedia.org/wiki/NTL_Lima_Pro_Championships","kind":"transfer"},{"date":"1968-11-08","year":1968,"from":"Fred Stolle","to":"Thomaz Koch","event":"Buenos Aires","round":"QF","score":"6-3 6-2 0-6 6-3","date_status":"RECONSTRUCTED - Buenos Aires quarterfinal chronology","source":"https://en.wikipedia.org/wiki/1968_South_American_Open","kind":"transfer"},{"date":"1968-11-09","year":1968,"from":"Thomaz Koch","to":"Rod Laver","event":"Buenos Aires","round":"SF","score":"6-2 8-6 6-2","date_status":"RECONSTRUCTED - Buenos Aires semifinal chronology","source":"https://en.wikipedia.org/wiki/1968_South_American_Open","kind":"transfer"},{"date":"1968-11-10","year":1968,"from":"Rod Laver","to":"Roy Emerson","event":"Buenos Aires","round":"F","score":"9-7 6-4 6-4","date_status":"EXACT - Emerson/Laver match chronology","source":"https://en.wikipedia.org/wiki/Emerson%E2%80%93Laver_rivalry","kind":"transfer"},{"date":"1968-11-19","year":1968,"from":"Roy Emerson","to":"Fred Stolle","event":"Wembley 3","round":"QF","score":"2-3 RET","date_status":"RECONSTRUCTED - Wembley event/draw chronology","source":"https://www.atptour.com/en/scores/results-archive?tournamentId=2066&year=1968","kind":"transfer"},{"date":"1968-11-20","year":1968,"from":"Fred Stolle","to":"John Newcombe","event":"Wembley 3","round":"SF","score":"3-6 6-2 6-4","date_status":"RECONSTRUCTED - Wembley event/draw chronology","source":"https://www.atptour.com/en/scores/results-archive?tournamentId=2066&year=1968","kind":"transfer"},{"date":"1968-11-21","year":1968,"from":"John Newcombe","to":"Ken Rosewall","event":"Wembley 3","round":"F","score":"6-4 4-6 7-5 6-4","date_status":"EXACT - Rosewall career chronology","source":"https://en.wikipedia.org/wiki/Ken_Rosewall_career_statistics","kind":"transfer"},{"date":"1968-11-28","year":1968,"from":"Ken Rosewall","to":"Pancho Gonzales","event":"New York 3","round":"QF","score":"7-5 5-7 6-4","date_status":"RECONSTRUCTED - New York-3 event/draw chronology","source":"https://www.atptour.com/en/scores/results-archive?tournamentId=2066&year=1968","kind":"transfer"},{"date":"1968-11-30","year":1968,"from":"Pancho Gonzales","to":"Tony Roche","event":"New York 3","round":"F","score":"6-4 6-3","date_status":"RECONSTRUCTED - ATP event final day","source":"https://www.atptour.com/en/scores/results-archive?tournamentId=2066&year=1968","kind":"transfer"}]},"1969":{"entry":"Tony Roche","exit":"Nikola Pilic","transfers":46,"played_transfers":46,"defences":90,"title_matches":136,"undated_defences":90,"defence_leaders":[{"player":"Rod Laver","count":42},{"player":"Tony Roche","count":19},{"player":"Fred Stolle","count":5},{"player":"Tom Okker","count":5},{"player":"Richard Gonzalez","count":5}],"busiest_event":{"event":"Los Angeles-2","transfers":5},"transfers_rows":[{"date":"1969-01-05","year":1969,"from":"Tony Roche","to":"Fred Stolle","event":"Hobart","round":"F","score":"6-3 0-6 6-4 6-1","date_status":"EXACT - Hobart final","source":"https://tennishistory.com.au/files/wp-content/uploads/2021/08/australian-finals-mens.pdf","kind":"transfer"},{"date":"1969-01-16","year":1969,"from":"Fred Stolle","to":"Richard Gonzalez","event":"Sydney","round":"R16","score":"15-13 6-4 8-6","date_status":"RECONSTRUCTED - Sydney event/round chronology","source":"https://en.wikipedia.org/wiki/1969_New_South_Wales_Open","kind":"transfer"},{"date":"1969-01-17","year":1969,"from":"Richard Gonzalez","to":"John Newcombe","event":"Sydney","round":"QF","score":"5-7 18-16 6-3 14-12","date_status":"RECONSTRUCTED - Sydney event/round chronology","source":"https://en.wikipedia.org/wiki/1969_New_South_Wales_Open","kind":"transfer"},{"date":"1969-01-18","year":1969,"from":"John Newcombe","to":"Rod Laver","event":"Sydney","round":"SF","score":"6-1 6-3 7-5","date_status":"RECONSTRUCTED - Sydney event/round chronology","source":"https://en.wikipedia.org/wiki/1969_New_South_Wales_Open","kind":"transfer"},{"date":"1969-01-19","year":1969,"from":"Rod Laver","to":"Tony Roche","event":"Sydney","round":"F","score":"6-4 4-6 9-7 12-10","date_status":"EXACT - Sydney final / contemporary report chronology","source":"https://en.wikipedia.org/wiki/1969_New_South_Wales_Open","kind":"transfer"},{"date":"1969-01-25","year":1969,"from":"Tony Roche","to":"Rod Laver","event":"Australian Open","round":"SF","score":"7-5 22-20 9-11 1-6 6-3","date_status":"EXACT - Australian Open semifinal","source":"https://oktennis.it/2017/02/gli-incontri-dimenticati-1969-laver-batte-roche-nel-forno-brisbane/","kind":"transfer"},{"date":"1969-02-03","year":1969,"from":"Rod Laver","to":"Tony Roche","event":"Auckland","round":"F","score":"6-1 6-4 4-6 6-3","date_status":"RECONSTRUCTED - Auckland event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1969","kind":"transfer"},{"date":"1969-02-09","year":1969,"from":"Tony Roche","to":"Rod Laver","event":"Philadelphia WCT","round":"F","score":"7-5 6-4 6-4","date_status":"EXACT - Philadelphia final","source":"https://en.wikipedia.org/wiki/1969_Philadelphia_International_Indoor_Open_Championships","kind":"transfer"},{"date":"1969-02-16","year":1969,"from":"Rod Laver","to":"Tony Roche","event":"Hollywood","round":"F","score":"6-3 9-7 6-4","date_status":"RECONSTRUCTED - Hollywood event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1969","kind":"transfer"},{"date":"1969-03-05","year":1969,"from":"Tony Roche","to":"Marty Riessen","event":"Los Angeles-1","round":"R16","score":"6-4 6-3","date_status":"RECONSTRUCTED - Los Angeles-1 draw/day chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1969","kind":"transfer"},{"date":"1969-03-08","year":1969,"from":"Marty Riessen","to":"Rod Laver","event":"Los Angeles-1","round":"F","score":"6-4 10-8","date_status":"RECONSTRUCTED - Los Angeles-1 event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1969","kind":"transfer"},{"date":"1969-03-25","year":1969,"from":"Rod Laver","to":"Cliff Richey","event":"New York-1","round":"R32","score":"6-4 3-6 6-3","date_status":"RECONSTRUCTED - New York-1 draw/day chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1969","kind":"transfer"},{"date":"1969-03-26","year":1969,"from":"Cliff Richey","to":"Roy Emerson","event":"New York-1","round":"R16","score":"7-5 9-7","date_status":"RECONSTRUCTED - New York-1 draw/day chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1969","kind":"transfer"},{"date":"1969-03-28","year":1969,"from":"Roy Emerson","to":"Arthur Ashe","event":"New York-1","round":"SF","score":"7-5 5-7 6-4","date_status":"RECONSTRUCTED - New York-1 draw/day chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1969","kind":"transfer"},{"date":"1969-03-29","year":1969,"from":"Arthur Ashe","to":"Andres Gimeno","event":"New York-1","round":"F","score":"6-1 6-2 3-6 6-8 9-7","date_status":"RECONSTRUCTED - New York-1 event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1969","kind":"transfer"},{"date":"1969-04-08","year":1969,"from":"Andres Gimeno","to":"Bob Hewitt","event":"Johannesburg","round":"R16","score":"6-3 6-4 6-2","date_status":"RECONSTRUCTED - Johannesburg draw/day chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1969","kind":"transfer"},{"date":"1969-04-09","year":1969,"from":"Bob Hewitt","to":"Rod Laver","event":"Johannesburg","round":"QF","score":"6-2 6-4 6-2","date_status":"RECONSTRUCTED - Johannesburg draw/day chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1969","kind":"transfer"},{"date":"1969-05-04","year":1969,"from":"Rod Laver","to":"Roy Emerson","event":"Japanese Championships","round":"RR","score":"6-4 6-5","date_status":"EXACT - audited Japan chronology","source":"https://raw.githubusercontent.com/Aneeshers/tennis-sackmann-archive/main/atp/atp_matches_1969.csv","kind":"transfer"},{"date":"1969-05-09","year":1969,"from":"Roy Emerson","to":"Tom Okker","event":"Japanese Championships","round":"F","score":"6-3 6-5","date_status":"RECONSTRUCTED - Japanese Championships event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1969","kind":"transfer"},{"date":"1969-05-21","year":1969,"from":"Tom Okker","to":"Rod Laver","event":"London-2","round":"SF","score":"10-5","date_status":"EXACT - London-2 single-day event","source":"https://www.atptour.com/en/tournaments/london/9284/overview","kind":"transfer"},{"date":"1969-05-22","year":1969,"from":"Rod Laver","to":"Andres Gimeno","event":"Amsterdam","round":"RR","score":"6-3 6-2","date_status":"EXACT - project-owner supplied evidence: Andres Gimeno d. Rod Laver 6-3 6-2 on 22 May 1969 in Amsterdam.","source":"https://raw.githubusercontent.com/Aneeshers/tennis-sackmann-archive/main/atp/atp_matches_1969.csv","kind":"transfer"},{"date":"1969-05-22","year":1969,"from":"Ken Rosewall","to":"Rod Laver","event":"Amsterdam","round":"RR","score":"6-2 1-6 6-3","date_status":"EXACT - Laver/Rosewall Amsterdam chronology","source":"https://tennis-db.com/rivalries/ken-rosewall-vs-rod-laver?player1_id=4580062&player2_id=4585744","kind":"transfer"},{"date":"1969-05-23","year":1969,"from":"Andres Gimeno","to":"Ken Rosewall","event":"Amsterdam","round":"RR","score":"12-10 1-6 7-5","date_status":"EXACT - project-owner supplied evidence: Ken Rosewall d. Andres Gimeno 12-10 1-6 7-5 on 23 May 1969 in Amsterdam.","source":"https://raw.githubusercontent.com/Aneeshers/tennis-sackmann-archive/main/atp/atp_matches_1969.csv","kind":"transfer"},{"date":"1969-05-25","year":1969,"from":"Rod Laver","to":"Tony Roche","event":"Amsterdam BR","round":"","score":"6-3 3-6 6-2","date_status":"RECONSTRUCTED - Amsterdam bronze/final-day chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1969","kind":"transfer"},{"date":"1969-06-06","year":1969,"from":"Tony Roche","to":"Ken Rosewall","event":"Roland Garros","round":"SF","score":"7-5 6-2 6-2","date_status":"RECONSTRUCTED - Roland Garros semifinal chronology","source":"https://en.wikipedia.org/wiki/1969_French_Open","kind":"transfer"},{"date":"1969-06-08","year":1969,"from":"Ken Rosewall","to":"Rod Laver","event":"Roland Garros","round":"F","score":"6-4 6-3 6-4","date_status":"EXACT - Roland Garros final","source":"https://en.wikipedia.org/wiki/1969_French_Open","kind":"transfer"},{"date":"1969-06-11","year":1969,"from":"Rod Laver","to":"Cliff Drysdale","event":"Bristol","round":"R16","score":"4-6 6-2 7-5","date_status":"RECONSTRUCTED - Bristol R16 draw/day chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1969","kind":"transfer"},{"date":"1969-06-12","year":1969,"from":"Cliff Drysdale","to":"Clark Graebner","event":"Bristol","round":"QF","score":"6-1 6-4","date_status":"RECONSTRUCTED - Bristol QF draw/day chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1969","kind":"transfer"},{"date":"1969-06-13","year":1969,"from":"Clark Graebner","to":"Pierre Barthes","event":"Bristol","round":"SF","score":"10-8 6-4","date_status":"RECONSTRUCTED - Bristol SF draw/day chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1969","kind":"transfer"},{"date":"1969-06-14","year":1969,"from":"Pierre Barthes","to":"Ken Rosewall","event":"Bristol","round":"F","score":"8-10 6-3 6-1","date_status":"EXACT - Bristol final","source":"https://www.atptour.com/en/scores/results-archive?year=1969","kind":"transfer"},{"date":"1969-06-18","year":1969,"from":"Ken Rosewall","to":"Ron Holmberg","event":"Queen's Club","round":"R16","score":"1-6 6-2 6-2","date_status":"RECONSTRUCTED - Queen's Club R16 draw/day chronology","source":"https://en.wikipedia.org/wiki/1969_Queen%27s_Club_Championships","kind":"transfer"},{"date":"1969-06-19","year":1969,"from":"Ron Holmberg","to":"Dennis Ralston","event":"Queen's Club","round":"QF","score":"6-4 9-7","date_status":"RECONSTRUCTED - Queen's Club QF draw/day chronology","source":"https://en.wikipedia.org/wiki/1969_Queen%27s_Club_Championships","kind":"transfer"},{"date":"1969-06-20","year":1969,"from":"Dennis Ralston","to":"Fred Stolle","event":"Queen's Club","round":"SF","score":"6-2 3-6 8-6","date_status":"RECONSTRUCTED - Queen's Club SF draw/day chronology","source":"https://en.wikipedia.org/wiki/1969_Queen%27s_Club_Championships","kind":"transfer"},{"date":"1969-06-30","year":1969,"from":"Fred Stolle","to":"John Newcombe","event":"Wimbledon","round":"R16","score":"6-4 7-5 3-6 6-3","date_status":"RECONSTRUCTED - Wimbledon fourth-round Monday chronology","source":"https://en.wikipedia.org/wiki/1969_Wimbledon_Championships","kind":"transfer"},{"date":"1969-07-05","year":1969,"from":"John Newcombe","to":"Rod Laver","event":"Wimbledon","round":"F","score":"6-4 5-7 6-4 6-4","date_status":"EXACT - Wimbledon final","source":"https://en.wikipedia.org/wiki/1969_Wimbledon_Championships","kind":"transfer"},{"date":"1969-09-24","year":1969,"from":"Rod Laver","to":"Raymond Moore","event":"Los Angeles-2","round":"R32","score":"7-5 3-6 6-2","date_status":"RECONSTRUCTED - Los Angeles-2 R32 draw/day chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1969","kind":"transfer"},{"date":"1969-09-25","year":1969,"from":"Raymond Moore","to":"Robert Lutz","event":"Los Angeles-2","round":"R16","score":"6-2 3-6 6-3","date_status":"RECONSTRUCTED - Los Angeles-2 R16 draw/day chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1969","kind":"transfer"},{"date":"1969-09-26","year":1969,"from":"Robert Lutz","to":"Earl Butch Buchholz","event":"Los Angeles-2","round":"QF","score":"6-4 7-5","date_status":"RECONSTRUCTED - Los Angeles-2 QF draw/day chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1969","kind":"transfer"},{"date":"1969-09-27","year":1969,"from":"Earl Butch Buchholz","to":"Cliff Richey","event":"Los Angeles-2","round":"SF","score":"6-4 6-2","date_status":"RECONSTRUCTED - Los Angeles-2 SF draw/day chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1969","kind":"transfer"},{"date":"1969-09-28","year":1969,"from":"Cliff Richey","to":"Richard Gonzalez","event":"Los Angeles-2","round":"F","score":"6-0 7-5","date_status":"RECONSTRUCTED - Los Angeles-2 event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1969","kind":"transfer"},{"date":"1969-10-05","year":1969,"from":"Richard Gonzalez","to":"Ken Rosewall","event":"Midland","round":"F","score":"5-7 6-1 7-5","date_status":"RECONSTRUCTED - Midland event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1969","kind":"transfer"},{"date":"1969-10-10","year":1969,"from":"Ken Rosewall","to":"Richard Gonzalez","event":"Las Vegas","round":"QF","score":"6-4 1-6 6-3","date_status":"RECONSTRUCTED - Las Vegas QF draw/day chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1969","kind":"transfer"},{"date":"1969-11-20","year":1969,"from":"Richard Gonzalez","to":"Tom Okker","event":"Wembley","round":"QF","score":"6-1 6-2","date_status":"RECONSTRUCTED - Wembley QF draw/day chronology","source":"https://www.itftennis.com/en/tournament/wembley/gbr/1969/m-gp-gbr-04a-1969/draws-and-results/","kind":"transfer"},{"date":"1969-11-21","year":1969,"from":"Tom Okker","to":"Rod Laver","event":"Wembley","round":"SF","score":"8-6 6-2","date_status":"RECONSTRUCTED - Wembley SF draw/day chronology","source":"https://www.itftennis.com/en/tournament/wembley/gbr/1969/m-gp-gbr-04a-1969/draws-and-results/","kind":"transfer"},{"date":"1969-11-27","year":1969,"from":"Rod Laver","to":"Fred Stolle","event":"Stockholm","round":"QF","score":"7-5 8-10 6-4","date_status":"RECONSTRUCTED - Stockholm QF draw/day chronology","source":"https://www.itftennis.com/en/tournament/stockholm/swe/1969/m-gp-swe-02a-1969/draws-and-results/","kind":"transfer"},{"date":"1969-11-28","year":1969,"from":"Fred Stolle","to":"Nikola Pilic","event":"Stockholm","round":"SF","score":"7-9 12-10 6-2","date_status":"RECONSTRUCTED - Stockholm SF draw/day chronology","source":"https://www.itftennis.com/en/tournament/stockholm/swe/1969/m-gp-swe-02a-1969/draws-and-results/","kind":"transfer"}]},"1970":{"entry":"Nikola Pilic","exit":"Manuel Santana","transfers":34,"played_transfers":34,"defences":63,"title_matches":97,"undated_defences":63,"defence_leaders":[{"player":"Rod Laver","count":17},{"player":"Ken Rosewall","count":16},{"player":"John Newcombe","count":8},{"player":"Tony Roche","count":8},{"player":"Arthur Ashe","count":3}],"busiest_event":{"event":"Sydney","transfers":4},"transfers_rows":[{"date":"1970-01-04","year":1970,"from":"Nikola Pilic","to":"John Newcombe","event":"Australian Round Robin","round":"RR","score":"6-2 6-3","date_status":"EXACT - user-verified Australian Round Robin chronology","source":"https://raw.githubusercontent.com/Aneeshers/tennis-sackmann-archive/main/atp/atp_matches_1970.csv","kind":"transfer"},{"date":"1970-01-04","year":1970,"from":"John Newcombe","to":"Tony Roche","event":"Australian Round Robin","round":"F","score":"5-7 7-5 7-5","date_status":"EXACT - Newcombe/Roche H2H chronology","source":"https://stats.tennismylife.org/h2h/john-newcombe-vs-tony-roche","kind":"transfer"},{"date":"1970-01-10","year":1970,"from":"Tony Roche","to":"John Newcombe","event":"Melbourne","round":"F","score":"6-4 6-4 4-6 RET","date_status":"EXACT - Newcombe/Roche H2H chronology","source":"https://stats.tennismylife.org/h2h/john-newcombe-vs-tony-roche","kind":"transfer"},{"date":"1970-01-25","year":1970,"from":"John Newcombe","to":"Dennis Ralston","event":"Australian Open","round":"QF","score":"19-17 20-18 4-6 6-3","date_status":"RECONSTRUCTED - Australian Open 19-27 Jan window + QF draw chronology","source":"https://en.wikipedia.org/wiki/1970_Australian_Open","kind":"transfer"},{"date":"1970-01-26","year":1970,"from":"Dennis Ralston","to":"Arthur Ashe","event":"Australian Open","round":"SF","score":"6-3 8-10 6-3 2-1 RET","date_status":"RECONSTRUCTED - Australian Open 19-27 Jan window + SF draw chronology","source":"https://en.wikipedia.org/wiki/1970_Australian_Open","kind":"transfer"},{"date":"1970-02-05","year":1970,"from":"Arthur Ashe","to":"Cliff Richey","event":"Philadelphia","round":"R16","score":"6-4 4-6 8-6","date_status":"RECONSTRUCTED - Philadelphia 2-8 Feb window + R16 draw chronology","source":"https://en.wikipedia.org/wiki/1970_ITPA_Open_Indoor","kind":"transfer"},{"date":"1970-02-06","year":1970,"from":"Cliff Richey","to":"Tony Roche","event":"Philadelphia","round":"QF","score":"6-2 6-1","date_status":"RECONSTRUCTED - Philadelphia 2-8 Feb window + QF draw chronology","source":"https://en.wikipedia.org/wiki/1970_ITPA_Open_Indoor","kind":"transfer"},{"date":"1970-02-08","year":1970,"from":"Tony Roche","to":"Rod Laver","event":"Philadelphia","round":"F","score":"6-3 8-6 6-2","date_status":"EXACT - Philadelphia final / event final day","source":"https://en.wikipedia.org/wiki/1970_ITPA_Open_Indoor","kind":"transfer"},{"date":"1970-02-13","year":1970,"from":"Rod Laver","to":"Andres Gimeno","event":"Miami","round":"SF","score":"4-6 11-9 7-5","date_status":"RECONSTRUCTED - WCT Miami 12-14 Feb window + SF chronology","source":"https://www.itftennis.com/en/tournament/wct-miami/usa/1970/m-gp-usa-01a-1970/draws-and-results/","kind":"transfer"},{"date":"1970-02-14","year":1970,"from":"Andres Gimeno","to":"Ken Rosewall","event":"Miami","round":"F","score":"3-6 6-2 3-6 7-6 6-3","date_status":"EXACT - WCT Miami final / event final day","source":"https://www.itftennis.com/en/tournament/wct-miami/usa/1970/m-gp-usa-01a-1970/draws-and-results/","kind":"transfer"},{"date":"1970-03-07","year":1970,"from":"Ken Rosewall","to":"Marty Riessen","event":"Wembley","round":"F","score":"6-4 6-2","date_status":"EXACT - Royal Albert Hall performance record for Rothmans final","source":"https://catalogue.royalalberthall.com/Record.aspx?id=PERF7759&src=CalmView.Performance","kind":"transfer"},{"date":"1970-03-17","year":1970,"from":"Marty Riessen","to":"Bill Bowrey","event":"Sydney","round":"R32","score":"7-5 8-6 6-3","date_status":"RECONSTRUCTED - Sydney 16-22 Mar window + R32 chronology","source":"https://www.itftennis.com/en/tournament/sydney/aus/1970/m-gp-aus-01a-1970/draws-and-results/","kind":"transfer"},{"date":"1970-03-18","year":1970,"from":"Bill Bowrey","to":"Richard Gonzalez","event":"Sydney","round":"R16","score":"6-3 6-4 6-2","date_status":"RECONSTRUCTED - Sydney 16-22 Mar window + R16 chronology","source":"https://www.itftennis.com/en/tournament/sydney/aus/1970/m-gp-aus-01a-1970/draws-and-results/","kind":"transfer"},{"date":"1970-03-20","year":1970,"from":"Richard Gonzalez","to":"Ken Rosewall","event":"Sydney","round":"QF","score":"6-0 10-8 6-2","date_status":"RECONSTRUCTED - Sydney 16-22 Mar window + QF chronology","source":"https://www.itftennis.com/en/tournament/sydney/aus/1970/m-gp-aus-01a-1970/draws-and-results/","kind":"transfer"},{"date":"1970-03-22","year":1970,"from":"Ken Rosewall","to":"Rod Laver","event":"Sydney","round":"F","score":"3-6 6-2 3-6 6-2 6-3","date_status":"EXACT - Sydney final / event final day","source":"https://en.wikipedia.org/wiki/1970_New_South_Wales_Open","kind":"transfer"},{"date":"1970-04-23","year":1970,"from":"Rod Laver","to":"Cliff Drysdale","event":"Dallas","round":"R16","score":"4-5 RET","date_status":"RECONSTRUCTED - WCT Dallas 21-26 Apr window + R16 chronology","source":"https://www.itftennis.com/en/tournament/wct-dallas/usa/1970/m-gp-usa-05a-1970/draws-and-results/","kind":"transfer"},{"date":"1970-04-24","year":1970,"from":"Cliff Drysdale","to":"Roy Emerson","event":"Dallas","round":"QF","score":"6-4 6-4","date_status":"RECONSTRUCTED - WCT Dallas 21-26 Apr window + QF chronology","source":"https://www.itftennis.com/en/tournament/wct-dallas/usa/1970/m-gp-usa-05a-1970/draws-and-results/","kind":"transfer"},{"date":"1970-04-26","year":1970,"from":"Roy Emerson","to":"Andres Gimeno","event":"Dallas","round":"F","score":"6-2 6-3 6-2","date_status":"EXACT - WCT Dallas final / event final day","source":"https://www.itftennis.com/en/tournament/wct-dallas/usa/1970/m-gp-usa-05a-1970/draws-and-results/","kind":"transfer"},{"date":"1970-05-15","year":1970,"from":"Andres Gimeno","to":"Richard Gonzalez","event":"Las Vegas","round":"QF","score":"8-6 6-4","date_status":"RECONSTRUCTED - WCT Las Vegas 13-17 May window + QF chronology","source":"https://www.itftennis.com/en/tournament/wct-las-vegas/usa/1970/m-gp-usa-07a-1970/draws-and-results/","kind":"transfer"},{"date":"1970-06-02","year":1970,"from":"Richard Gonzalez","to":"Rod Laver","event":"Champions Classic","round":"SF","score":"6-3 6-3 6-1","date_status":"EXACT - Gonzales/Laver rivalry chronology","source":"https://en.wikipedia.org/wiki/Gonzales%E2%80%93Laver_rivalry","kind":"transfer"},{"date":"1970-06-13","year":1970,"from":"Rod Laver","to":"Nikola Pilic","event":"Bristol","round":"F","score":"6-3 1-6 6-3","date_status":"EXACT - Bristol final / ATP event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1970","kind":"transfer"},{"date":"1970-06-18","year":1970,"from":"Nikola Pilic","to":"Bob Hewitt","event":"Eastbourne","round":"QF","score":"4-6 7-5 6-4","date_status":"RECONSTRUCTED - Eastbourne 15-20 Jun window + QF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1970","kind":"transfer"},{"date":"1970-06-19","year":1970,"from":"Bob Hewitt","to":"Ken Rosewall","event":"Eastbourne","round":"F","score":"6-2 6-1","date_status":"EXACT - Rosewall career chronology","source":"https://en.wikipedia.org/wiki/Ken_Rosewall_career_statistics","kind":"transfer"},{"date":"1970-07-04","year":1970,"from":"Ken Rosewall","to":"John Newcombe","event":"Wimbledon","round":"F","score":"5-7 6-3 6-3 3-6 6-1","date_status":"EXACT - Wimbledon final / championship final day","source":"https://en.wikipedia.org/wiki/1970_Wimbledon_Championships","kind":"transfer"},{"date":"1970-07-10","year":1970,"from":"John Newcombe","to":"Ken Rosewall","event":"Newport","round":"F","score":"6-4 6-4","date_status":"EXACT - Rosewall career chronology","source":"https://en.wikipedia.org/wiki/Ken_Rosewall_career_statistics","kind":"transfer"},{"date":"1970-07-22","year":1970,"from":"Ken Rosewall","to":"Rod Laver","event":"Champions Classic","round":"F","score":"6-4 6-3 6-3","date_status":"EXACT - Laver/Rosewall match chronology","source":"https://tennis-db.com/rivalries/ken-rosewall-vs-rod-laver?player1_id=4580062&player2_id=4585744","kind":"transfer"},{"date":"1970-08-09","year":1970,"from":"Rod Laver","to":"Tony Roche","event":"Boston","round":"F","score":"3-6 6-4 1-6 6-2 6-2","date_status":"EXACT - Boston final / ITF event final day","source":"https://www.itftennis.com/en/tournament/boston/usa/1970/m-gp-usa-13a-1970/","kind":"transfer"},{"date":"1970-08-16","year":1970,"from":"Tony Roche","to":"Ilie Nastase","event":"Hamburg","round":"SF","score":"3-6 7-5 6-1 6-4","date_status":"RECONSTRUCTED - Hamburg 10-17 Aug window + SF chronology","source":"https://en.wikipedia.org/wiki/1970_German_Open_Championships","kind":"transfer"},{"date":"1970-08-17","year":1970,"from":"Ilie Nastase","to":"Tom Okker","event":"Hamburg","round":"F","score":"4-6 6-3 6-3 6-4","date_status":"EXACT - Hamburg final / event final day","source":"https://en.wikipedia.org/wiki/1970_German_Open_Championships","kind":"transfer"},{"date":"1970-09-08","year":1970,"from":"Tom Okker","to":"Arthur Ashe","event":"US Open","round":"R16","score":"6-4 6-7 6-2 6-3","date_status":"RECONSTRUCTED - US Open 2-13 Sep window + R16 chronology","source":"https://en.wikipedia.org/wiki/1970_US_Open_(tennis)","kind":"transfer"},{"date":"1970-09-10","year":1970,"from":"Arthur Ashe","to":"John Newcombe","event":"US Open","round":"QF","score":"6-1 7-6 5-7 7-6","date_status":"RECONSTRUCTED - US Open 2-13 Sep window + QF chronology","source":"https://en.wikipedia.org/wiki/1970_US_Open_(tennis)","kind":"transfer"},{"date":"1970-09-12","year":1970,"from":"John Newcombe","to":"Ken Rosewall","event":"US Open","round":"SF","score":"6-3 6-4 6-3","date_status":"RECONSTRUCTED - US Open 2-13 Sep window + SF chronology","source":"https://en.wikipedia.org/wiki/1970_US_Open_(tennis)","kind":"transfer"},{"date":"1970-10-23","year":1970,"from":"Ken Rosewall","to":"Zeljko Franulovic","event":"Barcelona","round":"QF","score":"10-8 7-5 6-3","date_status":"RECONSTRUCTED - Barcelona 19-25 Oct window + QF chronology","source":"https://archivo.rctb1899.es/edicion-bcnopen/xviii-trofeo-conde-de-godo","kind":"transfer"},{"date":"1970-10-24","year":1970,"from":"Zeljko Franulovic","to":"Manuel Santana","event":"Barcelona","round":"SF","score":"7-5 4-6 6-4 6-1","date_status":"RECONSTRUCTED - Barcelona 19-25 Oct window + SF chronology","source":"https://archivo.rctb1899.es/edicion-bcnopen/xviii-trofeo-conde-de-godo","kind":"transfer"}]},"1971":{"entry":"Manuel Santana","exit":"Manuel Orantes","transfers":40,"played_transfers":40,"defences":101,"title_matches":141,"undated_defences":101,"defence_leaders":[{"player":"John Newcombe","count":19},{"player":"Ilie Nastase","count":13},{"player":"Ken Rosewall","count":11},{"player":"Rod Laver","count":11},{"player":"Tom Okker","count":9}],"busiest_event":{"event":"Queen's Club","transfers":4},"transfers_rows":[{"date":"1971-02-11","year":1971,"from":"Manuel Santana","to":"Jim Osborne","event":"New York","round":"R16","score":"6-4 6-4","date_status":"RECONSTRUCTED - New York 9-14 Feb window + R16 draw chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1971","kind":"transfer"},{"date":"1971-02-12","year":1971,"from":"Jim Osborne","to":"Zeljko Franulovic","event":"New York","round":"QF","score":"6-4 6-4","date_status":"RECONSTRUCTED - New York 9-14 Feb window + QF draw chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1971","kind":"transfer"},{"date":"1971-02-17","year":1971,"from":"Zeljko Franulovic","to":"Vladimir Zednik","event":"Salisbury","round":"R32","score":"3-6 6-4 6-4","date_status":"RECONSTRUCTED - Salisbury 14-21 Feb window + R32 draw chronology","source":"https://en.wikipedia.org/wiki/1971_U.S._National_Indoor_Tennis_Championships","kind":"transfer"},{"date":"1971-02-20","year":1971,"from":"Vladimir Zednik","to":"Cliff Richey","event":"Salisbury","round":"SF","score":"6-4 3-6 6-7 6-2 6-1","date_status":"RECONSTRUCTED - Salisbury 14-21 Feb window + SF draw chronology","source":"https://en.wikipedia.org/wiki/1971_U.S._National_Indoor_Tennis_Championships","kind":"transfer"},{"date":"1971-02-21","year":1971,"from":"Cliff Richey","to":"Clark Graebner","event":"Salisbury","round":"F","score":"2-6 7-6 1-6 7-6 6-0","date_status":"EXACT - Salisbury final / event final day","source":"https://en.wikipedia.org/wiki/1971_U.S._National_Indoor_Tennis_Championships","kind":"transfer"},{"date":"1971-02-27","year":1971,"from":"Clark Graebner","to":"Zeljko Franulovic","event":"Macon","round":"SF","score":"6-2 6-1","date_status":"RECONSTRUCTED - Macon 23-28 Feb window + SF chronology","source":"https://en.wikipedia.org/wiki/1971_Macon_International","kind":"transfer"},{"date":"1971-03-06","year":1971,"from":"Zeljko Franulovic","to":"Ilie Nastase","event":"Hampton","round":"SF","score":"1-6 6-0 6-2 5-7 7-5","date_status":"RECONSTRUCTED - Hampton 1-7 Mar window + SF chronology","source":"https://www.itftennis.com/en/tournament/hampton-international/usa/1971/m-gp-usa-03a-1971/","kind":"transfer"},{"date":"1971-03-27","year":1971,"from":"Ken Rosewall","to":"John Newcombe","event":"Chicago WCT","round":"SF","score":"7-6 7-5","date_status":"RECONSTRUCTED - Chicago WCT 22-28 Mar window + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1971","kind":"transfer"},{"date":"1971-04-16","year":1971,"from":"Ilie Nastase","to":"Pierre Barthes","event":"Palermo","round":"QF","score":"7-6 7-6","date_status":"RECONSTRUCTED - Palermo 12-18 Apr window + QF chronology","source":"https://en.wikipedia.org/wiki/1971_Campionati_Internazionali_di_Sicilia","kind":"transfer"},{"date":"1971-04-18","year":1971,"from":"Pierre Barthes","to":"Roger Taylor","event":"Palermo","round":"F","score":"6-3 4-6 7-6 6-2","date_status":"EXACT - Palermo final / event final day","source":"https://en.wikipedia.org/wiki/1971_Campionati_Internazionali_di_Sicilia","kind":"transfer"},{"date":"1971-04-21","year":1971,"from":"Roger Taylor","to":"Ken Rosewall","event":"Denver","round":"RR","score":"6-5","date_status":"EXACT - project-owner supplied evidence: Ken Rosewall d. Roger Taylor 6-5 on 21 Apr 1971 in Denver under the event's special WCT round-robin scoring system.","source":"https://raw.githubusercontent.com/Aneeshers/tennis-sackmann-archive/main/atp/atp_matches_1971.csv","kind":"transfer"},{"date":"1971-04-22","year":1971,"from":"Ken Rosewall","to":"Cliff Drysdale","event":"Denver","round":"RR","score":"6-2","date_status":"EXACT - project-owner supplied evidence: Cliff Drysdale d. Ken Rosewall 6-2 on 22 Apr 1971 in Denver.","source":"https://raw.githubusercontent.com/Aneeshers/tennis-sackmann-archive/main/atp/atp_matches_1971.csv","kind":"transfer"},{"date":"1971-04-25","year":1971,"from":"Cliff Drysdale","to":"Ken Rosewall","event":"Denver","round":"F","score":"6-2 6-2","date_status":"EXACT - Denver final","source":"https://wiki.arcsnet.dev/content/wikipedia_en_all_maxi_2026-02/Ken_Rosewall_career_statistics","kind":"transfer"},{"date":"1971-05-08","year":1971,"from":"John Newcombe","to":"Jan Kodes","event":"Rome","round":"QF","score":"2-6 6-1 7-5","date_status":"RECONSTRUCTED - Rome WCT 3-10 May window + QF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1971","kind":"transfer"},{"date":"1971-05-10","year":1971,"from":"Jan Kodes","to":"Rod Laver","event":"Rome","round":"F","score":"7-5 6-3 6-3","date_status":"EXACT - Rome WCT final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1971","kind":"transfer"},{"date":"1971-05-14","year":1971,"from":"Rod Laver","to":"Marty Riessen","event":"Tehran WCT","round":"QF","score":"6-4 6-4","date_status":"RECONSTRUCTED - Tehran WCT 10-16 May window + QF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1971","kind":"transfer"},{"date":"1971-06-01","year":1971,"from":"Marty Riessen","to":"Frank Froehling","event":"Roland Garros","round":"R16","score":"1-6 2-6 6-3 6-4 6-2","date_status":"RECONSTRUCTED - Roland Garros 24 May-6 Jun window + R16 chronology","source":"https://www.itftennis.com/en/tournament/french-open/fra/1971/m-sl-fra-01a-1971/draws-and-results/","kind":"transfer"},{"date":"1971-06-04","year":1971,"from":"Frank Froehling","to":"Ilie Nastase","event":"Roland Garros","round":"SF","score":"6-0 2-6 6-4 6-3","date_status":"RECONSTRUCTED - Roland Garros semifinal chronology","source":"https://www.itftennis.com/en/tournament/french-open/fra/1971/m-sl-fra-01a-1971/draws-and-results/","kind":"transfer"},{"date":"1971-06-06","year":1971,"from":"Ilie Nastase","to":"Jan Kodes","event":"Roland Garros","round":"F","score":"8-6 6-2 2-6 7-5","date_status":"EXACT - Roland Garros final / event final day","source":"https://en.wikipedia.org/wiki/1971_French_Open","kind":"transfer"},{"date":"1971-06-12","year":1971,"from":"Jan Kodes","to":"Alex Metreveli","event":"Davis Cup EUR","round":"SF: TCH vs URS RR","score":"7-5 3-6 4-6 7-5 6-3","date_status":"EXACT - Davis Cup Prague: Kodes-Metreveli completed Saturday 12 Jun","source":"https://texashistory.unt.edu/ark:/67531/metapth1777249/m1/41/","kind":"transfer"},{"date":"1971-06-13","year":1971,"from":"Alex Metreveli","to":"Frantisek Pala","event":"Davis Cup EUR","round":"SF: TCH vs URS RR","score":"6-0 6-4 2-0 RET","date_status":"EXACT - Davis Cup Prague reverse-singles day","source":"https://archivio.unita.news/assets/main/1971/06/14/page_011.pdf","kind":"transfer"},{"date":"1971-06-15","year":1971,"from":"Frantisek Pala","to":"Zeljko Franulovic","event":"Queen's Club","round":"R32","score":"6-3 6-4","date_status":"RECONSTRUCTED - Queen's Club 14-19 Jun window + R32 chronology","source":"https://cliffipedia.org/content/wikipedia_en_all_maxi_2025-08/1971_Queen%27s_Club_Championships","kind":"transfer"},{"date":"1971-06-16","year":1971,"from":"Zeljko Franulovic","to":"Rod Laver","event":"Queen's Club","round":"R16","score":"4-6 6-3 6-4","date_status":"RECONSTRUCTED - Queen's Club 14-19 Jun window + R16 chronology","source":"https://cliffipedia.org/content/wikipedia_en_all_maxi_2025-08/1971_Queen%27s_Club_Championships","kind":"transfer"},{"date":"1971-06-17","year":1971,"from":"Rod Laver","to":"Tom Gorman","event":"Queen's Club","round":"QF","score":"6-4 4-6 6-1","date_status":"RECONSTRUCTED - Queen's Club 14-19 Jun window + QF chronology","source":"https://cliffipedia.org/content/wikipedia_en_all_maxi_2025-08/1971_Queen%27s_Club_Championships","kind":"transfer"},{"date":"1971-06-18","year":1971,"from":"Tom Gorman","to":"Stan Smith","event":"Queen's Club","round":"SF","score":"7-5 9-8","date_status":"RECONSTRUCTED - Queen's Club 14-19 Jun window + SF chronology","source":"https://cliffipedia.org/content/wikipedia_en_all_maxi_2025-08/1971_Queen%27s_Club_Championships","kind":"transfer"},{"date":"1971-07-03","year":1971,"from":"Stan Smith","to":"John Newcombe","event":"Wimbledon","round":"F","score":"6-3 5-7 2-6 6-4 6-4","date_status":"EXACT - Wimbledon men's final","source":"https://www.wimbledon.com/pdf/2020_Compendium.pdf","kind":"transfer"},{"date":"1971-07-17","year":1971,"from":"John Newcombe","to":"Marty Riessen","event":"Washington WCT","round":"SF","score":"4-6 6-3 7-6","date_status":"RECONSTRUCTED - Washington WCT 12-18 Jul window + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1971","kind":"transfer"},{"date":"1971-07-18","year":1971,"from":"Marty Riessen","to":"Ken Rosewall","event":"Washington WCT","round":"F","score":"6-2 7-5 6-1","date_status":"EXACT - Washington final","source":"https://wiki.arcsnet.dev/content/wikipedia_en_all_maxi_2026-02/Ken_Rosewall_career_statistics","kind":"transfer"},{"date":"1971-07-22","year":1971,"from":"Ken Rosewall","to":"John Alexander","event":"Louisville WCT","round":"R16","score":"7-5 7-5","date_status":"RECONSTRUCTED - Louisville WCT 19-25 Jul window + R16 chronology","source":"https://en.wikipedia.org/wiki/1971_First_National_Tennis_Classic","kind":"transfer"},{"date":"1971-07-23","year":1971,"from":"John Alexander","to":"Tom Okker","event":"Louisville WCT","round":"QF","score":"6-1 4-6 6-2","date_status":"RECONSTRUCTED - Louisville WCT 19-25 Jul window + QF chronology","source":"https://en.wikipedia.org/wiki/1971_First_National_Tennis_Classic","kind":"transfer"},{"date":"1971-08-06","year":1971,"from":"Tom Okker","to":"Cliff Drysdale","event":"Boston WCT","round":"QF","score":"6-4 4-6 6-4","date_status":"RECONSTRUCTED - Boston WCT 2-8 Aug window + QF chronology","source":"https://www.itftennis.com/en/tournament/wct-boston/usa/1971/m-gp-usa-14a-1971/","kind":"transfer"},{"date":"1971-08-08","year":1971,"from":"Cliff Drysdale","to":"Ken Rosewall","event":"Boston WCT","round":"F","score":"6-4 6-3 6-0","date_status":"EXACT - U.S. Pro/Boston final","source":"https://en.wikipedia.org/wiki/1971_U.S._Pro_Tennis_Championships","kind":"transfer"},{"date":"1971-08-14","year":1971,"from":"Ken Rosewall","to":"John Newcombe","event":"Montreal / Toronto","round":"SF","score":"7-6 6-2","date_status":"RECONSTRUCTED - Canadian Open 9-15 Aug window + SF chronology","source":"https://www.itftennis.com/en/tournament/canadian-open/can/1971/m-gp-can-02a-1971/","kind":"transfer"},{"date":"1971-08-23","year":1971,"from":"John Newcombe","to":"Rod Laver","event":"Hilton Head","round":"F","score":"6-2 6-4","date_status":"EXACT - Hilton Head CBS Classic final chronology","source":"https://wiki.chogus.org/content/wikipedia_en_all_maxi_2025-08/Rod_Laver_career_statistics","kind":"transfer"},{"date":"1971-10-09","year":1971,"from":"Rod Laver","to":"Tom Okker","event":"Vancouver WCT","round":"SF","score":"5-7 6-4 6-3","date_status":"RECONSTRUCTED - Vancouver WCT 3-10 Oct window + SF chronology","source":"https://www.itftennis.com/en/tournament/wct-vancouver/can/1971/m-gp-can-03a-1971/","kind":"transfer"},{"date":"1971-10-10","year":1971,"from":"Tom Okker","to":"Ken Rosewall","event":"Vancouver WCT","round":"F","score":"6-2 6-2 6-4","date_status":"EXACT - Vancouver WCT final","source":"https://wiki.arcsnet.dev/content/wikipedia_en_all_maxi_2026-02/Ken_Rosewall_career_statistics","kind":"transfer"},{"date":"1971-10-15","year":1971,"from":"Ken Rosewall","to":"Cliff Drysdale","event":"Cologne WCT","round":"QF","score":"6-4 6-3","date_status":"RECONSTRUCTED - Cologne WCT 11-17 Oct window + QF chronology","source":"https://www.itftennis.com/en/tournament/wct-cologne/frg/1971/m-gp-frg-02a-1971/","kind":"transfer"},{"date":"1971-10-16","year":1971,"from":"Cliff Drysdale","to":"Jeff Borowiak","event":"Cologne WCT","round":"SF","score":"3-6 7-5 7-5","date_status":"RECONSTRUCTED - Cologne WCT 11-17 Oct window + SF chronology","source":"https://www.itftennis.com/en/tournament/wct-cologne/frg/1971/m-gp-frg-02a-1971/","kind":"transfer"},{"date":"1971-10-17","year":1971,"from":"Jeff Borowiak","to":"Bob Lutz","event":"Cologne WCT","round":"F","score":"6-3 6-7 6-3 6-1","date_status":"EXACT - Cologne WCT final / event final day","source":"https://www.itftennis.com/en/tournament/wct-cologne/frg/1971/m-gp-frg-02a-1971/","kind":"transfer"},{"date":"1971-10-24","year":1971,"from":"Bob Lutz","to":"Manuel Orantes","event":"Barcelona WCT","round":"F","score":"6-4 6-3 6-4","date_status":"EXACT - Barcelona WCT final / official tournament archive","source":"https://archivo.rctb1899.es/edicion-bcnopen/xix-trofeo-conde-de-godo","kind":"transfer"}]},"1972":{"entry":"Manuel Orantes","exit":"Ilie Nastase","transfers":32,"played_transfers":32,"defences":88,"title_matches":120,"undated_defences":88,"defence_leaders":[{"player":"Stan Smith","count":34},{"player":"Ilie Nastase","count":24},{"player":"Andres Gimeno","count":10},{"player":"Andrew Pattison","count":4},{"player":"Jan Kodes","count":4}],"busiest_event":{"event":"London Indoor","transfers":4},"transfers_rows":[{"date":"1972-01-19","year":1972,"from":"Manuel Orantes","to":"Gerald Battrick","event":"London Indoor","round":"R16","score":"6-4 6-4","date_status":"RECONSTRUCTED - London-1 18-22 Jan window + R16 chronology","source":"https://www.atptour.com/en/tournaments/london/2064/overview","kind":"transfer"},{"date":"1972-01-20","year":1972,"from":"Gerald Battrick","to":"Ilie Nastase","event":"London Indoor","round":"QF","score":"7-5 6-4","date_status":"RECONSTRUCTED - London-1 18-22 Jan window + QF chronology","source":"https://www.atptour.com/en/tournaments/london/2064/overview","kind":"transfer"},{"date":"1972-01-21","year":1972,"from":"Ilie Nastase","to":"Clark Graebner","event":"London Indoor","round":"SF","score":"6-3 RET","date_status":"RECONSTRUCTED - London-1 18-22 Jan window + SF chronology","source":"https://www.atptour.com/en/tournaments/london/2064/overview","kind":"transfer"},{"date":"1972-01-22","year":1972,"from":"Clark Graebner","to":"Cliff Richey","event":"London Indoor","round":"F","score":"7-5 6-7 7-5 6-0","date_status":"EXACT - London-1 final / event final day","source":"https://www.atptour.com/en/tournaments/london/2064/overview","kind":"transfer"},{"date":"1972-02-04","year":1972,"from":"Cliff Richey","to":"Haroon Rahim","event":"Des Moines","round":"QF","score":"7-6 6-5","date_status":"RECONSTRUCTED - Des Moines 2-6 Feb window + QF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1972","kind":"transfer"},{"date":"1972-02-05","year":1972,"from":"Haroon Rahim","to":"Georges Goven","event":"Des Moines","round":"SF","score":"0-6 7-6 6-1","date_status":"RECONSTRUCTED - Des Moines 2-6 Feb window + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1972","kind":"transfer"},{"date":"1972-02-06","year":1972,"from":"Georges Goven","to":"Richard Gonzalez","event":"Des Moines","round":"F","score":"3-6 4-6 6-3 6-4 6-2","date_status":"EXACT - Des Moines final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1972","kind":"transfer"},{"date":"1972-02-11","year":1972,"from":"Richard Gonzalez","to":"Thomaz Koch","event":"Los Angeles","round":"QF","score":"6-1 6-4","date_status":"RECONSTRUCTED - Los Angeles-1 7-13 Feb window + QF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1972","kind":"transfer"},{"date":"1972-02-12","year":1972,"from":"Thomaz Koch","to":"Pierre Barthes","event":"Los Angeles","round":"SF","score":"7-6 6-3","date_status":"RECONSTRUCTED - Los Angeles-1 7-13 Feb window + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1972","kind":"transfer"},{"date":"1972-02-13","year":1972,"from":"Pierre Barthes","to":"Andres Gimeno","event":"Los Angeles","round":"F","score":"6-3 2-6 6-2","date_status":"EXACT - Los Angeles-1 final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1972","kind":"transfer"},{"date":"1972-02-16","year":1972,"from":"Andres Gimeno","to":"Haroon Rahim","event":"Salisbury","round":"R32","score":"6-0 6-4","date_status":"RECONSTRUCTED - Salisbury 13-20 Feb window + R32 chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1972","kind":"transfer"},{"date":"1972-02-19","year":1972,"from":"Haroon Rahim","to":"Stan Smith","event":"Salisbury","round":"SF","score":"6-3 6-3 6-3","date_status":"RECONSTRUCTED - Salisbury 13-20 Feb window + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1972","kind":"transfer"},{"date":"1972-03-27","year":1972,"from":"Stan Smith","to":"Clark Graebner","event":"San Juan","round":"RR","score":"6-1 7-6","date_status":"RECONSTRUCTED - match-specific databases give 27 Mar 1972, but that also equals the San Juan tournament start date; retained as reconstructed, not exact.","source":"https://www.stevegtennis.com/head-to-head/men/Clark_Graebner/Stan_Smith/","kind":"transfer"},{"date":"1972-05-06","year":1972,"from":"Clark Graebner","to":"Haroon Rahim","event":"Kansas City","round":"SF","score":"6-3 7-6","date_status":"RECONSTRUCTED - Kansas City-2 5-7 May window + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1972","kind":"transfer"},{"date":"1972-05-07","year":1972,"from":"Haroon Rahim","to":"Alejandro Olmedo","event":"Kansas City","round":"F","score":"6-2 5-7 7-6","date_status":"EXACT - Kansas City-2 final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1972","kind":"transfer"},{"date":"1972-05-25","year":1972,"from":"Alejandro Olmedo","to":"Frantisek Pala","event":"Roland Garros","round":"R64","score":"6-2 7-5 6-2","date_status":"RECONSTRUCTED - Roland Garros 22 May-4 Jun window + R64 chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1972","kind":"transfer"},{"date":"1972-05-30","year":1972,"from":"Frantisek Pala","to":"Stan Smith","event":"Roland Garros","round":"R16","score":"6-4 6-0 6-3","date_status":"RECONSTRUCTED - Roland Garros 22 May-4 Jun window + R16 chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1972","kind":"transfer"},{"date":"1972-06-01","year":1972,"from":"Stan Smith","to":"Andres Gimeno","event":"Roland Garros","round":"QF","score":"6-1 7-9 6-0 7-6","date_status":"RECONSTRUCTED - Roland Garros 22 May-4 Jun window + QF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1972","kind":"transfer"},{"date":"1972-06-29","year":1972,"from":"Andres Gimeno","to":"Onny Parun","event":"Wimbledon","round":"R64","score":"6-4 8-6 6-8 8-9 6-4","date_status":"RECONSTRUCTED - Wimbledon 26 Jun-8 Jul window + R64 chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1972","kind":"transfer"},{"date":"1972-07-05","year":1972,"from":"Onny Parun","to":"Jan Kodes","event":"Wimbledon","round":"QF","score":"6-2 6-3 6-4","date_status":"RECONSTRUCTED - Wimbledon quarterfinal chronology","source":"https://www.wimbledon.com/pdf/2020_Compendium.pdf","kind":"transfer"},{"date":"1972-07-07","year":1972,"from":"Jan Kodes","to":"Stan Smith","event":"Wimbledon","round":"SF","score":"3-6 6-4 6-1 7-5","date_status":"RECONSTRUCTED - Wimbledon semifinal chronology","source":"https://www.wimbledon.com/pdf/2020_Compendium.pdf","kind":"transfer"},{"date":"1972-08-04","year":1972,"from":"Stan Smith","to":"Andres Gimeno","event":"Davis Cup EUR","round":"SF: ESP vs USA RR","score":"6-8 7-5 6-3 6-4","date_status":"EXACT - Davis Cup Spain-USA opening singles day","source":"https://www.usta.com/content/dam/usta/pdfs/20170509_Davis_Cup_Brisbane_Media_Guide.pdf","kind":"transfer"},{"date":"1972-08-14","year":1972,"from":"Andres Gimeno","to":"Andrew Pattison","event":"Montreal / Toronto","round":"R64","score":"6-3 4-6 7-5","date_status":"RECONSTRUCTED - Toronto-2 14-20 Aug window + R64 chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1972","kind":"transfer"},{"date":"1972-08-20","year":1972,"from":"Andrew Pattison","to":"Ilie Nastase","event":"Montreal / Toronto","round":"F","score":"6-4 6-3","date_status":"EXACT - Toronto-2 final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1972","kind":"transfer"},{"date":"1972-09-21","year":1972,"from":"Ilie Nastase","to":"Roscoe Tanner","event":"Los Angeles WCT","round":"R16","score":"5-7 6-4 6-2","date_status":"RECONSTRUCTED - Los Angeles-2 18-24 Sep window + R16 chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1972","kind":"transfer"},{"date":"1972-09-24","year":1972,"from":"Roscoe Tanner","to":"Stan Smith","event":"Los Angeles WCT","round":"F","score":"6-4 6-4","date_status":"EXACT - Los Angeles-2 final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1972","kind":"transfer"},{"date":"1972-10-21","year":1972,"from":"Stan Smith","to":"Manuel Orantes","event":"Barcelona","round":"SF","score":"9-7 7-9 7-5 6-1","date_status":"RECONSTRUCTED - Barcelona 16-22 Oct window + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1972","kind":"transfer"},{"date":"1972-10-22","year":1972,"from":"Manuel Orantes","to":"Jan Kodes","event":"Barcelona","round":"F","score":"6-3 6-2 6-3","date_status":"EXACT - Barcelona final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1972","kind":"transfer"},{"date":"1972-11-04","year":1972,"from":"Jan Kodes","to":"Stan Smith","event":"Paris Indoor","round":"SF","score":"6-2 6-4 6-1","date_status":"RECONSTRUCTED - Paris 30 Oct-5 Nov window + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1972","kind":"transfer"},{"date":"1972-11-15","year":1972,"from":"Stan Smith","to":"Onny Parun","event":"London","round":"R16","score":"6-4 6-3","date_status":"RECONSTRUCTED - London-3 13-18 Nov window + R16 chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1972","kind":"transfer"},{"date":"1972-11-17","year":1972,"from":"Onny Parun","to":"Tom Gorman","event":"London","round":"SF","score":"6-4 6-4","date_status":"RECONSTRUCTED - London-3 13-18 Nov window + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1972","kind":"transfer"},{"date":"1972-11-18","year":1972,"from":"Tom Gorman","to":"Ilie Nastase","event":"London","round":"F","score":"6-4 6-3","date_status":"EXACT - London-3 final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1972","kind":"transfer"}]},"1973":{"entry":"Ilie Nastase","exit":"Ilie Năstase","transfers":32,"played_transfers":32,"defences":108,"title_matches":140,"undated_defences":108,"defence_leaders":[{"player":"Ilie Năstase","count":54},{"player":"Jimmy Connors","count":16},{"player":"Tom Okker","count":13},{"player":"Adriano Panatta","count":7},{"player":"Clark Graebner","count":3}],"busiest_event":{"event":"Toronto","transfers":4},"transfers_rows":[{"date":"1973-02-01","year":1973,"from":"Ilie Nastase","to":"Karl Meiler","event":"Des Moines","round":"R16","score":"7-6 6-3","date_status":"RECONSTRUCTED - Des Moines 29 Jan-4 Feb window + R16 chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1973","kind":"transfer"},{"date":"1973-02-03","year":1973,"from":"Karl Meiler","to":"Clark Graebner","event":"Des Moines","round":"SF","score":"6-0 6-2","date_status":"RECONSTRUCTED - Des Moines 29 Jan-4 Feb window + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1973","kind":"transfer"},{"date":"1973-02-21","year":1973,"from":"Clark Graebner","to":"Frank Froehling","event":"Salisbury","round":"R16","score":"7-6 6-4","date_status":"RECONSTRUCTED - Salisbury 19-24 Feb window + R16 chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1973","kind":"transfer"},{"date":"1973-02-23","year":1973,"from":"Frank Froehling","to":"Jimmy Connors","event":"Salisbury","round":"SF","score":"6-0 6-1 6-1","date_status":"RECONSTRUCTED - Salisbury 19-24 Feb window + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1973","kind":"transfer"},{"date":"1973-03-25","year":1973,"from":"Jimmy Connors","to":"Ilie Năstase","event":"Washington-2","round":"F","score":"4-6 6-4 6-2 5-7 6-2","date_status":"EXACT - Washington-2 final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1973","kind":"transfer"},{"date":"1973-05-12","year":1973,"from":"Ilie Năstase","to":"Adriano Panatta","event":"Bournemouth","round":"F","score":"6-8 7-5 6-3","date_status":"EXACT - Bournemouth final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1973","kind":"transfer"},{"date":"1973-06-01","year":1973,"from":"Adriano Panatta","to":"Nikola Pilić","event":"Roland Garros","round":"SF","score":"6-4 6-3 6-2","date_status":"RECONSTRUCTED - Roland Garros 21 May-3 Jun window + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1973","kind":"transfer"},{"date":"1973-06-03","year":1973,"from":"Nikola Pilić","to":"Ilie Năstase","event":"Roland Garros","round":"F","score":"6-3 6-3 6-0","date_status":"EXACT - Roland Garros final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1973","kind":"transfer"},{"date":"1973-07-02","year":1973,"from":"Ilie Năstase","to":"Sandy Mayer","event":"Wimbledon","round":"R16","score":"6-4 8-6 6-8 6-4","date_status":"RECONSTRUCTED - Wimbledon 25 Jun-7 Jul window + R16 chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1973","kind":"transfer"},{"date":"1973-07-06","year":1973,"from":"Sandy Mayer","to":"Alex Metreveli","event":"Wimbledon","round":"SF","score":"6-3 3-6 6-3 6-4","date_status":"RECONSTRUCTED - Wimbledon semifinal chronology","source":"https://www.wimbledon.com/pdf/2020_Compendium.pdf","kind":"transfer"},{"date":"1973-07-07","year":1973,"from":"Alex Metreveli","to":"Jan Kodeš","event":"Wimbledon","round":"F","score":"6-1 9-8 6-3","date_status":"EXACT - Wimbledon men's final","source":"https://www.wimbledon.com/pdf/2020_Compendium.pdf","kind":"transfer"},{"date":"1973-08-03","year":1973,"from":"Jan Kodeš","to":"Corrado Barazzutti","event":"Davis Cup EUR","round":"F","score":"7-5 3-6 6-4 2-6 6-1","date_status":"EXACT - Davis Cup Czechoslovakia-Italy opening singles day","source":"https://en-academic.com/dic.nsf/enwiki/5758631/","kind":"transfer"},{"date":"1973-08-05","year":1973,"from":"Corrado Barazzutti","to":"Jiří Hřebec","event":"same tie","round":"","score":"9-7 6-1 6-4","date_status":"EXACT - Davis Cup Czechoslovakia-Italy reverse-singles day","source":"https://www.fitp.it/Federazione/Storia/L-Italia-in-Coppa-Davis/L%E2%80%99ITALIA-IN-COPPA-DAVIS-1971-1980","kind":"transfer"},{"date":"1973-08-20","year":1973,"from":"Jiří Hřebec","to":"Andrew Pattison","event":"Toronto","round":"R64","score":"7-6 6-4","date_status":"RECONSTRUCTED - Toronto-2 20-26 Aug window + R64 chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1973","kind":"transfer"},{"date":"1973-08-21","year":1973,"from":"Andrew Pattison","to":"Arthur Ashe","event":"Toronto","round":"R32","score":"6-4 2-6 7-6","date_status":"RECONSTRUCTED - Toronto-2 20-26 Aug window + R32 chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1973","kind":"transfer"},{"date":"1973-08-24","year":1973,"from":"Arthur Ashe","to":"Iván Molina","event":"Toronto","round":"QF","score":"6-4 6-3","date_status":"RECONSTRUCTED - Toronto-2 20-26 Aug window + QF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1973","kind":"transfer"},{"date":"1973-08-25","year":1973,"from":"Iván Molina","to":"Tom Okker","event":"Toronto","round":"SF","score":"7-6(3) 6-2","date_status":"RECONSTRUCTED - Toronto-2 20-26 Aug window + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1973","kind":"transfer"},{"date":"1973-09-04","year":1973,"from":"Tom Okker","to":"Jimmy Connors","event":"US Open","round":"R16","score":"6-3 6-2 6-4","date_status":"RECONSTRUCTED - US Open 29 Aug-9 Sep window + R16 chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1973","kind":"transfer"},{"date":"1973-09-06","year":1973,"from":"Jimmy Connors","to":"John Newcombe","event":"US Open","round":"QF","score":"6-4 7-6 7-6","date_status":"RECONSTRUCTED - US Open 29 Aug-9 Sep window + QF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1973","kind":"transfer"},{"date":"1973-09-11","year":1973,"from":"John Newcombe","to":"Rod Laver","event":"World Invitational Classic","round":"SF","score":"6-3 7-5","date_status":"RECONSTRUCTED - World Invitational Tennis Classic 10-12 Sep + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1973","kind":"transfer"},{"date":"1973-10-11","year":1973,"from":"Rod Laver","to":"Barry Phillips-Moore","event":"Barcelona","round":"R16","score":"6-3 7-5","date_status":"RECONSTRUCTED - Barcelona-2 8-14 Oct window + R16 chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1973","kind":"transfer"},{"date":"1973-10-12","year":1973,"from":"Barry Phillips-Moore","to":"Jan Kodeš","event":"Barcelona","round":"QF","score":"7-5 2-6 6-4","date_status":"RECONSTRUCTED - Barcelona-2 8-14 Oct window + QF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1973","kind":"transfer"},{"date":"1973-10-13","year":1973,"from":"Jan Kodeš","to":"Ilie Năstase","event":"Barcelona","round":"SF","score":"6-1 4-6 6-0 6-3","date_status":"RECONSTRUCTED - Barcelona-2 8-14 Oct window + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1973","kind":"transfer"},{"date":"1973-10-20","year":1973,"from":"Ilie Năstase","to":"Tom Okker","event":"Madrid","round":"SF","score":"6-4 1-6 7-5","date_status":"RECONSTRUCTED - Madrid-2 15-21 Oct window + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1973","kind":"transfer"},{"date":"1973-11-03","year":1973,"from":"Tom Okker","to":"Ilie Năstase","event":"Paris Indoor","round":"SF","score":"7-6 6-2 7-5","date_status":"RECONSTRUCTED - Paris 29 Oct-4 Nov window + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1973","kind":"transfer"},{"date":"1973-11-07","year":1973,"from":"Ilie Năstase","to":"Björn Borg","event":"Stockholm","round":"R16","score":"6-2 4-6 7-5","date_status":"RECONSTRUCTED - Stockholm 5-11 Nov window + R16 chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1973","kind":"transfer"},{"date":"1973-11-11","year":1973,"from":"Björn Borg","to":"Tom Gorman","event":"Stockholm","round":"F","score":"6-3 4-6 7-6","date_status":"EXACT - Stockholm final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1973","kind":"transfer"},{"date":"1973-11-15","year":1973,"from":"Tom Gorman","to":"Mark Cox","event":"London","round":"QF","score":"6-3 1-6 6-2","date_status":"RECONSTRUCTED - London-3 12-17 Nov window + QF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1973","kind":"transfer"},{"date":"1973-11-16","year":1973,"from":"Mark Cox","to":"Tom Okker","event":"London","round":"SF","score":"6-0 7-6","date_status":"RECONSTRUCTED - London-3 12-17 Nov window + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1973","kind":"transfer"},{"date":"1973-11-24","year":1973,"from":"Tom Okker","to":"Jimmy Connors","event":"Johannesburg","round":"SF","score":"6-3 6-3 4-6 6-4","date_status":"RECONSTRUCTED - Johannesburg-2 17-25 Nov window + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1973","kind":"transfer"},{"date":"1973-12-06","year":1973,"from":"Jimmy Connors","to":"Tom Okker","event":"Masters","round":"RR","score":"7-5 6-3","date_status":"RECONSTRUCTED - 1973 Masters 4-8 Dec; official RR ordering places Connors-Okker in the third session.","source":"https://www.nittoatpfinals.com/en/heritage/results-1970-1999","kind":"transfer"},{"date":"1973-12-08","year":1973,"from":"Tom Okker","to":"Ilie Năstase","event":"Masters","round":"F","score":"6-3 7-5 4-6 6-3","date_status":"EXACT - Masters final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1973","kind":"transfer"}]},"1974":{"entry":"Ilie Năstase","exit":"Jimmy Connors","transfers":21,"played_transfers":21,"defences":63,"title_matches":84,"undated_defences":63,"defence_leaders":[{"player":"John Newcombe","count":22},{"player":"Rod Laver","count":7},{"player":"Björn Borg","count":6},{"player":"Arthur Ashe","count":5},{"player":"Jimmy Connors","count":5}],"busiest_event":{"event":"Philadelphia WCT","transfers":3},"transfers_rows":[{"date":"1974-01-19","year":1974,"from":"Ilie Năstase","to":"Cliff Richey","event":"Lakeway","round":"SF","score":"6-1 6-1","date_status":"RECONSTRUCTED - Lakeway WCT 14-20 Jan + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1974","kind":"transfer"},{"date":"1974-01-23","year":1974,"from":"Cliff Richey","to":"Alex Metreveli","event":"Philadelphia WCT","round":"R32","score":"7-6(3) 6-4","date_status":"RECONSTRUCTED - Philadelphia WCT 21-27 Jan + R32 chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1974","kind":"transfer"},{"date":"1974-01-24","year":1974,"from":"Alex Metreveli","to":"Arthur Ashe","event":"Philadelphia WCT","round":"R16","score":"6-2 7-6(3)","date_status":"RECONSTRUCTED - Philadelphia WCT 21-27 Jan + R16 chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1974","kind":"transfer"},{"date":"1974-01-27","year":1974,"from":"Arthur Ashe","to":"Rod Laver","event":"Philadelphia WCT","round":"F","score":"6-1 6-4 3-6 6-4","date_status":"EXACT - Philadelphia WCT final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1974","kind":"transfer"},{"date":"1974-02-15","year":1974,"from":"Rod Laver","to":"Roger Taylor","event":"Bologna WCT","round":"QF","score":"7-5 6-1","date_status":"RECONSTRUCTED - Bologna WCT 11-17 Feb + QF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1974","kind":"transfer"},{"date":"1974-02-16","year":1974,"from":"Roger Taylor","to":"Arthur Ashe","event":"Bologna WCT","round":"SF","score":"6-0 4-6 6-2","date_status":"RECONSTRUCTED - Bologna WCT 11-17 Feb + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1974","kind":"transfer"},{"date":"1974-02-21","year":1974,"from":"Arthur Ashe","to":"Björn Borg","event":"London WCT","round":"QF","score":"6-4 7-6(3)","date_status":"RECONSTRUCTED - London WCT 15-23 Feb + QF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1974","kind":"transfer"},{"date":"1974-03-03","year":1974,"from":"Björn Borg","to":"Arthur Ashe","event":"Barcelona WCT","round":"F","score":"6-4 3-6 6-3","date_status":"EXACT - Barcelona WCT final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1974","kind":"transfer"},{"date":"1974-03-07","year":1974,"from":"Arthur Ashe","to":"John Newcombe","event":"Hartford","round":"RR","score":"6-2 5-7 6-4","date_status":"RECONSTRUCTED - Hartford Aetna World Cup match is verified, but 7 Mar matches tournament/event chronology rather than an independently dated match report.","source":"https://www.easterntennishalloffame.com/2001","kind":"transfer"},{"date":"1974-03-29","year":1974,"from":"John Newcombe","to":"Dick Stockton","event":"Atlanta WCT","round":"QF","score":"7-6(4) 6-4","date_status":"RECONSTRUCTED - Atlanta WCT 25-31 Mar + QF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1974","kind":"transfer"},{"date":"1974-04-02","year":1974,"from":"Dick Stockton","to":"Bob Lutz","event":"New Orleans WCT","round":"R32","score":"7-6 6-1","date_status":"RECONSTRUCTED - New Orleans WCT 1-7 Apr + R32 chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1974","kind":"transfer"},{"date":"1974-04-05","year":1974,"from":"Bob Lutz","to":"John Newcombe","event":"New Orleans WCT","round":"QF","score":"6-4 7-5","date_status":"RECONSTRUCTED - New Orleans WCT 1-7 Apr + QF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1974","kind":"transfer"},{"date":"1974-04-19","year":1974,"from":"John Newcombe","to":"Jeff Borowiak","event":"Charlotte","round":"QF","score":"6-2 6-4","date_status":"RECONSTRUCTED - Charlotte WCT 15-21 Apr + QF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1974","kind":"transfer"},{"date":"1974-04-23","year":1974,"from":"Jeff Borowiak","to":"Dick Crealy","event":"St. Louis","round":"R32","score":"6-1 7-6(6)","date_status":"RECONSTRUCTED - St Louis WCT 22-28 Apr + R32 chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1974","kind":"transfer"},{"date":"1974-04-27","year":1974,"from":"Dick Crealy","to":"Stan Smith","event":"St. Louis","round":"SF","score":"6-2 6-7(2) 7-6(3)","date_status":"RECONSTRUCTED - St Louis WCT 22-28 Apr + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1974","kind":"transfer"},{"date":"1974-05-11","year":1974,"from":"Stan Smith","to":"John Newcombe","event":"Dallas WCT","round":"SF","score":"6-1 3-6 7-6(3) 6-2","date_status":"RECONSTRUCTED - WCT Finals Dallas 8-12 May + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1974","kind":"transfer"},{"date":"1974-05-18","year":1974,"from":"John Newcombe","to":"Marty Riessen","event":"Las Vegas","round":"SF","score":"7-6 6-3","date_status":"RECONSTRUCTED - Las Vegas 13-19 May + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1974","kind":"transfer"},{"date":"1974-05-19","year":1974,"from":"Marty Riessen","to":"Rod Laver","event":"Las Vegas","round":"F","score":"6-2 6-2","date_status":"EXACT - Las Vegas final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1974","kind":"transfer"},{"date":"1974-10-31","year":1974,"from":"Rod Laver","to":"Ilie Năstase","event":"World Invitational Classic","round":"SF","score":"6-3 6-4","date_status":"RECONSTRUCTED - World Invitational Classic 29 Oct-1 Nov + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1974","kind":"transfer"},{"date":"1974-11-12","year":1974,"from":"Ilie Năstase","to":"Brian Gottfried","event":"London","round":"R32","score":"6-2 6-4","date_status":"RECONSTRUCTED - London-2 11-16 Nov + R32 chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1974","kind":"transfer"},{"date":"1974-11-16","year":1974,"from":"Brian Gottfried","to":"Jimmy Connors","event":"London","round":"F","score":"6-2 7-6","date_status":"EXACT - London-2 final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1974","kind":"transfer"}]},"1975":{"entry":"Jimmy Connors","exit":"Ilie Năstase","transfers":41,"played_transfers":41,"defences":89,"title_matches":130,"undated_defences":89,"defence_leaders":[{"player":"Guillermo Vilas","count":13},{"player":"Björn Borg","count":12},{"player":"Jimmy Connors","count":6},{"player":"Manuel Orantes","count":6},{"player":"Arthur Ashe","count":5}],"busiest_event":{"event":"Tucson","transfers":5},"transfers_rows":[{"date":"1975-01-01","year":1975,"from":"Jimmy Connors","to":"John Newcombe","event":"1975 Australian Open","round":"F","score":"7-5 3-6 6-4 7-6","date_status":"EXACT - Australian Open final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1975","kind":"transfer"},{"date":"1975-03-08","year":1975,"from":"John Newcombe","to":"Dick Stockton","event":"Hartford","round":"RR","score":"4-6 6-4 6-2","date_status":"EXACT - project-owner supplied evidence: Dick Stockton d. John Newcombe 4-6 6-4 6-2 on 8 Mar 1975 in Hartford.","source":"https://raw.githubusercontent.com/Aneeshers/tennis-sackmann-archive/main/atp/atp_matches_1975.csv","kind":"transfer"},{"date":"1975-03-16","year":1975,"from":"Dick Stockton","to":"Mark Cox","event":"Washington Indoor WCT","round":"F","score":"6-2 7-6(5)","date_status":"EXACT - Washington WCT final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1975","kind":"transfer"},{"date":"1975-03-22","year":1975,"from":"Mark Cox","to":"Jiří Hřebec","event":"Memphis","round":"SF","score":"6-3 6-2","date_status":"RECONSTRUCTED - Memphis WCT 17-23 Mar + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1975","kind":"transfer"},{"date":"1975-03-23","year":1975,"from":"Jiří Hřebec","to":"Harold Solomon","event":"Memphis","round":"F","score":"2-6 6-1 6-4","date_status":"EXACT - Memphis WCT final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1975","kind":"transfer"},{"date":"1975-03-29","year":1975,"from":"Harold Solomon","to":"John Alexander","event":"Atlanta WCT","round":"SF","score":"6-4 6-2","date_status":"RECONSTRUCTED - Atlanta WCT 24-30 Mar + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1975","kind":"transfer"},{"date":"1975-03-30","year":1975,"from":"John Alexander","to":"Mark Cox","event":"Atlanta WCT","round":"F","score":"6-3 7-6(3)","date_status":"EXACT - Atlanta WCT final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1975","kind":"transfer"},{"date":"1975-04-02","year":1975,"from":"Mark Cox","to":"Cliff Drysdale","event":"Tucson","round":"R32","score":"6-3 7-6","date_status":"RECONSTRUCTED - Tucson 31 Mar-6 Apr + R32 chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1975","kind":"transfer"},{"date":"1975-04-03","year":1975,"from":"Cliff Drysdale","to":"Vijay Amritraj","event":"Tucson","round":"R16","score":"3-6 6-3 6-4","date_status":"RECONSTRUCTED - Tucson 31 Mar-6 Apr + R16 chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1975","kind":"transfer"},{"date":"1975-04-04","year":1975,"from":"Vijay Amritraj","to":"Ken Rosewall","event":"Tucson","round":"QF","score":"6-7 6-0 7-6","date_status":"RECONSTRUCTED - Tucson 31 Mar-6 Apr + QF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1975","kind":"transfer"},{"date":"1975-04-05","year":1975,"from":"Ken Rosewall","to":"Ilie Năstase","event":"Tucson","round":"SF","score":"3-6 7-5 6-2","date_status":"RECONSTRUCTED - Tucson 31 Mar-6 Apr + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1975","kind":"transfer"},{"date":"1975-04-06","year":1975,"from":"Ilie Năstase","to":"John Alexander","event":"Tucson","round":"F","score":"7-5 6-2","date_status":"EXACT - Tucson final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1975","kind":"transfer"},{"date":"1975-04-19","year":1975,"from":"John Alexander","to":"Bob Lutz","event":"Tokyo Indoor","round":"SF","score":"6-3 6-4","date_status":"RECONSTRUCTED - Tokyo WCT 14-20 Apr + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1975","kind":"transfer"},{"date":"1975-04-25","year":1975,"from":"Bob Lutz","to":"Harold Solomon","event":"Houston","round":"QF","score":"6-2 6-3","date_status":"RECONSTRUCTED - Houston WCT 21-27 Apr + QF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1975","kind":"transfer"},{"date":"1975-04-26","year":1975,"from":"Harold Solomon","to":"Ken Rosewall","event":"Houston","round":"SF","score":"6-4 6-7(4) 6-4","date_status":"RECONSTRUCTED - Houston WCT 21-27 Apr + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1975","kind":"transfer"},{"date":"1975-05-17","year":1975,"from":"Ken Rosewall","to":"Roscoe Tanner","event":"Las Vegas","round":"SF","score":"6-2 7-6","date_status":"RECONSTRUCTED - Las Vegas 12-18 May + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1975","kind":"transfer"},{"date":"1975-06-08","year":1975,"from":"Roscoe Tanner","to":"John Andrews","event":"Roland Garros","round":"R32","score":"3-6 3-6 6-3 6-4 6-4","date_status":"RECONSTRUCTED - Roland Garros 4-15 Jun + R32 chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1975","kind":"transfer"},{"date":"1975-06-12","year":1975,"from":"John Andrews","to":"Adriano Panatta","event":"Roland Garros","round":"QF","score":"6-4 5-7 7-6 6-2","date_status":"RECONSTRUCTED - Roland Garros 4-15 Jun + QF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1975","kind":"transfer"},{"date":"1975-06-13","year":1975,"from":"Adriano Panatta","to":"Björn Borg","event":"Roland Garros","round":"SF","score":"6-4 1-6 7-5 6-4","date_status":"RECONSTRUCTED - Roland Garros 4-15 Jun + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1975","kind":"transfer"},{"date":"1975-07-02","year":1975,"from":"Björn Borg","to":"Arthur Ashe","event":"Wimbledon","round":"QF","score":"2-6 6-4 8-6 6-1","date_status":"RECONSTRUCTED - Wimbledon 23 Jun-5 Jul + QF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1975","kind":"transfer"},{"date":"1975-07-25","year":1975,"from":"Arthur Ashe","to":"Harold Solomon","event":"Washington","round":"QF","score":"6-4 7-5","date_status":"RECONSTRUCTED - Washington-2 21-27 Jul + QF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1975","kind":"transfer"},{"date":"1975-07-27","year":1975,"from":"Harold Solomon","to":"Guillermo Vilas","event":"Washington","round":"F","score":"6-1 6-3","date_status":"EXACT - Washington-2 final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1975","kind":"transfer"},{"date":"1975-08-01","year":1975,"from":"Manuel Orantes","to":"Jaime Fillol","event":"Louisville","round":"QF","score":"7-5 6-4","date_status":"RECONSTRUCTED - Louisville 28 Jul-3 Aug + QF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1975","kind":"transfer"},{"date":"1975-08-02","year":1975,"from":"Jaime Fillol","to":"Guillermo Vilas","event":"Louisville","round":"SF","score":"6-2 6-2","date_status":"RECONSTRUCTED - Louisville 28 Jul-3 Aug + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1975","kind":"transfer"},{"date":"1975-08-09","year":1975,"from":"Guillermo Vilas","to":"Manuel Orantes","event":"Indianapolis","round":"SF","score":"6-4 6-2","date_status":"RECONSTRUCTED - Indianapolis 4-10 Aug + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1975","kind":"transfer"},{"date":"1975-08-24","year":1975,"from":"Guillermo Vilas","to":"Björn Borg","event":"Boston","round":"F","score":"6-3 6-4 6-2","date_status":"EXACT - Boston final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1975","kind":"transfer"},{"date":"1975-09-06","year":1975,"from":"Björn Borg","to":"Jimmy Connors","event":"US Open","round":"SF","score":"7-5 7-5 7-5","date_status":"RECONSTRUCTED - US Open 27 Aug-7 Sep + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1975","kind":"transfer"},{"date":"1975-09-07","year":1975,"from":"Jimmy Connors","to":"Manuel Orantes","event":"US Open","round":"F","score":"6-4 6-3 6-3","date_status":"EXACT - US Open final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1975","kind":"transfer"},{"date":"1975-10-03","year":1975,"from":"Manuel Orantes","to":"Vladimir Zedník","event":"Avilés","round":"QF","score":"6-1 3-6 6-3","date_status":"RECONSTRUCTED - Aviles 29 Sep-5 Oct + QF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1975","kind":"transfer"},{"date":"1975-10-04","year":1975,"from":"Vladimir Zedník","to":"Nikola Pilić","event":"Avilés","round":"SF","score":"3-6 7-6 6-3 7-6","date_status":"RECONSTRUCTED - Aviles 29 Sep-5 Oct + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1975","kind":"transfer"},{"date":"1975-10-09","year":1975,"from":"Nikola Pilić","to":"Manuel Orantes","event":"Madrid","round":"R16","score":"6-4 6-3","date_status":"RECONSTRUCTED - Madrid-2 6-12 Oct + R16 chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1975","kind":"transfer"},{"date":"1975-10-10","year":1975,"from":"Manuel Orantes","to":"Jaime Fillol","event":"Madrid","round":"QF","score":"6-4 6-0","date_status":"RECONSTRUCTED - Madrid-2 6-12 Oct + QF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1975","kind":"transfer"},{"date":"1975-10-11","year":1975,"from":"Jaime Fillol","to":"Jan Kodeš","event":"Madrid","round":"SF","score":"5-7 2-6 7-6 6-2 6-3","date_status":"RECONSTRUCTED - Madrid-2 6-12 Oct + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1975","kind":"transfer"},{"date":"1975-10-17","year":1975,"from":"Jan Kodeš","to":"Björn Borg","event":"Barcelona","round":"QF","score":"6-1 2-6 6-4","date_status":"RECONSTRUCTED - Barcelona-3 13-19 Oct + QF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1975","kind":"transfer"},{"date":"1975-10-23","year":1975,"from":"Björn Borg","to":"Ilie Năstase","event":"World Invitational Classic","round":"SF","score":"6-3 5-7 6-4","date_status":"RECONSTRUCTED - World Invitational Classic 20-24 Oct + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1975","kind":"transfer"},{"date":"1975-11-01","year":1975,"from":"Ilie Năstase","to":"Arthur Ashe","event":"Paris Indoor","round":"SF","score":"2-6 6-7 6-3 6-3 6-4","date_status":"RECONSTRUCTED - Paris 27 Oct-2 Nov + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1975","kind":"transfer"},{"date":"1975-11-02","year":1975,"from":"Arthur Ashe","to":"Tom Okker","event":"Paris Indoor","round":"F","score":"6-3 2-6 6-3 3-6 6-4","date_status":"EXACT - Paris final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1975","kind":"transfer"},{"date":"1975-11-05","year":1975,"from":"Tom Okker","to":"Jimmy Connors","event":"Stockholm","round":"R16","score":"6-4 6-2","date_status":"RECONSTRUCTED - Stockholm-2 3-9 Nov + R16 chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1975","kind":"transfer"},{"date":"1975-11-09","year":1975,"from":"Jimmy Connors","to":"Adriano Panatta","event":"Stockholm","round":"F","score":"6-4 6-3","date_status":"EXACT - Stockholm-2 final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1975","kind":"transfer"},{"date":"1975-11-16","year":1975,"from":"Adriano Panatta","to":"Guillermo Vilas","event":"Buenos Aires","round":"F","score":"6-1 6-4 6-4","date_status":"EXACT - Buenos Aires final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1975","kind":"transfer"},{"date":"1975-12-06","year":1975,"from":"Guillermo Vilas","to":"Ilie Năstase","event":"Masters semi","round":"F","score":"6-0 6-3 6-4","date_status":"RECONSTRUCTED - 1975 Masters 30 Nov-7 Dec; semifinal day immediately before final","source":"https://www.nittoatpfinals.com/en/heritage/results-1970-1999","kind":"transfer"}]},"1976":{"entry":"Ilie Năstase","exit":"Jimmy Connors","transfers":30,"played_transfers":30,"defences":95,"title_matches":125,"undated_defences":95,"defence_leaders":[{"player":"Jimmy Connors","count":32},{"player":"Ilie Năstase","count":19},{"player":"Björn Borg","count":13},{"player":"Brian Gottfried","count":8},{"player":"Harold Solomon","count":4}],"busiest_event":{"event":"Salisbury","transfers":3},"transfers_rows":[{"date":"1976-01-25","year":1976,"from":"Ilie Năstase","to":"Tom Gorman","event":"Baltimore","round":"F","score":"7-5 6-3","date_status":"EXACT - Baltimore final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1976","kind":"transfer"},{"date":"1976-01-30","year":1976,"from":"Tom Gorman","to":"Dick Stockton","event":"Philadelphia WCT","round":"QF","score":"7-6(2) 6-2","date_status":"RECONSTRUCTED - Philadelphia WCT 26 Jan-1 Feb + QF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1976","kind":"transfer"},{"date":"1976-01-31","year":1976,"from":"Dick Stockton","to":"Jimmy Connors","event":"Philadelphia WCT","round":"SF","score":"3-6 7-5 6-3 6-2","date_status":"RECONSTRUCTED - Philadelphia WCT 26 Jan-1 Feb + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1976","kind":"transfer"},{"date":"1976-02-06","year":1976,"from":"Jimmy Connors","to":"John Whitlinger","event":"Boca Raton","round":"QF","score":"2-6 DEF","date_status":"RECONSTRUCTED - Boca Raton 2-8 Feb + QF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1976","kind":"transfer"},{"date":"1976-02-07","year":1976,"from":"John Whitlinger","to":"Butch Walts","event":"Boca Raton","round":"SF","score":"7-5 6-3","date_status":"RECONSTRUCTED - Boca Raton 2-8 Feb + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1976","kind":"transfer"},{"date":"1976-02-19","year":1976,"from":"Butch Walts","to":"Vitas Gerulaitis","event":"Salisbury","round":"R16","score":"6-1 6-4","date_status":"RECONSTRUCTED - Salisbury 14-22 Feb + R16 chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1976","kind":"transfer"},{"date":"1976-02-20","year":1976,"from":"Vitas Gerulaitis","to":"Haroon Rahim","event":"Salisbury","round":"QF","score":"6-3 6-1","date_status":"RECONSTRUCTED - Salisbury 14-22 Feb + QF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1976","kind":"transfer"},{"date":"1976-02-21","year":1976,"from":"Haroon Rahim","to":"Ilie Năstase","event":"Salisbury","round":"SF","score":"6-1 7-5 7-6","date_status":"RECONSTRUCTED - Salisbury 14-22 Feb + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1976","kind":"transfer"},{"date":"1976-03-05","year":1976,"from":"Ilie Năstase","to":"Bernard Mitton","event":"Little Rock","round":"QF","score":"7-6 2-6 6-4","date_status":"RECONSTRUCTED - Little Rock 1-7 Mar + QF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1976","kind":"transfer"},{"date":"1976-03-06","year":1976,"from":"Bernard Mitton","to":"Haroon Rahim","event":"Little Rock","round":"SF","score":"6-2 6-3","date_status":"RECONSTRUCTED - Little Rock 1-7 Mar + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1976","kind":"transfer"},{"date":"1976-03-11","year":1976,"from":"Haroon Rahim","to":"Raymond Moore","event":"Hampton","round":"R16","score":"7-5 6-3","date_status":"RECONSTRUCTED - Hampton 10-14 Mar + R16 chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1976","kind":"transfer"},{"date":"1976-03-12","year":1976,"from":"Raymond Moore","to":"Ilie Năstase","event":"Hampton","round":"QF","score":"6-2 6-2","date_status":"RECONSTRUCTED - Hampton 10-14 Mar + QF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1976","kind":"transfer"},{"date":"1976-03-14","year":1976,"from":"Ilie Năstase","to":"Jimmy Connors","event":"Hampton","round":"F","score":"6-2 6-2 6-2","date_status":"EXACT - Hampton final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1976","kind":"transfer"},{"date":"1976-03-20","year":1976,"from":"Jimmy Connors","to":"Ilie Năstase","event":"La Costa","round":"F","score":"4-6 6-0 6-1","date_status":"EXACT - La Costa singles final was played Saturday 20 Mar 1976","source":"https://en.wikipedia.org/wiki/1976_La_Costa_Pro-Celebrity_Tennis_Classic","kind":"transfer"},{"date":"1976-03-26","year":1976,"from":"Ilie Năstase","to":"Roscoe Tanner","event":"Palm Springs","round":"QF","score":"6-3 3-1 DEF","date_status":"RECONSTRUCTED - Palm Springs 22-28 Mar + QF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1976","kind":"transfer"},{"date":"1976-03-28","year":1976,"from":"Roscoe Tanner","to":"Jimmy Connors","event":"Palm Springs","round":"F","score":"6-4 6-4","date_status":"EXACT - Palm Springs final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1976","kind":"transfer"},{"date":"1976-06-30","year":1976,"from":"Jimmy Connors","to":"Roscoe Tanner","event":"Wimbledon","round":"QF","score":"6-4 6-2 8-6","date_status":"RECONSTRUCTED - Wimbledon 21 Jun-3 Jul + QF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1976","kind":"transfer"},{"date":"1976-07-02","year":1976,"from":"Roscoe Tanner","to":"Björn Borg","event":"Wimbledon","round":"SF","score":"6-4 9-8 6-4","date_status":"RECONSTRUCTED - Wimbledon semifinal chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1976","kind":"transfer"},{"date":"1976-09-12","year":1976,"from":"Björn Borg","to":"Jimmy Connors","event":"US Open","round":"F","score":"6-4 3-6 7-6 6-4","date_status":"EXACT - US Open final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1976","kind":"transfer"},{"date":"1976-09-24","year":1976,"from":"Jimmy Connors","to":"Brian Gottfried","event":"Los Angeles","round":"QF","score":"6-6 RET","date_status":"RECONSTRUCTED - Los Angeles 20-27 Sep + QF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1976","kind":"transfer"},{"date":"1976-10-04","year":1976,"from":"Brian Gottfried","to":"Roscoe Tanner","event":"San","round":"Francisco final","score":"4-6 7-5 6-1","date_status":"EXACT - San Francisco final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1976","kind":"transfer"},{"date":"1976-10-07","year":1976,"from":"Roscoe Tanner","to":"Bob Lutz","event":"Maui","round":"R16","score":"7-6 6-1","date_status":"RECONSTRUCTED - Maui 4-10 Oct + R16 chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1976","kind":"transfer"},{"date":"1976-10-10","year":1976,"from":"Bob Lutz","to":"Harold Solomon","event":"Maui","round":"F","score":"6-3 5-7 7-5","date_status":"EXACT - Maui final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1976","kind":"transfer"},{"date":"1976-10-23","year":1976,"from":"Harold Solomon","to":"Eddie Dibbs","event":"Barcelona","round":"SF","score":"6-3 6-4 5-7 6-4","date_status":"RECONSTRUCTED - Barcelona-3 18-24 Oct + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1976","kind":"transfer"},{"date":"1976-10-24","year":1976,"from":"Eddie Dibbs","to":"Manuel Orantes","event":"Barcelona","round":"F","score":"6-1 2-6 2-6 7-5 6-4","date_status":"EXACT - Barcelona-3 final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1976","kind":"transfer"},{"date":"1976-11-06","year":1976,"from":"Manuel Orantes","to":"Raúl Ramírez","event":"London","round":"F","score":"6-3 6-4","date_status":"EXACT - London final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1976","kind":"transfer"},{"date":"1976-11-12","year":1976,"from":"Raúl Ramírez","to":"Jimmy Connors","event":"Stockholm","round":"QF","score":"7-6 6-1","date_status":"RECONSTRUCTED - Stockholm-2 8-14 Nov + QF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1976","kind":"transfer"},{"date":"1976-11-13","year":1976,"from":"Jimmy Connors","to":"Mark Cox","event":"Stockholm","round":"SF","score":"7-6 3-6 7-6","date_status":"RECONSTRUCTED - Stockholm-2 8-14 Nov + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1976","kind":"transfer"},{"date":"1976-11-18","year":1976,"from":"Mark Cox","to":"Brian Gottfried","event":"Wembley","round":"R16","score":"1-6 6-1 6-4","date_status":"RECONSTRUCTED - Wembley 15-21 Nov + R16 chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1976","kind":"transfer"},{"date":"1976-11-20","year":1976,"from":"Brian Gottfried","to":"Jimmy Connors","event":"Wembley","round":"SF","score":"6-3 5-7 6-2","date_status":"RECONSTRUCTED - Wembley 15-21 Nov + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1976","kind":"transfer"}]},"1977":{"entry":"Jimmy Connors","exit":"Jimmy Connors","transfers":18,"played_transfers":18,"defences":57,"title_matches":75,"undated_defences":57,"defence_leaders":[{"player":"Björn Borg","count":19},{"player":"Guillermo Vilas","count":12},{"player":"Jimmy Connors","count":9},{"player":"Ilie Năstase","count":5},{"player":"Vitas Gerulaitis","count":4}],"busiest_event":{"event":"Richmond WCT","transfers":3},"transfers_rows":[{"date":"1977-01-30","year":1977,"from":"Jimmy Connors","to":"Dick Stockton","event":"Philadelphia WCT","round":"F","score":"3-6 6-4 3-6 6-1 6-2","date_status":"EXACT - Philadelphia WCT final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1977","kind":"transfer"},{"date":"1977-02-03","year":1977,"from":"Dick Stockton","to":"Corrado Barazzutti","event":"Richmond WCT","round":"R16","score":"6-4 6-2","date_status":"RECONSTRUCTED - Richmond WCT 1-6 Feb + R16 chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1977","kind":"transfer"},{"date":"1977-02-05","year":1977,"from":"Corrado Barazzutti","to":"Vitas Gerulaitis","event":"Richmond WCT","round":"SF","score":"6-3 3-6 7-5","date_status":"RECONSTRUCTED - Richmond WCT 1-6 Feb + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1977","kind":"transfer"},{"date":"1977-02-06","year":1977,"from":"Vitas Gerulaitis","to":"Tom Okker","event":"Richmond WCT","round":"F","score":"3-6 6-3 6-4","date_status":"EXACT - Richmond WCT final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1977","kind":"transfer"},{"date":"1977-02-10","year":1977,"from":"Tom Okker","to":"Ken Rosewall","event":"Mexico City WCT","round":"R16","score":"6-4 6-0","date_status":"RECONSTRUCTED - Mexico City WCT 8-13 Feb + R16 chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1977","kind":"transfer"},{"date":"1977-02-12","year":1977,"from":"Ken Rosewall","to":"Wojtek Fibak","event":"Mexico City WCT","round":"SF","score":"7-6(5) 6-3","date_status":"RECONSTRUCTED - Mexico City WCT 8-13 Feb + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1977","kind":"transfer"},{"date":"1977-02-13","year":1977,"from":"Wojtek Fibak","to":"Ilie Năstase","event":"Mexico City WCT","round":"F","score":"4-6 6-2 7-6(6)","date_status":"EXACT - Mexico City WCT final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1977","kind":"transfer"},{"date":"1977-02-18","year":1977,"from":"Ilie Năstase","to":"Vitas Gerulaitis","event":"Ocean City","round":"SF","score":"1-6 6-2 6-4","date_status":"RECONSTRUCTED - Ocean City 15-19 Feb + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1977","kind":"transfer"},{"date":"1977-03-06","year":1977,"from":"Vitas Gerulaitis","to":"Wojtek Fibak","event":"Monterrey WCT","round":"F","score":"6-4 6-3","date_status":"EXACT - Monterrey WCT final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1977","kind":"transfer"},{"date":"1977-03-26","year":1977,"from":"Wojtek Fibak","to":"Dick Stockton","event":"Rotterdam","round":"SF","score":"6-7(6) 7-6(5) 6-4","date_status":"RECONSTRUCTED - Rotterdam WCT 22-27 Mar + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1977","kind":"transfer"},{"date":"1977-04-02","year":1977,"from":"Dick Stockton","to":"Vitas Gerulaitis","event":"London WCT","round":"SF","score":"6-1 5-7 6-2","date_status":"RECONSTRUCTED - London WCT 28 Mar-3 Apr + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1977","kind":"transfer"},{"date":"1977-04-03","year":1977,"from":"Vitas Gerulaitis","to":"Eddie Dibbs","event":"London WCT","round":"F","score":"7-6(2) 6-7(5) 6-4","date_status":"EXACT - London WCT final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1977","kind":"transfer"},{"date":"1977-04-08","year":1977,"from":"Eddie Dibbs","to":"Björn Borg","event":"Monte Carlo WCT","round":"QF","score":"6-4 6-2","date_status":"RECONSTRUCTED - Monte-Carlo WCT 5-10 Apr + QF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1977","kind":"transfer"},{"date":"1977-09-05","year":1977,"from":"Björn Borg","to":"Dick Stockton","event":"US Open","round":"R16","score":"3-6 6-4 1-0 RET","date_status":"RECONSTRUCTED - US Open 31 Aug-11 Sep + R16 chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1977","kind":"transfer"},{"date":"1977-09-07","year":1977,"from":"Dick Stockton","to":"Harold Solomon","event":"US Open","round":"QF","score":"6-4 6-4 6-2","date_status":"RECONSTRUCTED - US Open + QF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1977","kind":"transfer"},{"date":"1977-09-09","year":1977,"from":"Harold Solomon","to":"Guillermo Vilas","event":"US Open","round":"SF","score":"6-2 7-6 6-2","date_status":"RECONSTRUCTED - US Open + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1977","kind":"transfer"},{"date":"1977-10-02","year":1977,"from":"Guillermo Vilas","to":"Ilie Năstase","event":"Aix-en-Provence","round":"F","score":"6-1 7-5 RET","date_status":"EXACT - Aix-en-Provence final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1977","kind":"transfer"},{"date":"1977-11-19","year":1977,"from":"Ilie Năstase","to":"Jimmy Connors","event":"WCT Challenge Cup","round":"SF","score":"6-2 6-4","date_status":"RECONSTRUCTED - WCT Challenge Cup 14-20 Nov + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1977","kind":"transfer"}]},"1978":{"entry":"Jimmy Connors","exit":"Guillermo Vilas","transfers":21,"played_transfers":21,"defences":90,"title_matches":111,"undated_defences":90,"defence_leaders":[{"player":"Björn Borg","count":49},{"player":"Jimmy Connors","count":20},{"player":"John McEnroe","count":9},{"player":"Peter Fleming","count":3},{"player":"Tim Gullikson","count":3}],"busiest_event":{"event":"Las Vegas","transfers":4},"transfers_rows":[{"date":"1978-01-05","year":1978,"from":"Jimmy Connors","to":"Guillermo Vilas","event":"1977 Masters","round":"RR","score":"6-4 3-6 7-5","date_status":"EXACT - contemporary Le Monde report dates the Connors-Vilas RR match to Thursday 5 January 1978.","source":"https://www.lemonde.fr/archives/article/1978/01/07/connors-elu-joueur-de-l-annee_2995245_1819218.html","kind":"transfer"},{"date":"1978-01-07","year":1978,"from":"Guillermo Vilas","to":"Björn Borg","event":"1977 Masters","round":"SF","score":"6-3 6-3","date_status":"EXACT - 1977 Masters semifinal day","source":"https://en.wikipedia.org/wiki/1977_Colgate-Palmolive_Masters","kind":"transfer"},{"date":"1978-01-08","year":1978,"from":"Björn Borg","to":"Jimmy Connors","event":"1977 Masters","round":"F","score":"6-4 1-6 6-4","date_status":"EXACT - 1977 Masters final","source":"https://en.wikipedia.org/wiki/1977_Colgate-Palmolive_Masters","kind":"transfer"},{"date":"1978-01-22","year":1978,"from":"Jimmy Connors","to":"Björn Borg","event":"Pepsi Grand Slam","round":"F","score":"7-6 3-6 6-1","date_status":"EXACT - Pepsi Grand Slam final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1978","kind":"transfer"},{"date":"1978-01-27","year":1978,"from":"Björn Borg","to":"Roscoe Tanner","event":"Philadelphia WCT","round":"QF","score":"6-4 7-6","date_status":"RECONSTRUCTED - Philadelphia WCT 23-29 Jan + QF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1978","kind":"transfer"},{"date":"1978-01-29","year":1978,"from":"Roscoe Tanner","to":"Jimmy Connors","event":"Philadelphia WCT","round":"F","score":"6-2 6-4 6-3","date_status":"EXACT - Philadelphia WCT final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1978","kind":"transfer"},{"date":"1978-04-27","year":1978,"from":"Jimmy Connors","to":"Jeff Borowiak","event":"Las Vegas","round":"R16","score":"6-3 6-0","date_status":"RECONSTRUCTED - Las Vegas-2 24-30 Apr + R16 chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1978","kind":"transfer"},{"date":"1978-04-28","year":1978,"from":"Jeff Borowiak","to":"Harold Solomon","event":"Las Vegas","round":"QF","score":"6-4 6-2","date_status":"RECONSTRUCTED - Las Vegas-2 + QF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1978","kind":"transfer"},{"date":"1978-04-29","year":1978,"from":"Harold Solomon","to":"Vitas Gerulaitis","event":"Las Vegas","round":"SF","score":"6-4 6-1","date_status":"RECONSTRUCTED - Las Vegas-2 + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1978","kind":"transfer"},{"date":"1978-04-30","year":1978,"from":"Vitas Gerulaitis","to":"Björn Borg","event":"Las Vegas","round":"F","score":"6-5 5-6 6-4 6-5","date_status":"EXACT - Las Vegas-2 final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1978","kind":"transfer"},{"date":"1978-09-10","year":1978,"from":"Björn Borg","to":"Jimmy Connors","event":"US Open","round":"F","score":"6-4 6-2 6-2","date_status":"EXACT - US Open final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1978","kind":"transfer"},{"date":"1978-11-02","year":1978,"from":"Jimmy Connors","to":"Brian Teacher","event":"Tokyo Indoor","round":"R16","score":"4-6 6-4 6-3","date_status":"RECONSTRUCTED - Tokyo-2 30 Oct-5 Nov + R16 chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1978","kind":"transfer"},{"date":"1978-11-05","year":1978,"from":"Brian Teacher","to":"Björn Borg","event":"Tokyo Indoor","round":"F","score":"6-3 6-4","date_status":"EXACT - Tokyo-2 final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1978","kind":"transfer"},{"date":"1978-11-11","year":1978,"from":"Björn Borg","to":"John McEnroe","event":"Stockholm","round":"SF","score":"6-3 6-4","date_status":"RECONSTRUCTED - Stockholm 6-12 Nov + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1978","kind":"transfer"},{"date":"1978-11-25","year":1978,"from":"John McEnroe","to":"Peter Fleming","event":"Bologna","round":"SF","score":"6-4 6-1","date_status":"RECONSTRUCTED - Bologna 20-26 Nov + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1978","kind":"transfer"},{"date":"1978-12-01","year":1978,"from":"Peter Fleming","to":"David Schneider","event":"Johannesburg","round":"QF","score":"6-4 7-6","date_status":"RECONSTRUCTED - Johannesburg-2 27 Nov-3 Dec + QF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1978","kind":"transfer"},{"date":"1978-12-02","year":1978,"from":"David Schneider","to":"Tim Gullikson","event":"Johannesburg","round":"SF","score":"6-4 6-4","date_status":"RECONSTRUCTED - Johannesburg-2 + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1978","kind":"transfer"},{"date":"1978-12-21","year":1978,"from":"Tim Gullikson","to":"Kim Warwick","event":"Sydney Outdoor","round":"R16","score":"6-4 6-4","date_status":"RECONSTRUCTED - Sydney-2 18-24 Dec + R16 chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1978","kind":"transfer"},{"date":"1978-12-24","year":1978,"from":"Kim Warwick","to":"Tim Wilkison","event":"Sydney Outdoor","round":"F","score":"6-3 6-3 6-7 3-6 6-2","date_status":"EXACT - Sydney-2 final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1978","kind":"transfer"},{"date":"1978-12-27","year":1978,"from":"Tim Wilkison","to":"Allan Stone","event":"Australian Open","round":"R64","score":"6-3 6-2 6-3","date_status":"RECONSTRUCTED - Australian Open 25 Dec-3 Jan + R64 chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1978","kind":"transfer"},{"date":"1978-12-31","year":1978,"from":"Allan Stone","to":"Guillermo Vilas","event":"Australian Open","round":"R16","score":"6-4 6-4 6-4","date_status":"RECONSTRUCTED - Australian Open 25 Dec-3 Jan + R16 chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1978","kind":"transfer"}]},"1979":{"entry":"Guillermo Vilas","exit":"Butch Walts","transfers":23,"played_transfers":23,"defences":102,"title_matches":125,"undated_defences":102,"defence_leaders":[{"player":"John McEnroe","count":40},{"player":"Björn Borg","count":29},{"player":"Guillermo Vilas","count":11},{"player":"Jimmy Connors","count":8},{"player":"Roscoe Tanner","count":6}],"busiest_event":{"event":"Rancho Mirage","transfers":4},"transfers_rows":[{"date":"1979-01-20","year":1979,"from":"Guillermo Vilas","to":"Eddie Dibbs","event":"Birmingham","round":"SF","score":"6-0 1-6 6-2","date_status":"RECONSTRUCTED - Birmingham WCT 15-21 Jan + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1979","kind":"transfer"},{"date":"1979-01-21","year":1979,"from":"Eddie Dibbs","to":"Jimmy Connors","event":"Birmingham","round":"F","score":"6-2 3-6 7-5","date_status":"EXACT - Birmingham WCT final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1979","kind":"transfer"},{"date":"1979-02-11","year":1979,"from":"Jimmy Connors","to":"Björn Borg","event":"Pepsi Grand Slam","round":"F","score":"6-2 6-3","date_status":"EXACT - Pepsi Grand Slam final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1979","kind":"transfer"},{"date":"1979-02-13","year":1979,"from":"Björn Borg","to":"Bruce Manson","event":"Rancho Mirage","round":"R64","score":"6-7 7-5 6-2","date_status":"RECONSTRUCTED - Rancho Mirage 12-18 Feb + R64 chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1979","kind":"transfer"},{"date":"1979-02-15","year":1979,"from":"Bruce Manson","to":"Tom Okker","event":"Rancho Mirage","round":"R16","score":"6-4 5-7 6-4","date_status":"RECONSTRUCTED - Rancho Mirage + R16 chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1979","kind":"transfer"},{"date":"1979-02-16","year":1979,"from":"Tom Okker","to":"Brian Gottfried","event":"Rancho Mirage","round":"QF","score":"6-2 6-0","date_status":"RECONSTRUCTED - Rancho Mirage + QF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1979","kind":"transfer"},{"date":"1979-02-18","year":1979,"from":"Brian Gottfried","to":"Roscoe Tanner","event":"Rancho Mirage","round":"F","score":"6-4 6-2","date_status":"EXACT - Rancho Mirage final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1979","kind":"transfer"},{"date":"1979-03-03","year":1979,"from":"Roscoe Tanner","to":"Arthur Ashe","event":"Memphis","round":"SF","score":"2-6 6-4 6-4","date_status":"RECONSTRUCTED - Memphis 26 Feb-4 Mar + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1979","kind":"transfer"},{"date":"1979-03-04","year":1979,"from":"Arthur Ashe","to":"Jimmy Connors","event":"Memphis","round":"F","score":"6-4 5-7 6-3","date_status":"EXACT - Memphis final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1979","kind":"transfer"},{"date":"1979-03-22","year":1979,"from":"Jimmy Connors","to":"Tom Gullikson","event":"New Orleans","round":"R16","score":"3-6 6-4 6-2","date_status":"RECONSTRUCTED - New Orleans WCT 19-25 Mar + R16 chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1979","kind":"transfer"},{"date":"1979-03-23","year":1979,"from":"Tom Gullikson","to":"Roscoe Tanner","event":"New Orleans","round":"QF","score":"6-3 6-4","date_status":"RECONSTRUCTED - New Orleans WCT + QF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1979","kind":"transfer"},{"date":"1979-03-25","year":1979,"from":"Roscoe Tanner","to":"John McEnroe","event":"New Orleans","round":"F","score":"6-4 6-2","date_status":"EXACT - New Orleans WCT final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1979","kind":"transfer"},{"date":"1979-04-08","year":1979,"from":"John McEnroe","to":"Björn Borg","event":"Rotterdam","round":"F","score":"6-4 6-2","date_status":"EXACT - Rotterdam WCT final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1979","kind":"transfer"},{"date":"1979-05-06","year":1979,"from":"Björn Borg","to":"John McEnroe","event":"Dallas WCT","round":"F","score":"7-5 4-6 6-2 7-6","date_status":"EXACT - WCT Finals Dallas final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1979","kind":"transfer"},{"date":"1979-07-02","year":1979,"from":"John McEnroe","to":"Tim Gullikson","event":"Wimbledon","round":"R16","score":"6-4 6-2 6-4","date_status":"RECONSTRUCTED - Wimbledon R16 chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1979","kind":"transfer"},{"date":"1979-07-04","year":1979,"from":"Tim Gullikson","to":"Roscoe Tanner","event":"Wimbledon","round":"QF","score":"6-1 6-4 6-7 6-2","date_status":"RECONSTRUCTED - Wimbledon QF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1979","kind":"transfer"},{"date":"1979-07-07","year":1979,"from":"Roscoe Tanner","to":"Björn Borg","event":"Wimbledon","round":"F","score":"6-7 6-1 3-6 6-3 6-4","date_status":"EXACT - Wimbledon final","source":"https://www.wimbledon.com/pdf/2020_Compendium.pdf","kind":"transfer"},{"date":"1979-09-05","year":1979,"from":"Björn Borg","to":"Roscoe Tanner","event":"US Open","round":"QF","score":"6-2 4-6 6-2 7-6","date_status":"RECONSTRUCTED - US Open QF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1979","kind":"transfer"},{"date":"1979-09-07","year":1979,"from":"Roscoe Tanner","to":"Vitas Gerulaitis","event":"US Open","round":"SF","score":"3-6 2-6 7-6 6-3 6-3","date_status":"RECONSTRUCTED - US Open SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1979","kind":"transfer"},{"date":"1979-09-09","year":1979,"from":"Vitas Gerulaitis","to":"John McEnroe","event":"US Open","round":"F","score":"7-5 6-3 6-3","date_status":"EXACT - US Open final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1979","kind":"transfer"},{"date":"1979-09-23","year":1979,"from":"John McEnroe","to":"Peter Fleming","event":"Los Angeles","round":"F","score":"6-4 6-4","date_status":"EXACT - Los Angeles final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1979","kind":"transfer"},{"date":"1979-09-30","year":1979,"from":"Peter Fleming","to":"John McEnroe","event":"San","round":"Francisco final","score":"4-6 7-5 6-2","date_status":"EXACT - San Francisco final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1979","kind":"transfer"},{"date":"1979-11-24","year":1979,"from":"John McEnroe","to":"Butch Walts","event":"Bologna","round":"SF","score":"6-4 6-7 6-3","date_status":"RECONSTRUCTED - Bologna 19-25 Nov + SF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1979","kind":"transfer"}]},"1980":{"entry":"Butch Walts","exit":"Björn Borg","transfers":17,"played_transfers":17,"defences":86,"title_matches":103,"undated_defences":84,"defence_leaders":[{"player":"Björn Borg","count":35},{"player":"Jimmy Connors","count":13},{"player":"Guillermo Vilas","count":9},{"player":"Harold Solomon","count":8},{"player":"John McEnroe","count":8}],"busiest_event":{"event":"Cincinnati","transfers":3},"transfers_rows":[{"date":"1980-01-19","year":1980,"from":"Butch Walts","to":"Jimmy Connors","event":"Birmingham","round":"SF","score":"6-3 6-3","date_status":"RECONSTRUCTED - Birmingham WCT began 14 Jan; semifinal immediately before final","source":"https://www.ultimatetennisstatistics.com/tournamentEvent?tournamentEventId=1175","kind":"transfer"},{"date":"1980-02-20","year":1980,"from":"Jimmy Connors","to":"Vijay Amritraj","event":"WCT Invitational","round":"RR","score":"6-3 6-2","date_status":"EXACT - Amritraj defeated Connors 6-3 6-2 on 20 Feb and acquired the lineal title","source":"https://www.washingtonpost.com/archive/sports/1980/02/21/double-trouble-leaves-connors-sore-for-sure/7b7f4b0b-de1f-4b4a-abea-4dccdd6e1152/","kind":"transfer"},{"date":"1980-02-24","year":1980,"from":"Vijay Amritraj","to":"Björn Borg","event":"WCT Invitational","round":"F","score":"7-5 6-1 6-3","date_status":"EXACT + MATCH CORRECTION - WCT Invitational final","source":"https://www.washingtonpost.com/archive/sports/1980/02/25/borg-makes-easy-work-of-amritraj/4ed8f061-558a-49ef-90d5-b739f7cee748/","kind":"transfer"},{"date":"1980-05-10","year":1980,"from":"Björn Borg","to":"Guillermo Vilas","event":"Nations Cup","round":"SF","score":"6-3 1-6 6-1","date_status":"RECONSTRUCTED - Nations Cup began 5 May; semifinal chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1980","kind":"transfer"},{"date":"1980-05-18","year":1980,"from":"Guillermo Vilas","to":"Harold Solomon","event":"Hamburg","round":"F","score":"6-7 6-2 6-4 2-6 6-3","date_status":"EXACT - Hamburg final / event final day","source":"https://en.wikipedia.org/wiki/1980_German_Open_Championships","kind":"transfer"},{"date":"1980-06-06","year":1980,"from":"Harold Solomon","to":"Björn Borg","event":"Roland Garros","round":"SF","score":"6-2 6-2 6-0","date_status":"RECONSTRUCTED - Roland Garros 26 May-8 Jun + semifinal chronology","source":"https://en.wikipedia.org/wiki/1980_French_Open","kind":"transfer"},{"date":"1980-08-17","year":1980,"from":"Björn Borg","to":"Ivan Lendl","event":"Canada","round":"F","score":"4-6 5-4 RET","date_status":"EXACT - Canadian Open final / event final day","source":"https://www.atptour.com/en/scores/results-archive?year=1980","kind":"transfer"},{"date":"1980-08-22","year":1980,"from":"Ivan Lendl","to":"Jimmy Connors","event":"Cincinnati","round":"QF","score":"6-2 6-0","date_status":"RECONSTRUCTED - Cincinnati 18-24 Aug + QF chronology","source":"https://en.wikipedia.org/wiki/1980_ATP_Championship","kind":"transfer"},{"date":"1980-08-23","year":1980,"from":"Jimmy Connors","to":"Francisco González","event":"Cincinnati","round":"SF","score":"6-2 7-6","date_status":"RECONSTRUCTED - Cincinnati 18-24 Aug + SF chronology","source":"https://en.wikipedia.org/wiki/1980_ATP_Championship","kind":"transfer"},{"date":"1980-08-24","year":1980,"from":"Francisco González","to":"Harold Solomon","event":"Cincinnati","round":"F","score":"7-6 6-3","date_status":"EXACT - Cincinnati final / event final day","source":"https://en.wikipedia.org/wiki/1980_ATP_Championship","kind":"transfer"},{"date":"1980-09-01","year":1980,"from":"Harold Solomon","to":"Ivan Lendl","event":"US Open","round":"R16","score":"6-1 6-0 6-0","date_status":"RECONSTRUCTED - US Open 26 Aug-7 Sep + R16 chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1980","kind":"transfer"},{"date":"1980-09-03","year":1980,"from":"Ivan Lendl","to":"John McEnroe","event":"US Open","round":"QF","score":"4-6 6-3 6-2 7-5","date_status":"RECONSTRUCTED - US Open 26 Aug-7 Sep + QF chronology","source":"https://www.atptour.com/en/scores/results-archive?year=1980","kind":"transfer"},{"date":"1980-09-26","year":1980,"from":"John McEnroe","to":"Johan Kriek","event":"San","round":"Francisco QF","score":"7-6 6-3","date_status":"RECONSTRUCTED - San Francisco 22-28 Sep + QF chronology","source":"https://en.wikipedia.org/wiki/1980_Transamerica_Open","kind":"transfer"},{"date":"1980-09-27","year":1980,"from":"Johan Kriek","to":"Gene Mayer","event":"San","round":"Francisco SF","score":"6-1 7-5","date_status":"RECONSTRUCTED - San Francisco 22-28 Sep + SF chronology","source":"https://en.wikipedia.org/wiki/1980_Transamerica_Open","kind":"transfer"},{"date":"1980-10-18","year":1980,"from":"Gene Mayer","to":"Vitas Gerulaitis","event":"Sydney Indoor","round":"SF","score":"6-4 6-3","date_status":"RECONSTRUCTED - Sydney Indoor 13-19 Oct + SF chronology","source":"https://en.wikipedia.org/wiki/1980_Custom_Credit_Australian_Indoor_Championships","kind":"transfer"},{"date":"1980-10-19","year":1980,"from":"Vitas Gerulaitis","to":"John McEnroe","event":"Sydney Indoor","round":"F","score":"6-3 6-4","date_status":"EXACT - Sydney Indoor final / event final day","source":"https://en.wikipedia.org/wiki/1980_Custom_Credit_Australian_Indoor_Championships","kind":"transfer"},{"date":"1980-11-10","year":1980,"from":"John McEnroe","to":"Björn Borg","event":"Stockholm","round":"F","score":"6-3 6-4","date_status":"EXACT - Stockholm final / event final day","source":"https://en.wikipedia.org/wiki/1980_Stockholm_Open","kind":"transfer"}]},"1981":{"entry":"Björn Borg","exit":"Bill Scanlon","transfers":34,"played_transfers":34,"defences":63,"title_matches":97,"undated_defences":63,"defence_leaders":[{"player":"Jimmy Connors","count":16},{"player":"José Luis Clerc","count":14},{"player":"Björn Borg","count":9},{"player":"John McEnroe","count":8},{"player":"Eliot Teltscher","count":4}],"busiest_event":{"event":"North Conway","transfers":4},"transfers_rows":[{"date":"1981-01-16","year":1981,"from":"Björn Borg","to":"Gene Mayer","event":"1980 Masters","round":"RR","score":"6-0 6-3","date_status":"EXACT - contemporary Washington Post report says Borg lost to Gene Mayer Friday afternoon; report dated 17 Jan.","source":"https://www.washingtonpost.com/archive/sports/1981/01/17/mcenroe-beats-connors/","kind":"transfer"},{"date":"1981-01-17","year":1981,"from":"Gene Mayer","to":"Ivan Lendl","event":"1980 Masters","round":"SF","score":"6-3 6-4","date_status":"RECONSTRUCTED - official 1980 Masters window 14-18 Jan 1981 + semifinal chronology","source":"https://www.nittoatpfinals.com/en/heritage/results-1970-1999","kind":"transfer"},{"date":"1981-01-18","year":1981,"from":"Ivan Lendl","to":"Björn Borg","event":"1980 Masters","round":"F","score":"6-4 6-2 6-2","date_status":"EXACT - 1980 Masters final","source":"https://www.nittoatpfinals.com/en/heritage/results-1970-1999","kind":"transfer"},{"date":"1981-03-12","year":1981,"from":"Björn Borg","to":"Rolf Gehring","event":"Brussels","round":"R16","score":"7-6 7-5","date_status":"RECONSTRUCTED - audited event window + R16 chronology","source":"https://raw.githubusercontent.com/Aneeshers/tennis-sackmann-archive/main/atp/atp_matches_1981.csv","kind":"transfer"},{"date":"1981-03-14","year":1981,"from":"Rolf Gehring","to":"Brian Gottfried","event":"Brussels","round":"SF","score":"6-2 6-4","date_status":"RECONSTRUCTED - audited event window + SF chronology","source":"https://raw.githubusercontent.com/Aneeshers/tennis-sackmann-archive/main/atp/atp_matches_1981.csv","kind":"transfer"},{"date":"1981-03-15","year":1981,"from":"Brian Gottfried","to":"Jimmy Connors","event":"Brussels","round":"F","score":"6-2 6-4 6-3","date_status":"RECONSTRUCTED - audited event window + F chronology","source":"https://raw.githubusercontent.com/Aneeshers/tennis-sackmann-archive/main/atp/atp_matches_1981.csv","kind":"transfer"},{"date":"1981-05-17","year":1981,"from":"Jimmy Connors","to":"Peter McNamara","event":"Hamburg","round":"F","score":"7-6 6-1 4-6 6-4","date_status":"RECONSTRUCTED - audited event window + F chronology","source":"https://raw.githubusercontent.com/Aneeshers/tennis-sackmann-archive/main/atp/atp_matches_1981.csv","kind":"transfer"},{"date":"1981-05-22","year":1981,"from":"Peter McNamara","to":"Victor Pecci","event":"Rome","round":"QF","score":"6-2 5-7 7-6","date_status":"RECONSTRUCTED - audited event window + QF chronology","source":"https://raw.githubusercontent.com/Aneeshers/tennis-sackmann-archive/main/atp/atp_matches_1981.csv","kind":"transfer"},{"date":"1981-05-24","year":1981,"from":"Victor Pecci","to":"José Luis Clerc","event":"Rome","round":"F","score":"6-3 6-4 6-0","date_status":"RECONSTRUCTED - audited event window + F chronology","source":"https://raw.githubusercontent.com/Aneeshers/tennis-sackmann-archive/main/atp/atp_matches_1981.csv","kind":"transfer"},{"date":"1981-06-05","year":1981,"from":"José Luis Clerc","to":"Ivan Lendl","event":"Roland Garros","round":"SF","score":"3-6 6-4 4-6 7-6 6-2","date_status":"RECONSTRUCTED - audited event window + SF chronology","source":"https://raw.githubusercontent.com/Aneeshers/tennis-sackmann-archive/main/atp/atp_matches_1981.csv","kind":"transfer"},{"date":"1981-06-07","year":1981,"from":"Ivan Lendl","to":"Björn Borg","event":"Roland Garros","round":"F","score":"6-1 4-6 6-2 3-6 6-1","date_status":"RECONSTRUCTED - audited event window + F chronology","source":"https://raw.githubusercontent.com/Aneeshers/tennis-sackmann-archive/main/atp/atp_matches_1981.csv","kind":"transfer"},{"date":"1981-07-04","year":1981,"from":"Björn Borg","to":"John McEnroe","event":"Wimbledon","round":"F","score":"4-6 7-6 7-6 6-4","date_status":"RECONSTRUCTED - audited event window + F chronology","source":"https://raw.githubusercontent.com/Aneeshers/tennis-sackmann-archive/main/atp/atp_matches_1981.csv","kind":"transfer"},{"date":"1981-07-09","year":1981,"from":"John McEnroe","to":"Ivan Lendl","event":"Davis Cup WG","round":"QF rubber","score":"6-4 14-12 7-5","date_status":"EXACT - Davis Cup tie opening-day rubber","source":"https://raw.githubusercontent.com/Aneeshers/tennis-sackmann-archive/main/atp/atp_matches_1981.csv","kind":"transfer"},{"date":"1981-07-11","year":1981,"from":"Ivan Lendl","to":"Jimmy Connors","event":"later rubber in same tie","round":"","score":"7-5 6-4","date_status":"RECONSTRUCTED - later rubber in same Davis Cup tie","source":"https://raw.githubusercontent.com/Aneeshers/tennis-sackmann-archive/main/atp/atp_matches_1981.csv","kind":"transfer"},{"date":"1981-07-30","year":1981,"from":"Jimmy Connors","to":"José Higueras","event":"North Conway","round":"R16","score":"6-4 6-1","date_status":"RECONSTRUCTED - audited event window + R16 chronology","source":"https://raw.githubusercontent.com/Aneeshers/tennis-sackmann-archive/main/atp/atp_matches_1981.csv","kind":"transfer"},{"date":"1981-07-31","year":1981,"from":"José Higueras","to":"Eliot Teltscher","event":"North Conway","round":"QF","score":"6-4 6-1","date_status":"RECONSTRUCTED - audited event window + QF chronology","source":"https://raw.githubusercontent.com/Aneeshers/tennis-sackmann-archive/main/atp/atp_matches_1981
