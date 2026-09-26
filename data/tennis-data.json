@@ -43,5 +43,23 @@
       "next_match": null
     }
   ],
-  "lineage_updates": []
+  "lineage_updates": [],
+  "players": [
+    {
+      "player": "Jannik Sinner",
+      "country": "Italy",
+      "country_code": "ITA",
+      "flag": "🇮🇹",
+      "flag_override": null,
+      "notes": "Current men's baseline holder."
+    },
+    {
+      "player": "Elena Rybakina",
+      "country": "Kazakhstan",
+      "country_code": "KAZ",
+      "flag": "🇰🇿",
+      "flag_override": null,
+      "notes": "Current women's baseline holder."
+    }
+  ]
 }
