@@ -2156,7 +2156,7 @@ const SURFACE_LEADER_DATA = {"transfers":{"All":[{"player":"Chris Evert","value"
     return '';
   };
 
-  // Populate Full Archive immediately, before any other test-only UI updates.
+  // Populate Full Archive immediately, before any other live UI updates.
   // This is deliberately early so a later rendering error cannot suppress archive rows.
   try {
     if (typeof ARCHIVE_ALL !== 'undefined' && typeof filterArchive === 'function') {
@@ -2187,7 +2187,7 @@ const SURFACE_LEADER_DATA = {"transfers":{"All":[{"player":"Chris Evert","value"
       filterArchive();
     }
   } catch (archiveError) {
-    console.error('Pipeline test archive injection failed', archiveError);
+    console.error('Live archive update failed', archiveError);
   }
 
   const parseUTC = d => {
