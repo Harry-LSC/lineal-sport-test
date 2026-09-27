@@ -10,7 +10,8 @@ on:
       - ".tennis-page-src/**"
       - "assemble_tennis_pages.py"
       - "tennis-identity-runtime.js"
-      - "validate_tennis_identity.py"\n      - "validate_publication_links.py"
+      - "validate_tennis_identity.py"
+      - "validate_publication_links.py"
       - "data/tennis-player-aliases.json"
       - ".github/workflows/assemble-tennis-pages.yml"
 
@@ -30,7 +31,9 @@ jobs:
         run: python assemble_tennis_pages.py
       - name: Regression-test canonical tennis identities
         run: python validate_tennis_identity.py
-      - name: Validate publication links and assets\n        run: python validate_publication_links.py\n      - name: Commit assembled pages
+      - name: Validate publication links and assets
+        run: python validate_publication_links.py
+      - name: Commit assembled pages
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
