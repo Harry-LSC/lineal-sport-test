@@ -61,5 +61,363 @@
       "flag_override": null,
       "notes": "Current women's baseline holder."
     }
+  ],
+  "aliases": [
+    {
+      "alias": "Agnes Szavay",
+      "canonical": "Ágnes Szávay"
+    },
+    {
+      "alias": "Alex Corretja",
+      "canonical": "Àlex Corretja"
+    },
+    {
+      "alias": "Alex De Minaur",
+      "canonical": "Alex de Minaur"
+    },
+    {
+      "alias": "Anders Jarryd",
+      "canonical": "Anders Järryd"
+    },
+    {
+      "alias": "Andres Gomez",
+      "canonical": "Andrés Gómez"
+    },
+    {
+      "alias": "Anna Schmiedlová",
+      "canonical": "Anna Karolína Schmiedlová"
+    },
+    {
+      "alias": "Anne Gaelle Sidot",
+      "canonical": "Anne-Gaëlle Sidot"
+    },
+    {
+      "alias": "Anne-Gaelle Sidot",
+      "canonical": "Anne-Gaëlle Sidot"
+    },
+    {
+      "alias": "Arantxa Sanchez Vicario",
+      "canonical": "Arantxa Sánchez Vicario"
+    },
+    {
+      "alias": "Asa Carlsson",
+      "canonical": "Åsa Svensson"
+    },
+    {
+      "alias": "Balazs Taroczy",
+      "canonical": "Balázs Taróczy"
+    },
+    {
+      "alias": "Barry Phillips Moore",
+      "canonical": "Barry Phillips-Moore"
+    },
+    {
+      "alias": "Betty Stove",
+      "canonical": "Betty Stöve"
+    },
+    {
+      "alias": "Bjorn Borg",
+      "canonical": "Björn Borg"
+    },
+    {
+      "alias": "Brenda Schultz McCarthy",
+      "canonical": "Brenda Schultz-McCarthy"
+    },
+    {
+      "alias": "Carl Uwe Steeb",
+      "canonical": "Carl-Uwe Steeb"
+    },
+    {
+      "alias": "Carlos Moya",
+      "canonical": "Carlos Moyá"
+    },
+    {
+      "alias": "Cedric Pioline",
+      "canonical": "Cédric Pioline"
+    },
+    {
+      "alias": "Conchita Martinez",
+      "canonical": "Conchita Martínez"
+    },
+    {
+      "alias": "Daniela Hantuchova",
+      "canonical": "Daniela Hantuchová"
+    },
+    {
+      "alias": "Diego Perez",
+      "canonical": "Diego Pérez"
+    },
+    {
+      "alias": "Emilio Sanchez",
+      "canonical": "Emilio Sánchez"
+    },
+    {
+      "alias": "Felix Auger Aliassime",
+      "canonical": "Felix Auger-Aliassime"
+    },
+    {
+      "alias": "Francoise Durr",
+      "canonical": "Françoise Dürr"
+    },
+    {
+      "alias": "German Lopez",
+      "canonical": "Germán López"
+    },
+    {
+      "alias": "Gigi Fernandez",
+      "canonical": "Gigi Fernández"
+    },
+    {
+      "alias": "Goran Ivanisevic",
+      "canonical": "Goran Ivanišević"
+    },
+    {
+      "alias": "Goran Prpic",
+      "canonical": "Goran Prpić"
+    },
+    {
+      "alias": "Guillermo Garcia Lopez",
+      "canonical": "Guillermo Garcia-Lopez"
+    },
+    {
+      "alias": "Guillermo Perez Roldan",
+      "canonical": "Guillermo Pérez-Roldán"
+    },
+    {
+      "alias": "Hana Mandlikova",
+      "canonical": "Hana Mandlíková"
+    },
+    {
+      "alias": "Heinz Gunthardt",
+      "canonical": "Heinz Günthardt"
+    },
+    {
+      "alias": "Helena Sukova",
+      "canonical": "Helena Suková"
+    },
+    {
+      "alias": "Horacio De La Pena",
+      "canonical": "Horacio de la Peña"
+    },
+    {
+      "alias": "Ilie Nastase",
+      "canonical": "Ilie Năstase"
+    },
+    {
+      "alias": "Irina Spirlea",
+      "canonical": "Irina Spîrlea"
+    },
+    {
+      "alias": "Ivan Molina",
+      "canonical": "Iván Molina"
+    },
+    {
+      "alias": "Jan Kodes",
+      "canonical": "Jan Kodeš"
+    },
+    {
+      "alias": "Jan Lennard Struff",
+      "canonical": "Jan-Lennard Struff"
+    },
+    {
+      "alias": "Jana Novotna",
+      "canonical": "Jana Novotná"
+    },
+    {
+      "alias": "Javier Sanchez",
+      "canonical": "Javier Sánchez"
+    },
+    {
+      "alias": "Jelena Dokic",
+      "canonical": "Jelena Dokić"
+    },
+    {
+      "alias": "Jelena Kostanić",
+      "canonical": "Jelena Kostanić Tošić"
+    },
+    {
+      "alias": "Jiri Hrebec",
+      "canonical": "Jiří Hřebec"
+    },
+    {
+      "alias": "Joakim Nystrom",
+      "canonical": "Joakim Nyström"
+    },
+    {
+      "alias": "Joanne Russell",
+      "canonical": "JoAnne Russell"
+    },
+    {
+      "alias": "John Van Lottum",
+      "canonical": "John van Lottum"
+    },
+    {
+      "alias": "Jose Higueras",
+      "canonical": "José Higueras"
+    },
+    {
+      "alias": "Jose Luis Clerc",
+      "canonical": "José Luis Clerc"
+    },
+    {
+      "alias": "Julie Halard",
+      "canonical": "Julie Halard-Decugis"
+    },
+    {
+      "alias": "Julie Halard Decugis",
+      "canonical": "Julie Halard-Decugis"
+    },
+    {
+      "alias": "Karel Novacek",
+      "canonical": "Karel Nováček"
+    },
+    {
+      "alias": "Karol Kucera",
+      "canonical": "Karol Kučera"
+    },
+    {
+      "alias": "Karolina Sprem",
+      "canonical": "Karolina Šprem"
+    },
+    {
+      "alias": "Katarina Studenikova",
+      "canonical": "Katarina Studeníková"
+    },
+    {
+      "alias": "Kimberly Po Messerli",
+      "canonical": "Kimberly Po-Messerli"
+    },
+    {
+      "alias": "Kimiko Date Krumm",
+      "canonical": "Kimiko Date-Krumm"
+    },
+    {
+      "alias": "Kveta Peschke",
+      "canonical": "Květa Peschke"
+    },
+    {
+      "alias": "Magdalena Rybarikova",
+      "canonical": "Magdaléna Rybáriková"
+    },
+    {
+      "alias": "Magdalena Rybáriková",
+      "canonical": "Magdaléna Rybáriková"
+    },
+    {
+      "alias": "Malivai Washington",
+      "canonical": "MaliVai Washington"
+    },
+    {
+      "alias": "Manuela Maleeva Fragniere",
+      "canonical": "Manuela Maleeva-Fragnière"
+    },
+    {
+      "alias": "Manuela Maleeva-Fragniere",
+      "canonical": "Manuela Maleeva-Fragnière"
+    },
+    {
+      "alias": "Marc Kevin Goellner",
+      "canonical": "Marc-Kevin Goellner"
+    },
+    {
+      "alias": "Marcello Lara",
+      "canonical": "Marcelo Lara"
+    },
+    {
+      "alias": "Marcelo Rios",
+      "canonical": "Marcelo Ríos"
+    },
+    {
+      "alias": "Martin Damm",
+      "canonical": "Martin Damm Sr"
+    },
+    {
+      "alias": "Mary Joe Fernandez",
+      "canonical": "Mary Joe Fernández"
+    },
+    {
+      "alias": "Miloslav Mecir",
+      "canonical": "Miloslav Mečíř"
+    },
+    {
+      "alias": "Mima Jausovec",
+      "canonical": "Mima Jaušovec"
+    },
+    {
+      "alias": "Mirjana Lučić",
+      "canonical": "Mirjana Lučić-Baroni"
+    },
+    {
+      "alias": "Nicolas Escude",
+      "canonical": "Nicolas Escudé"
+    },
+    {
+      "alias": "Nikola Pilic",
+      "canonical": "Nikola Pilić"
+    },
+    {
+      "alias": "Patricia Hy Boulais",
+      "canonical": "Patricia Hy-Boulais"
+    },
+    {
+      "alias": "Patrik Kuhnen",
+      "canonical": "Patrik Kühnen"
+    },
+    {
+      "alias": "Paul Henri Mathieu",
+      "canonical": "Paul-Henri Mathieu"
+    },
+    {
+      "alias": "Paul Mcnamee",
+      "canonical": "Paul McNamee"
+    },
+    {
+      "alias": "Peter Mcnamara",
+      "canonical": "Peter McNamara"
+    },
+    {
+      "alias": "Petra Martic",
+      "canonical": "Petra Martić"
+    },
+    {
+      "alias": "Raul Ramirez",
+      "canonical": "Raúl Ramírez"
+    },
+    {
+      "alias": "Regina Marsikova",
+      "canonical": "Regina Maršíková"
+    },
+    {
+      "alias": "Robert Vant Hof",
+      "canonical": "Robert Van't Hof"
+    },
+    {
+      "alias": "Ruxandra Dragomir",
+      "canonical": "Ruxandra Dragomir-Ilie"
+    },
+    {
+      "alias": "Shahar Peer",
+      "canonical": "Shahar Pe'er"
+    },
+    {
+      "alias": "Slobodan Zivojinovic",
+      "canonical": "Slobodan Živojinović"
+    },
+    {
+      "alias": "Tomas Smid",
+      "canonical": "Tomáš Šmíd"
+    },
+    {
+      "alias": "Viktoria Kutuzova",
+      "canonical": "Viktoriya Kutuzova"
+    },
+    {
+      "alias": "Vladimir Zednik",
+      "canonical": "Vladimir Zedník"
+    },
+    {
+      "alias": "Åsa Carlsson/Svensson",
+      "canonical": "Åsa Svensson"
+    }
   ]
 }
