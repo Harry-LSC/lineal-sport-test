@@ -5,9 +5,13 @@ on:
     branches:
       - tennis-publication-preview
       - main
+      - tennis-identity-repair-2026-09-27
     paths:
       - ".tennis-page-src/**"
       - "assemble_tennis_pages.py"
+      - "tennis-identity-runtime.js"
+      - "validate_tennis_identity.py"
+      - "data/tennis-player-aliases.json"
       - ".github/workflows/assemble-tennis-pages.yml"
 
 permissions:
@@ -24,6 +28,8 @@ jobs:
           python-version: "3.12"
       - name: Assemble frozen tennis pages
         run: python assemble_tennis_pages.py
+      - name: Regression-test canonical tennis identities
+        run: python validate_tennis_identity.py
       - name: Commit assembled pages
         run: |
           git config user.name "github-actions[bot]"
