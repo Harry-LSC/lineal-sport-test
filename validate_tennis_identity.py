@@ -27,6 +27,8 @@ for scope,path,tx,df,mt,rg in [
     ("WOMEN","womens-tennis.html",1087,3381,4468,1088),
 ]:
     t=Path(path).read_text(encoding="utf-8")
+    if "\\n(function initSurfacePerformance" in t:
+        raise SystemExit(scope+" page contains a literal \\n token in executable JavaScript")
     if "tennis-identity-runtime.js" not in t or f"LSC_applyCanonicalTennisIdentity('{scope}'" not in t:
         raise SystemExit(scope+" identity hook missing")
     ar=c(t,"FULL_ARCHIVE_DATA")
