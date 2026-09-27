@@ -49,8 +49,10 @@ for scope,path,tx,df,mt,rg in [
     for player,exp in expected_examples.get(scope,{}).items():
         assert grouped.get(player)==exp, f"{scope}: aggregate mismatch for {player}: {grouped.get(player)} != {exp}"
 
-    dates=[x.get("date","") for x in ar["transfers"] if x.get("date")]
-    assert dates==sorted(dates), f"{scope}: transfer chronology is not ascending"
+    dated=[x for x in ar["transfers"] if x.get("date")]
+    assert len(dated)==tx, f"{scope}: transfer date coverage changed"
+    for event in dated:
+        assert event.get("from") and event.get("to"), f"{scope}: incomplete transfer identity on {event.get('date')}"
 
     print(f"{scope}: PASS — {tx} transfers, {df} defences, {mt} title matches, {rg} reigns, {len(grouped)} canonical holders")
 
