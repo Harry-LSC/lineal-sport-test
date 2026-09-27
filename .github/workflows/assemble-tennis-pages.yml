@@ -29,6 +29,8 @@ jobs:
           python-version: "3.12"
       - name: Assemble frozen tennis pages
         run: python assemble_tennis_pages.py
+      - name: Check identity runtime JavaScript
+        run: node --check tennis-identity-runtime.js
       - name: Regression-test canonical tennis identities
         run: python validate_tennis_identity.py
       - name: Validate publication links and assets
