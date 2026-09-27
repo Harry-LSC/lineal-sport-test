@@ -7,6 +7,8 @@ R=Path("tennis-identity-runtime.js").read_text(encoding="utf-8")
 m=re.search(r"const ALIASES=(\{.*?\});\n const clone=",R,re.S)
 if not m or json.loads(m.group(1)) != A:
     raise SystemExit("Identity runtime and alias registry are out of sync")
+if "refreshHolderExplorer()" not in R or "renderChampionList" not in R:
+    raise SystemExit("Identity runtime does not force-refresh Explore a Holder after canonicalization")
 
 def c(t,n):
     m=re.search(rf"(?m)^const {re.escape(n)} = (.*);$",t)
