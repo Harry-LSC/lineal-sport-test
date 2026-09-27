@@ -180,7 +180,26 @@ def read_players(ws_players, ws_countries):
     return players
 
 
-def read_updates(ws, baseline):
+def read_aliases(ws):
+    if ws is None:
+        return {}
+    idx = header_map(ws, ["Alias", "Canonical Player"])
+    aliases = {}
+    for r, row in enumerate(ws.iter_rows(min_row=2, values_only=True), start=2):
+        alias = clean(row[idx["Alias"]])
+        canonical = clean(row[idx["Canonical Player"]])
+        if not alias and not canonical:
+            continue
+        if not alias or not canonical:
+            fail(f"Aliases row {r}: Alias and Canonical Player are both required.")
+        if alias in aliases and aliases[alias] != canonical:
+            fail(f"Aliases row {r}: conflicting mapping for '{alias}'.")
+        if alias != canonical:
+            aliases[alias] = canonical
+    return aliases
+
+
+def read_updates(ws, baseline, resolve):
     required = [
         "Lineage", "Match Date", "Opponent", "Tournament", "Round", "Surface",
         "Status", "Played?", "Result Type", "Result / Score", "Source URL", "Notes",
@@ -191,7 +210,7 @@ def read_updates(ws, baseline):
     for r, row in enumerate(ws.iter_rows(min_row=2, values_only=True), start=2):
         lineage = clean(row[idx["Lineage"]])
         match_date_raw = row[idx["Match Date"]]
-        opponent = clean(row[idx["Opponent"]])
+        opponent = resolve(clean(row[idx["Opponent"]]))
         tournament = clean(row[idx["Tournament"]])
         status = clean(row[idx["Status"]])
 
@@ -390,10 +409,13 @@ def main():
         if sheet not in wb.sheetnames:
             fail(f"Workbook is missing required sheet: {sheet}")
 
+    aliases = read_aliases(wb["Aliases"] if "Aliases" in wb.sheetnames else None)
+    resolve = lambda name: aliases.get(name, name)
     baseline = read_baseline(wb["Baseline"])
     players = read_players(wb["Players"], wb["Countries"])
-    events = read_updates(wb["Updates"], baseline)
+    events = read_updates(wb["Updates"], baseline, resolve)
     output = build_state(baseline, events, players)
+    output["aliases"] = [{"alias": a, "canonical": c} for a, c in sorted(aliases.items())]
 
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT.write_text(json.dumps(output, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
