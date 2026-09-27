@@ -1227,7 +1227,7 @@ footer{
 }
 
 </style>
-</head>
+<script src="tennis-identity-runtime.js"></script>\n</head>
 <body>
 
 <header>
