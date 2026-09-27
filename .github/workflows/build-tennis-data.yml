@@ -5,11 +5,13 @@ on:
     branches:
       - tennis-publication-preview
       - main
+      - tennis-identity-repair-2026-09-27
     paths:
       - "LSC_Tennis_Update_System.xlsx"
       - "create_tennis_workbook.py"
       - "migrate_tennis_workbook_players.py"
       - "build_tennis_data.py"
+      - "data/tennis-player-aliases.json"
       - ".github/workflows/build-tennis-data.yml"
 
 permissions:
