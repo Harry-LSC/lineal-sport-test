@@ -5,7 +5,6 @@ on:
     branches:
       - tennis-publication-preview
       - main
-      - tennis-identity-repair-2026-09-27
     paths:
       - ".tennis-page-src/**"
       - "assemble_tennis_pages.py"
