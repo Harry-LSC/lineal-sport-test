@@ -41,14 +41,14 @@
       "competition": "Men's ODI",
       "current_holder": "South Africa",
       "current_since": "2026-09-24",
-      "current_defences": 0,
+      "current_defences": 1,
       "transfers": 359,
-      "total_defences": 599,
+      "total_defences": 600,
       "next_defence": {
-        "date": "2026-09-27",
+        "date": "2026-09-30",
         "end_date": null,
         "opponent": "Australia",
-        "venue": "Johannesburg",
+        "venue": "Potchefstroom",
         "status": "Scheduled"
       }
     },
@@ -216,6 +216,21 @@
       "outcome": "Transfer",
       "holder_after": "South Africa",
       "venue": "Durban",
+      "source_url": null,
+      "notes": null
+    },
+    {
+      "championship": "John Edrich Jug",
+      "date": "2026-09-27",
+      "fixture_start_date": "2026-09-27",
+      "fixture_end_date": null,
+      "holder_before": "South Africa",
+      "challenger": "Australia",
+      "result_type": "Holder win",
+      "result_score": "def Australia by 32 runs",
+      "outcome": "Defence",
+      "holder_after": "South Africa",
+      "venue": "Johannesburg",
       "source_url": null,
       "notes": null
     }
