@@ -29,6 +29,10 @@ for scope,path,tx,df,mt,rg in [
     ("WOMEN","womens-tennis.html",1087,3381,4468,1088),
 ]:
     t=Path(path).read_text(encoding="utf-8")
+    if '<script src="tennis-identity-runtime.js"></script>\\\\n</head>' in t:
+        raise SystemExit(scope+" page contains a visible literal \\n before </head>")
+    if '<a class="logo" href="index.html"' not in t:
+        raise SystemExit(scope+" header logo is not linked to home")
     if "\\n(function initSurfacePerformance" in t:
         raise SystemExit(scope+" page contains a literal \\n token in executable JavaScript")
     if "tennis-identity-runtime.js" not in t or f"LSC_applyCanonicalTennisIdentity('{scope}'" not in t:

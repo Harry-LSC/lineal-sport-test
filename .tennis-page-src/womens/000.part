@@ -1203,12 +1203,13 @@ footer{
 }
 
 </style>
-<script src="tennis-identity-runtime.js"></script>\n</head>
+<script src="tennis-identity-runtime.js"></script>
+</head>
 <body>
 
 <header>
   <div class="wrap nav">
-    <div class="logo">LSC</div>
+    <a class="logo" href="index.html" aria-label="Lineal Sport Championship home">LSC</a>
     <div class="brand">
       <b>LINEAL SPORT CHAMPIONSHIP</b>
       <span>Tennis</span>
