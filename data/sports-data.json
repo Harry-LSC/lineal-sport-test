@@ -39,16 +39,16 @@
       "championship": "John Edrich Jug",
       "sport": "Cricket",
       "competition": "Men's ODI",
-      "current_holder": "South Africa",
-      "current_since": "2026-09-24",
-      "current_defences": 1,
-      "transfers": 359,
+      "current_holder": "Australia",
+      "current_since": "2026-09-30",
+      "current_defences": 0,
+      "transfers": 360,
       "total_defences": 600,
       "next_defence": {
-        "date": "2026-09-30",
+        "date": "2026-11-13",
         "end_date": null,
-        "opponent": "Australia",
-        "venue": "Potchefstroom",
+        "opponent": "England",
+        "venue": "Perth",
         "status": "Scheduled"
       }
     },
@@ -231,6 +231,21 @@
       "outcome": "Defence",
       "holder_after": "South Africa",
       "venue": "Johannesburg",
+      "source_url": null,
+      "notes": null
+    },
+    {
+      "championship": "John Edrich Jug",
+      "date": "2026-09-30",
+      "fixture_start_date": "2026-09-30",
+      "fixture_end_date": null,
+      "holder_before": "South Africa",
+      "challenger": "Australia",
+      "result_type": "Challenger win",
+      "result_score": "def South Africa by 45 runs (DLS)",
+      "outcome": "Transfer",
+      "holder_after": "Australia",
+      "venue": "Potchefstroom",
       "source_url": null,
       "notes": null
     }
