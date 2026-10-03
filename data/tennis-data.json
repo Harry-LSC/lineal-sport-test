@@ -40,7 +40,15 @@
       "played_title_matches": 4469,
       "checkpoint_date": "2026-09-12",
       "notes": "Frozen publication baseline. One successful defence: 12 Sep 2026 US Open F vs Aryna Sabalenka.",
-      "next_match": null
+      "next_match": {
+        "date": "2026-10-05",
+        "opponent": "Sonay Kartal",
+        "tournament": "China Open",
+        "round": "R32",
+        "surface": "Hard",
+        "status": "Scheduled",
+        "source_url": null
+      }
     }
   ],
   "lineage_updates": [
