@@ -25,33 +25,44 @@
     {
       "lineage": "Women's Singles",
       "tour": "WTA",
-      "current_holder": "Elena Rybakina",
-      "current_since": "2026-09-11",
-      "won_from": "Coco Gauff",
+      "current_holder": "Alina Charaeva",
+      "current_since": "2026-10-03",
+      "won_from": "Elena Rybakina",
       "acquisition": {
-        "tournament": "US Open",
-        "round": "SF",
-        "surface": "Hard",
-        "score": "3–6, 6–4, 6–4"
-      },
-      "current_defences": 1,
-      "transfers": 1087,
-      "total_defences": 3381,
-      "played_title_matches": 4468,
-      "checkpoint_date": "2026-09-12",
-      "notes": "Frozen publication baseline. One successful defence: 12 Sep 2026 US Open F vs Aryna Sabalenka.",
-      "next_match": {
-        "date": "2026-10-03",
-        "opponent": "Alina Charaeva",
         "tournament": "China Open",
         "round": "R64",
         "surface": "Hard",
-        "status": "Scheduled",
-        "source_url": null
-      }
+        "score": "3-6, 6-4, 6-3"
+      },
+      "current_defences": 0,
+      "transfers": 1088,
+      "total_defences": 3381,
+      "played_title_matches": 4469,
+      "checkpoint_date": "2026-09-12",
+      "notes": "Frozen publication baseline. One successful defence: 12 Sep 2026 US Open F vs Aryna Sabalenka.",
+      "next_match": null
     }
   ],
-  "lineage_updates": [],
+  "lineage_updates": [
+    {
+      "lineage": "Women's Singles",
+      "match_date": "2026-10-03",
+      "opponent": "Alina Charaeva",
+      "tournament": "China Open",
+      "round": "R64",
+      "surface": "Hard",
+      "status": "Completed",
+      "played": "Yes",
+      "result_type": "Challenger win",
+      "result_score": "3-6, 6-4, 6-3",
+      "source_url": null,
+      "notes": null,
+      "holder_before": "Elena Rybakina",
+      "holder_after": "Alina Charaeva",
+      "outcome": "Transfer",
+      "counts_as_title_match": true
+    }
+  ],
   "players": [
     {
       "player": "Jannik Sinner",
@@ -68,6 +79,14 @@
       "flag": "🇰🇿",
       "flag_override": null,
       "notes": "Current women's baseline holder."
+    },
+    {
+      "player": "Alina Charaeva",
+      "country": "Armenia",
+      "country_code": "ARM",
+      "flag": "🇦🇲",
+      "flag_override": null,
+      "notes": null
     }
   ],
   "aliases": [
