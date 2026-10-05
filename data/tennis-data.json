@@ -34,21 +34,13 @@
         "surface": "Hard",
         "score": "3-6, 6-4, 6-3"
       },
-      "current_defences": 0,
+      "current_defences": 1,
       "transfers": 1088,
-      "total_defences": 3381,
-      "played_title_matches": 4469,
+      "total_defences": 3382,
+      "played_title_matches": 4470,
       "checkpoint_date": "2026-09-12",
       "notes": "Frozen publication baseline. One successful defence: 12 Sep 2026 US Open F vs Aryna Sabalenka.",
-      "next_match": {
-        "date": "2026-10-05",
-        "opponent": "Sonay Kartal",
-        "tournament": "China Open",
-        "round": "R32",
-        "surface": "Hard",
-        "status": "Scheduled",
-        "source_url": null
-      }
+      "next_match": null
     }
   ],
   "lineage_updates": [
@@ -68,6 +60,24 @@
       "holder_before": "Elena Rybakina",
       "holder_after": "Alina Charaeva",
       "outcome": "Transfer",
+      "counts_as_title_match": true
+    },
+    {
+      "lineage": "Women's Singles",
+      "match_date": "2026-10-05",
+      "opponent": "Sonay Kartal",
+      "tournament": "China Open",
+      "round": "R32",
+      "surface": "Hard",
+      "status": "Completed",
+      "played": "Yes",
+      "result_type": "Holder win",
+      "result_score": "6-4, 6-1",
+      "source_url": null,
+      "notes": null,
+      "holder_before": "Alina Charaeva",
+      "holder_after": "Alina Charaeva",
+      "outcome": "Defence",
       "counts_as_title_match": true
     }
   ],
