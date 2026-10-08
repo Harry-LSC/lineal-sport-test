@@ -25,26 +25,26 @@
     {
       "lineage": "Women's Singles",
       "tour": "WTA",
-      "current_holder": "Alina Charaeva",
-      "current_since": "2026-10-03",
-      "won_from": "Elena Rybakina",
+      "current_holder": "Qinwen Zheng",
+      "current_since": "2026-10-07",
+      "won_from": "Alina Charaeva",
       "acquisition": {
         "tournament": "China Open",
-        "round": "R64",
+        "round": "R16",
         "surface": "Hard",
-        "score": "3-6, 6-4, 6-3"
+        "score": "6-1, 2-6, 6-4"
       },
-      "current_defences": 1,
-      "transfers": 1088,
+      "current_defences": 0,
+      "transfers": 1089,
       "total_defences": 3382,
-      "played_title_matches": 4470,
+      "played_title_matches": 4471,
       "checkpoint_date": "2026-09-12",
       "notes": "Frozen publication baseline. One successful defence: 12 Sep 2026 US Open F vs Aryna Sabalenka.",
       "next_match": {
-        "date": "2026-10-07",
-        "opponent": "Qinwen Zheng",
+        "date": "2026-10-09",
+        "opponent": "Elina Svitolina",
         "tournament": "China Open",
-        "round": "R16",
+        "round": "QF",
         "surface": "Hard",
         "status": "Scheduled",
         "source_url": null
@@ -87,6 +87,24 @@
       "holder_after": "Alina Charaeva",
       "outcome": "Defence",
       "counts_as_title_match": true
+    },
+    {
+      "lineage": "Women's Singles",
+      "match_date": "2026-10-07",
+      "opponent": "Qinwen Zheng",
+      "tournament": "China Open",
+      "round": "R16",
+      "surface": "Hard",
+      "status": "Completed",
+      "played": "Yes",
+      "result_type": "Challenger win",
+      "result_score": "6-1, 2-6, 6-4",
+      "source_url": null,
+      "notes": null,
+      "holder_before": "Alina Charaeva",
+      "holder_after": "Qinwen Zheng",
+      "outcome": "Transfer",
+      "counts_as_title_match": true
     }
   ],
   "players": [
@@ -111,6 +129,14 @@
       "country": "Armenia",
       "country_code": "ARM",
       "flag": "🇦🇲",
+      "flag_override": null,
+      "notes": null
+    },
+    {
+      "player": "Qinwen Zheng",
+      "country": "China",
+      "country_code": "CHN",
+      "flag": "🇨🇳",
       "flag_override": null,
       "notes": null
     }
