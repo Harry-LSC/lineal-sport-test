@@ -58,14 +58,14 @@
       "competition": "Women's ODI",
       "current_holder": "Australia",
       "current_since": "2026-02-24",
-      "current_defences": 5,
+      "current_defences": 6,
       "transfers": 120,
-      "total_defences": 251,
+      "total_defences": 252,
       "next_defence": {
-        "date": "2026-10-09",
+        "date": "2026-10-11",
         "end_date": null,
         "opponent": "Bangladesh",
-        "venue": "Allan Border Field · Brisbane",
+        "venue": "Brisbane",
         "status": "Scheduled"
       }
     },
@@ -156,6 +156,21 @@
       "outcome": "Defence",
       "holder_after": "Australia",
       "venue": "Harare Sports Club · Harare",
+      "source_url": null,
+      "notes": null
+    },
+    {
+      "championship": "Tina Macpherson Trophy",
+      "date": "2026-10-09",
+      "fixture_start_date": "2026-10-09",
+      "fixture_end_date": null,
+      "holder_before": "Australia",
+      "challenger": "Bangladesh",
+      "result_type": "Holder win",
+      "result_score": "def Bangladesh by 7 Wickets",
+      "outcome": "Defence",
+      "holder_after": "Australia",
+      "venue": "Allan Border Field · Brisbane",
       "source_url": null,
       "notes": null
     },
