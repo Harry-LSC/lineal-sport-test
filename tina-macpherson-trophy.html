@@ -1323,7 +1323,7 @@ window.MACPHERSON_DATA = {"current_champion": "Australia", "current_since": "202
     const payload=await response.json();
     const live=payload.championships.find(x=>x.championship==='Tina Macpherson Trophy');
     if(!live) throw new Error('Tina Macpherson Trophy missing from sports-data.json');
-    const D=window.T20I_DATA;
+    const D=window.MACPHERSON_DATA;
     if(!D) throw new Error('Page data object missing');
 
     // Freeze the static page's audited cutoff, then apply only workbook events
