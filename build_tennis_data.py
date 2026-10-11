@@ -253,7 +253,7 @@ def read_updates(ws, baseline, resolve):
                 if result_type not in {"Holder win", "Challenger win"}:
                     fail(
                         f"Updates row {r}: a played Completed match requires Result Type "
-                        f"Holder win or Challenger win; got {result_type!r}."
+                        "Holder win or Challenger win."
                     )
                 if not surface:
                     fail(f"Updates row {r}: a played Completed match requires Surface.")
