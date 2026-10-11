@@ -34,21 +34,13 @@
         "surface": "Hard",
         "score": "6-1, 2-6, 6-4"
       },
-      "current_defences": 2,
+      "current_defences": 3,
       "transfers": 1089,
-      "total_defences": 3384,
-      "played_title_matches": 4473,
+      "total_defences": 3385,
+      "played_title_matches": 4474,
       "checkpoint_date": "2026-09-12",
       "notes": "Frozen publication baseline. One successful defence: 12 Sep 2026 US Open F vs Aryna Sabalenka.",
-      "next_match": {
-        "date": "2026-10-11",
-        "opponent": "Mirra Andreeva",
-        "tournament": "China Open",
-        "round": "F",
-        "surface": "Hard",
-        "status": "Scheduled",
-        "source_url": null
-      }
+      "next_match": null
     }
   ],
   "lineage_updates": [
@@ -135,6 +127,24 @@
       "played": "Yes",
       "result_type": "Holder win",
       "result_score": "7-5, 6-2",
+      "source_url": null,
+      "notes": null,
+      "holder_before": "Qinwen Zheng",
+      "holder_after": "Qinwen Zheng",
+      "outcome": "Defence",
+      "counts_as_title_match": true
+    },
+    {
+      "lineage": "Women's Singles",
+      "match_date": "2026-10-11",
+      "opponent": "Mirra Andreeva",
+      "tournament": "China Open",
+      "round": "F",
+      "surface": "Hard",
+      "status": "Completed",
+      "played": "Yes",
+      "result_type": "Holder win",
+      "result_score": "7-5, 6-4",
       "source_url": null,
       "notes": null,
       "holder_before": "Qinwen Zheng",
