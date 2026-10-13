@@ -435,7 +435,7 @@ footer{border-top:1px solid var(--line)!important;background:#040c13!important}.
           <div class="n" id="holder-defences">—</div><div class="l">Defences</div>
           <div class="holder-substat" id="holder-last-defence"></div>
         </div>
-        <div class="holder-stat" style="border-right:none;"><div class="n" style="font-size:17px;">9–13 October v Australia<br><span style="font-size:.78em;color:var(--slate);font-weight:500;">Kingsmead · Durban</span></div><div class="l">Next Defence</div></div>
+        <div class="holder-stat" style="border-right:none;"><div class="n" id="next-defence-live" style="font-size:17px;">9–13 October v Australia<br><span style="font-size:.78em;color:var(--slate);font-weight:500;">Kingsmead · Durban</span></div><div class="l">Next Defence</div></div>
         </div>
     </div>
 
@@ -1317,5 +1317,155 @@ window.BANNERMAN_DATA = {"current_champion":"South Africa","current_since":"2025
 })();
 </script>
   <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "28e26713bb2f49d093fbaf51414b9cc2"}'></script><!-- End Cloudflare Web Analytics -->
+
+<!-- LSC Bannerman live sports-data overlay -->
+<script id="bannerman-live-sports-data-v1">
+(async function(){
+  const esc=v=>String(v??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const prettyDate=iso=>{
+    if(!iso)return 'TBD';
+    const [y,m,d]=iso.split('-').map(Number);
+    return new Intl.DateTimeFormat('en-GB',{day:'numeric',month:'short',year:'numeric'}).format(new Date(Date.UTC(y,m-1,d)));
+  };
+  const prettyRange=(a,b)=>{
+    if(!a)return 'TBD';
+    if(!b||a===b)return prettyDate(a);
+    const [ay,am,ad]=a.split('-').map(Number),[by,bm,bd]=b.split('-').map(Number);
+    if(ay===by&&am===bm){
+      const mon=new Intl.DateTimeFormat('en-GB',{month:'short'}).format(new Date(Date.UTC(ay,am-1,ad)));
+      return `${ad}–${bd} ${mon} ${ay}`;
+    }
+    return `${prettyDate(a)}–${prettyDate(b)}`;
+  };
+  const daysSince=iso=>{
+    if(!iso)return 0;
+    const [y,m,d]=iso.split('-').map(Number);
+    const start=Date.UTC(y,m-1,d);
+    const now=new Date();
+    const today=Date.UTC(now.getUTCFullYear(),now.getUTCMonth(),now.getUTCDate());
+    return Math.max(0,Math.floor((today-start)/86400000));
+  };
+  const nextHTML=nd=>{
+    if(!nd)return 'TBD';
+    const venue=nd.venue?`<br><span style="font-size:.78em;color:var(--slate);font-weight:500;">${esc(nd.venue)}</span>`:'';
+    return `${esc(prettyRange(nd.date,nd.end_date))} · vs ${esc(nd.opponent)}${venue}`;
+  };
+
+  try{
+    const response=await fetch('./data/sports-data.json',{cache:'no-store'});
+    if(!response.ok)throw new Error('sports-data.json returned '+response.status);
+    const payload=await response.json();
+    const live=payload.championships.find(x=>x.championship==='Charles Bannerman Belt');
+    if(!live)throw new Error('Charles Bannerman Belt missing from sports-data.json');
+
+    const D=window.BANNERMAN_DATA;
+    if(!D)throw new Error('BANNERMAN_DATA missing');
+
+    // Determine only workbook events newer than the embedded audited history.
+    const staticLastDate=(D.timeline_events||[]).reduce((m,e)=>e.date>m?e.date:m,'0000-00-00');
+    const updates=(payload.lineage_updates||[])
+      .filter(x=>x.championship==='Charles Bannerman Belt' && x.date>staticLastDate)
+      .sort((a,b)=>a.date.localeCompare(b.date));
+    const latest=updates.length?updates[updates.length-1]:null;
+
+    // Keep the in-memory page object aligned for share cards and later UI logic.
+    D.current_champion=live.current_holder;
+    D.current_since=live.current_since;
+    D.current_days=daysSince(live.current_since);
+    D.current_defences=live.current_defences;
+    D.total_transfers=live.transfers;
+    D.total_matches=live.transfers+live.total_defences;
+
+    for(const u of updates){
+      if(u.outcome==='Defence'){
+        if(!(D.timeline_events||[]).some(e=>e.date===u.date&&e.type==='def'&&e.team===u.holder_after)){
+          D.timeline_events.push({date:u.date,team:u.holder_after,type:'def',context:u.result_score||''});
+        }
+      }else if(u.outcome==='Transfer'){
+        if(!(D.timeline_events||[]).some(e=>e.date===u.date&&e.type==='new'&&e.team===u.holder_after)){
+          D.timeline_events.push({date:u.date,team:u.holder_after,type:'new',context:u.result_score||''});
+        }
+        D.recent_transfers=D.recent_transfers||[];
+        if(!D.recent_transfers.some(e=>e.date===u.date&&e.to===u.holder_after)){
+          D.recent_transfers.unshift({date:u.date,from:u.holder_before,to:u.holder_after,context:u.result_score||''});
+        }
+      }
+    }
+
+    // Hero.
+    const setText=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};
+    setText('holder-name',String(live.current_holder).toUpperCase());
+    setText('holder-since','Won on '+prettyDate(live.current_since));
+    setText('holder-days',D.current_days);
+    setText('holder-defences',live.current_defences);
+    const result=document.getElementById('holder-result');
+    if(result&&latest){
+      result.textContent=latest.outcome==='Transfer'
+        ? `def. ${latest.holder_before} — ${latest.result_score} — ${prettyDate(latest.date)}`
+        : `Last defence: ${latest.result_score} — ${prettyDate(latest.date)}`;
+    }
+    const lastDef=document.getElementById('holder-last-defence');
+    if(lastDef){
+      const ld=[...updates].reverse().find(x=>x.outcome==='Defence'&&x.holder_after===live.current_holder);
+      lastDef.textContent=ld?`Last: ${ld.result_score}`:'';
+    }
+    const nd=document.getElementById('next-defence-live');
+    if(nd)nd.innerHTML=nextHTML(live.next_defence);
+
+    // Current-champion stats.
+    setText('s-current-team',live.current_holder);
+    const scd=document.getElementById('s-current-days');
+    if(scd)scd.innerHTML=D.current_days+'<span class="unit">days</span>';
+    if(typeof flagSVG==='function'){
+      const sf=document.getElementById('s-current-flag');if(sf)sf.innerHTML=flagSVG(live.current_holder);
+      const hb=document.getElementById('holder-badge');if(hb)hb.innerHTML=flagSVG(live.current_holder);
+    }
+    setText('g-transfers',live.transfers);
+    setText('g-matches',live.transfers+live.total_defences);
+
+    // Make the newest transfer immediately visible in Full Lineage.
+    const newestTransfer=[...updates].reverse().find(x=>x.outcome==='Transfer');
+    const list=document.getElementById('fl-list');
+    if(newestTransfer&&list&&!list.querySelector('[data-live-bannerman-transfer="'+newestTransfer.date+'"]')){
+      const row=document.createElement('div');
+      row.className='fl-item';
+      row.dataset.liveBannermanTransfer=newestTransfer.date;
+      row.innerHTML=
+        '<div class="fl-date mono">'+esc(prettyDate(newestTransfer.date))+'</div>'+
+        '<div class="fl-transfer">'+esc(newestTransfer.holder_before)+' <span class="arrow">→</span> '+esc(newestTransfer.holder_after)+'</div>'+
+        '<div class="fl-context-row"><div class="fl-context">'+esc(newestTransfer.result_score||'')+'</div></div>';
+      list.prepend(row);
+    }
+    const flCount=document.getElementById('fl-count');
+    if(flCount)flCount.textContent=live.transfers+' title changes · '+(live.transfers+1)+' entries incl. seed';
+    const tlCount=document.getElementById('tl-count-label');
+    if(tlCount)tlCount.textContent=live.transfers+' title changes since 1877';
+
+    // Append the latest event to the visible timeline without disturbing the historical renderer.
+    const track=document.getElementById('tl-track');
+    const axis=document.getElementById('tl-axis');
+    if(latest&&track&&!track.querySelector('[data-live-bannerman="'+latest.date+'"]')){
+      const node=document.createElement('div');
+      node.className='tl-node '+(latest.outcome==='Transfer'?'new':'def');
+      node.dataset.liveBannerman=latest.date;
+      node.dataset.date=prettyDate(latest.date);
+      node.dataset.context=latest.result_score||'';
+      node.innerHTML='<div class="dot"></div>'+(latest.outcome==='Transfer'?'<div class="tl-label">'+esc((latest.holder_after||'').slice(0,3).toUpperCase())+'</div>':'');
+      track.appendChild(node);
+      if(axis){
+        const tick=document.createElement('div');
+        tick.className='tl-axis-tick';
+        tick.innerHTML='<div class="tl-axis-year">'+esc(latest.date.slice(0,4))+'</div>';
+        axis.appendChild(tick);
+      }
+      const scroll=document.getElementById('tl-scroll');
+      if(scroll)setTimeout(()=>scroll.scrollLeft=scroll.scrollWidth,30);
+    }
+  }catch(err){
+    console.error('Live Charles Bannerman data hydration failed:',err);
+  }
+})();
+</script>
+
 </body>
 </html>
