@@ -742,6 +742,8 @@ window.BANNERMAN_DATA = {"current_champion":"South Africa","current_since":"2025
   function badgeHTML(team, cls){
     return `<div class="${cls}" style="background:#12161f;">${flagSVG(team)}</div>`;
   }
+  window.LSC_FLAG_SVG = flagSVG;
+  window.LSC_BADGE_HTML = badgeHTML;
   const fmtDate = d => new Date(d+'T00:00:00').toLocaleDateString('en-US',{day:'numeric',month:'short',year:'numeric'});
 
   // HERO holder card
@@ -1392,6 +1394,29 @@ window.BANNERMAN_DATA = {"current_champion":"South Africa","current_since":"2025
       }
     }
 
+    // Re-render Latest Title Changes after applying live workbook transfers.
+    const tcRow=document.getElementById('tc-row');
+    const liveBadge=window.LSC_BADGE_HTML;
+    if(tcRow && typeof liveBadge==='function'){
+      tcRow.innerHTML=(D.recent_transfers||[]).slice(0,3).map(t=>{
+        const parts=String(t.context||'').split(': ');
+        const hasStage=parts.length>1;
+        const stage=hasStage?parts[0]:'Title change';
+        const rest=hasStage?parts.slice(1).join(': '):String(t.context||'');
+        return `
+          <div class="tc-card">
+            <div class="tc-top"><span class="tc-date mono">${prettyDate(t.date)}</span><span class="tc-stage">${esc(stage)}</span></div>
+            <div class="tc-match">
+              <div class="tc-team">${liveBadge(t.from,'badge')}<span class="tname">${esc(t.from)}</span></div>
+              <div class="tc-vs">VS</div>
+              <div class="tc-team">${liveBadge(t.to,'badge')}<span class="tname">${esc(t.to)}</span></div>
+            </div>
+            <div class="tc-result">${esc(rest)}</div>
+            <div class="tc-arrow">${esc(t.from)} <span style="color:var(--slate)">→</span> <b>${esc(t.to)}</b></div>
+          </div>`;
+      }).join('');
+    }
+
     // Hero.
     const setText=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};
     setText('holder-name',String(live.current_holder).toUpperCase());
@@ -1416,9 +1441,10 @@ window.BANNERMAN_DATA = {"current_champion":"South Africa","current_since":"2025
     setText('s-current-team',live.current_holder);
     const scd=document.getElementById('s-current-days');
     if(scd)scd.innerHTML=D.current_days+'<span class="unit">days</span>';
-    if(typeof flagSVG==='function'){
-      const sf=document.getElementById('s-current-flag');if(sf)sf.innerHTML=flagSVG(live.current_holder);
-      const hb=document.getElementById('holder-badge');if(hb)hb.innerHTML=flagSVG(live.current_holder);
+    const liveFlag=window.LSC_FLAG_SVG;
+    if(typeof liveFlag==='function'){
+      const sf=document.getElementById('s-current-flag');if(sf)sf.innerHTML=liveFlag(live.current_holder);
+      const hb=document.getElementById('holder-badge');if(hb)hb.innerHTML=liveFlag(live.current_holder);
     }
     setText('g-transfers',live.transfers);
     setText('g-matches',live.transfers+live.total_defences);
