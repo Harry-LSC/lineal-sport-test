@@ -1449,41 +1449,50 @@ window.BANNERMAN_DATA = {"current_champion":"South Africa","current_since":"2025
     setText('g-transfers',live.transfers);
     setText('g-matches',live.transfers+live.total_defences);
 
-    // Make the newest transfer immediately visible in Full Lineage.
-    const newestTransfer=[...updates].reverse().find(x=>x.outcome==='Transfer');
+    // Add every workbook transfer newer than the embedded audited cutoff to Full Lineage.
+    // Full Lineage is reverse-chronological, so prepend oldest->newest to leave the newest on top.
+    const liveTransfers=updates.filter(x=>x.outcome==='Transfer');
     const list=document.getElementById('fl-list');
-    if(newestTransfer&&list&&!list.querySelector('[data-live-bannerman-transfer="'+newestTransfer.date+'"]')){
-      const row=document.createElement('div');
-      row.className='fl-item';
-      row.dataset.liveBannermanTransfer=newestTransfer.date;
-      row.innerHTML=
-        '<div class="fl-date mono">'+esc(prettyDate(newestTransfer.date))+'</div>'+
-        '<div class="fl-transfer">'+esc(newestTransfer.holder_before)+' <span class="arrow">→</span> '+esc(newestTransfer.holder_after)+'</div>'+
-        '<div class="fl-context-row"><div class="fl-context">'+esc(newestTransfer.result_score||'')+'</div></div>';
-      list.prepend(row);
+    if(list){
+      liveTransfers.forEach(t=>{
+        if(list.querySelector('[data-live-bannerman-transfer="'+t.date+'"]')) return;
+        const row=document.createElement('div');
+        row.className='fl-item';
+        row.dataset.liveBannermanTransfer=t.date;
+        row.innerHTML=
+          '<div class="fl-date mono">'+esc(prettyDate(t.date))+'</div>'+
+          '<div class="fl-transfer">'+esc(t.holder_before)+' <span class="arrow">→</span> '+esc(t.holder_after)+'</div>'+
+          '<div class="fl-context-row"><div class="fl-context">'+esc(t.result_score||'')+'</div></div>';
+        list.prepend(row);
+      });
     }
     const flCount=document.getElementById('fl-count');
     if(flCount)flCount.textContent=live.transfers+' title changes · '+(live.transfers+1)+' entries incl. seed';
     const tlCount=document.getElementById('tl-count-label');
     if(tlCount)tlCount.textContent=live.transfers+' title changes since 1877';
 
-    // Append the latest event to the visible timeline without disturbing the historical renderer.
+    // Append every workbook event newer than the embedded cutoff to the visible timeline.
     const track=document.getElementById('tl-track');
     const axis=document.getElementById('tl-axis');
-    if(latest&&track&&!track.querySelector('[data-live-bannerman="'+latest.date+'"]')){
-      const node=document.createElement('div');
-      node.className='tl-node '+(latest.outcome==='Transfer'?'new':'def');
-      node.dataset.liveBannerman=latest.date;
-      node.dataset.date=prettyDate(latest.date);
-      node.dataset.context=latest.result_score||'';
-      node.innerHTML='<div class="dot"></div>'+(latest.outcome==='Transfer'?'<div class="tl-label">'+esc((latest.holder_after||'').slice(0,3).toUpperCase())+'</div>':'');
-      track.appendChild(node);
-      if(axis){
-        const tick=document.createElement('div');
-        tick.className='tl-axis-tick';
-        tick.innerHTML='<div class="tl-axis-year">'+esc(latest.date.slice(0,4))+'</div>';
-        axis.appendChild(tick);
-      }
+    if(track){
+      updates.forEach(u=>{
+        if(track.querySelector('[data-live-bannerman="'+u.date+'"]')) return;
+        const node=document.createElement('div');
+        node.className='tl-node '+(u.outcome==='Transfer'?'new':'def');
+        node.dataset.liveBannerman=u.date;
+        node.dataset.date=prettyDate(u.date);
+        node.dataset.context=u.result_score||'';
+        node.innerHTML='<div class="dot"></div>'+(u.outcome==='Transfer'?'<div class="tl-label">'+esc((u.holder_after||'').slice(0,3).toUpperCase())+'</div>':'');
+        track.appendChild(node);
+        if(axis){
+          const tick=document.createElement('div');
+          tick.className='tl-axis-tick';
+          // Only label the year once among consecutive live events from the same year.
+          const prevYear=tick.previousElementSibling?.querySelector('.tl-axis-year')?.textContent;
+          tick.innerHTML=prevYear===u.date.slice(0,4)?'':'<div class="tl-axis-year">'+esc(u.date.slice(0,4))+'</div>';
+          axis.appendChild(tick);
+        }
+      });
       const scroll=document.getElementById('tl-scroll');
       if(scroll)setTimeout(()=>scroll.scrollLeft=scroll.scrollWidth,30);
     }
